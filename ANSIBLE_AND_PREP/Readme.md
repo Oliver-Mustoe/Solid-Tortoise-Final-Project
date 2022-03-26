@@ -30,3 +30,7 @@ https://docs.ansible.com/ansible/2.9/modules/win_domain_module.html#win-domain-m
 https://www.dell.com/support/kbdoc/en-us/000121955/installing-active-directory-domain-services-and-promoting-the-server-to-a-domain-controller
 
 https://askubuntu.com/questions/294736/run-a-shell-script-as-another-user-that-has-no-password
+
+https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse
+
+https://stackoverflow.com/questions/39319140/error-1067-on-start-openssh-by-net-start-opensshd-in-windows-cmd

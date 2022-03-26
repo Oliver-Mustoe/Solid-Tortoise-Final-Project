@@ -10,6 +10,3 @@ Set-Service -Name sshd -StartupType Automatic
 # Change SSH shell to powershell
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\PowerShell\1\ShellIds" -Name ConsolePrompting -Value $true
 New-ItemProperty -Path HKLM:\SOFTWARE\OpenSSH -Name Defaultshell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
-
-# Shows that OpenSSH Server is installed
-Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH.Server*'
