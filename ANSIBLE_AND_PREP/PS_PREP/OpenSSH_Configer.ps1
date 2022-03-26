@@ -1,6 +1,6 @@
 # Setup commands needed for Ansible on Windows
 # Execution policy needs to be set (Set-ExecutionPolicy unrestricted)
-# Version: 0.1
+# Version: 1.0 - NEEDS DOUBLE CHECK
 #Requires -RunAsAdministrator
 # Install OpenSSH
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
