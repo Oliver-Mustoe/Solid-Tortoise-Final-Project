@@ -7,10 +7,10 @@ sudo useradd -mk /etc/skel -s /bin/bash -d /home/deployer -G wheel deployer
 sudo passwd deployer
 wait
 
-# Create "sys265" file as the deployer user
+# Create "sys265" file
 echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265
 
-# Copy sys265 to "/etc/sudoers.d/sys264" as the deployer user
+# Copy sys265 to "/etc/sudoers.d/sys264"
 sudo cp sys265 /etc/sudoers.d/sys265
 
 # Change to deployer
