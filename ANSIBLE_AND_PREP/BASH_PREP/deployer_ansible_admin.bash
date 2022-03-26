@@ -1,5 +1,5 @@
 # Script to setup Linux (Ubuntu) host for Ansible SSH deployment
-# Version: 0.5
+# Version: 1.0 - NEEDS DOUBLE CHECK
 # Add deployer user
 sudo adduser deployer
 wait
@@ -9,10 +9,10 @@ sudo usermod -aG sudo deployer
 sudo apt install ansible sshpass python3-paramiko -y
 wait
 
-# Create "sys265" file as the deployer user
+# Create "sys265" file
 echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265
 
-# Copy sys265 to "/etc/sudoers.d/sys264" as the deployer user
+# Copy sys265 to "/etc/sudoers.d/sys264"
 sudo cp sys265 /etc/sudoers.d/sys265
 
 # Generate SSH key for ansible as the deployer user
