@@ -10,17 +10,20 @@ sudo apt install ansible sshpass python3-paramiko -y
 wait
 
 # Create "sys265" file as the deployer user
-sudo -u deployer -c 'echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265'
+sudo su - deployer -c 'echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265'
 
 # Copy sys265 to "/etc/sudoers.d/sys264" as the deployer user
-sudo -u deployer -c 'cp sys265 /etc/sudoers.d/sys265'
+sudo su - deployer -c 'cp sys265 /etc/sudoers.d/sys265'
 
 # Generate SSH key for ansible as the deployer user
-sudo -u deployer -c 'ssh-keygen -t rsa -C "controller"'
+sudo su - deployer -c 'ssh-keygen -t rsa -C "controller"'
 
-# Install needed Windows modules as the deployer user
+# Install needed Windows modules
 sudo ansible-galaxy collection install ansible.windows
 
 # Let user know what they now need to do
-echo ("Will need to know run the comman 'ssh-copy-id -i ~/.ssh/mykey deployer@ansible1-oliver' to copy your SSH to Linux users")
-echo ("For Window's hosts, you will need to refer to 'PS_PREP' ")
+echo "Will need to know run the comman 'ssh-copy-id -i ~/.ssh/mykey deployer@ansible1-oliver' to copy your SSH to Linux users"
+echo "For Window's hosts, you will need to refer to 'PS_PREP' "
+
+# Change to deployer
+sudo su - deployer
