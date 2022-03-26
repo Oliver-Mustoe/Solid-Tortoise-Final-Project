@@ -1,5 +1,5 @@
 # Script to setup Linux (Ubuntu) host for Ansible SSH deployment
-# Version: 0.1
+# Version: 0.3
 # Add deployer user
 sudo adduser deployer
 wait
