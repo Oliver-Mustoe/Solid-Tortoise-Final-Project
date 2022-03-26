@@ -1,4 +1,4 @@
-Sources used in the creation of this code (in no order):
+Sources used in the creation of this code (in no order):  
 https://phoenixnap.com/kb/bash-wait-command
 
 https://unix.stackexchange.com/questions/3568/how-to-switch-between-users-on-one-terminal

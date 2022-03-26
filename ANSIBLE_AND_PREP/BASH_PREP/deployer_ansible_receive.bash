@@ -8,7 +8,7 @@ sudo passwd deployer
 wait
 
 # Create "sys265" file as the deployer user
-sudo -H -u deployer -c 'echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265'
+sudo -u deployer -c 'echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265'
 
 # Copy sys265 to "/etc/sudoers.d/sys264" as the deployer user
-sudo -H -u deployer -c 'cp sys265 /etc/sudoers.d/sys265'
+sudo -u deployer -c 'cp sys265 /etc/sudoers.d/sys265'
