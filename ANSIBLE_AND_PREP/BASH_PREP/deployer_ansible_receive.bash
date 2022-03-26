@@ -1,5 +1,5 @@
 # Script to setup Linux (CentOS 7) hosts for Ansible SSH
-# Version: 0.3
+# Version: 0.4
 # Add deployer user
 sudo useradd -mk /etc/skel -s /bin/bash -d /home/deployer -G wheel deployer
 
@@ -11,7 +11,7 @@ wait
 sudo su - deployer -c 'echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265'
 
 # Copy sys265 to "/etc/sudoers.d/sys264" as the deployer user
-sudo su - deployer -c 'cp sys265 /etc/sudoers.d/sys265'
+sudo su - deployer -c 'sudo cp sys265 /etc/sudoers.d/sys265'
 
 # Change to deployer
 sudo su - deployer
