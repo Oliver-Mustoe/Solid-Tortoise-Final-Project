@@ -28,3 +28,5 @@ https://docs.ansible.com/ansible/2.9/modules/win_domain_computer_module.html#win
 https://docs.ansible.com/ansible/2.9/modules/win_domain_module.html#win-domain-module
 
 https://www.dell.com/support/kbdoc/en-us/000121955/installing-active-directory-domain-services-and-promoting-the-server-to-a-domain-controller
+
+https://askubuntu.com/questions/294736/run-a-shell-script-as-another-user-that-has-no-password

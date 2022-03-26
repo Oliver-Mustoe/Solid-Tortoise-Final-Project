@@ -6,23 +6,19 @@ wait
 sudo usermod -aG sudo deployer
 
 # Install needed prerequisites
-sudo apt install ansible sshpass python3-paramiko
+sudo apt install ansible sshpass python3-paramiko -y
 wait
 
-# Change to deployer user
-sudo su - deployer
-wait
+# Create "sys265" file as the deployer user
+sudo -H -u deployer -c 'echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265'
 
-# Create "sys265" file
-echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265
+# Copy sys265 to "/etc/sudoers.d/sys264" as the deployer user
+sudo -H -u deployer -c 'cp sys265 /etc/sudoers.d/sys265'
 
-# Copy sys265 to "/etc/sudoers.d/sys264"
-cp sys265 /etc/sudoers.d/sys265
+# Generate SSH key for ansible as the deployer user
+sudo -H -u deployer -c 'ssh-keygen -t rsa -C "controller"'
 
-# Generate SSH key for ansible
-ssh-keygen -t rsa -C "controller"
-
-# Install needed Windows modules
+# Install needed Windows modules as the deployer user
 sudo ansible-galaxy collection install ansible.windows
 
 # Let user know what they now need to do
