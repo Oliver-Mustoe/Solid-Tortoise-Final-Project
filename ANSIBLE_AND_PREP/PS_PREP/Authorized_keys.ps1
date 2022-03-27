@@ -3,10 +3,9 @@
 
 # Create authorized keys file (if it doesn't exist)
 if (Test-Path "C:\ProgramData\ssh\administrators_authorized_keys"){
-    continue
-}
+    break
 else{    
-    New-Item -Path 'C:\ProgramData\ssh\administrators_authorized_keys' -ItemType Directory
+    md C:\ProgramData\ssh\administrators_authorized_keys
 }
 
 # Appropriately ACL the keys in the folder

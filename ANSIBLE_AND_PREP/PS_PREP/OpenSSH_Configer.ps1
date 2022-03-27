@@ -4,7 +4,7 @@
 #Requires -RunAsAdministrator
 # Install OpenSSH , does not install if "ssh" folder exists
 if (Test-Path "C:\ProgramData\ssh") {
-    continue
+    break
 }
 else{
     Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
