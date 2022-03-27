@@ -12,7 +12,7 @@
 
   - name: Reboot (if necessary)
     win_reboot:
-      when: domain_state.reboot_required
+    when: domain_state.reboot_required
 
   - name: Create new domain in a new forest on ad01
     win_domain:
@@ -21,7 +21,7 @@
 
   - name: Reboot (if necessary)
     win_reboot:
-      when: domain_state.reboot_required
+    when: domain_state.reboot_required
 
 - name: Make Domain users
   tasks:
@@ -49,7 +49,7 @@
 
     - name: Reboot (if necessary)
       win_reboot:
-        when: domain_state.reboot_required
+      when: domain_state.reboot_required
 
 - name: Add DNS records
   hosts: all

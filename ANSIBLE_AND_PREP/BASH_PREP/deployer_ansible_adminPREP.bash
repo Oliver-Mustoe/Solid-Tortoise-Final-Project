@@ -7,9 +7,9 @@ wait
 
 # Installs Ansible
 sudo pip3 install ansible
-
+wait
 # Prompts user that system will now reboot
 read -p "Your system will now reboot..."
-
+wait
 # Reboot system
 sudo reboot now
