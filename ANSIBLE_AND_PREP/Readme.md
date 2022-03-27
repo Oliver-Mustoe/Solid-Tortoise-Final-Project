@@ -34,3 +34,6 @@ https://askubuntu.com/questions/294736/run-a-shell-script-as-another-user-that-h
 https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse
 
 https://stackoverflow.com/questions/39319140/error-1067-on-start-openssh-by-net-start-opensshd-in-windows-cmd
+
+https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement
+

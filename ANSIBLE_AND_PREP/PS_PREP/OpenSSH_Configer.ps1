@@ -1,9 +1,11 @@
-# Setup commands needed for Ansible on Windows
+# Setup commands needed for Ansible on Windows (DON'T RUN TWICE)
 # Execution policy needs to be set (Set-ExecutionPolicy unrestricted)
-# Version: 1.0 - NEEDS DOUBLE CHECK
+# Version: 1.1 - NEEDS DOUBLE CHECK
 #Requires -RunAsAdministrator
-# Install OpenSSH
+# Install OpenSSH , does not install if "ssh" folder exists
+if (Test-Path C:\ProgramData\ssh) {
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+}
 Start-Service sshd
 Set-Service -Name sshd -StartupType Automatic
 
