@@ -51,3 +51,9 @@ https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 
 https://docs.ansible.com/ansible/latest/network/getting_started/first_playbook.html
 
+https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_domain_membership_module.html
+
+https://fedingo.com/how-to-pause-shell-script/#:~:text=If%20you%20want%20to%20suspend,execution%20and%20wait%20for%20input.&text=In%20the%20above%20code%2C%20the,proceeds%20only%20after%20user%20input.
+
+https://www.ntweekly.com/2020/11/18/upgrade-ansible-to-version-2-10/
+

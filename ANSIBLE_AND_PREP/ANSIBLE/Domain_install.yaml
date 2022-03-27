@@ -11,7 +11,7 @@
       state: present
 
   - name: Reboot (if necessary)
-    win_reboot:
+    ansible.windows.win_reboot:
     when: domain_state.reboot_required
 
   - name: Create new domain in a new forest on ad01
@@ -20,7 +20,7 @@
       safe_mode_password: Shmear69420
 
   - name: Reboot (if necessary)
-    win_reboot:
+    ansible.windows.win_reboot:
     when: domain_state.reboot_required
 
 - name: Make Domain users
@@ -48,7 +48,7 @@
         state: domain
 
     - name: Reboot (if necessary)
-      win_reboot:
+      ansible.windows.win_reboot:
       when: domain_state.reboot_required
 
 - name: Add DNS records
