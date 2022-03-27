@@ -27,6 +27,7 @@
     when: domain_state.reboot_required
 
 - name: Make Domain users
+  hosts: ad01
   tasks:
   - name: Create domain admin user "Kurma"
     win_domain_user:
@@ -40,23 +41,24 @@
       state: present
 
 - name: Add computers to domain
-  hosts: mgmt01
   tasks:
-    - name: Add mgmt01 to Domain
-      win_domain_membership:
-        dns_domain_name: tortoise.local
-        hostname: mgmt01
-        domain_admin_user: Kurma
-        domain_admin_password: enterpass
-        state: domain
-      register: host_restart
+    - hosts: mgmt01
+      tasks:
+      - name: Add mgmt01 to Domain
+        win_domain_membership:
+          dns_domain_name: tortoise.local
+          hostname: mgmt01
+          domain_admin_user: Kurma
+          domain_admin_password: enterpass
+          state: domain
+        register: host_restart
 
-    - name: Reboot
-      ansible.windows.win_reboot:
-      when: domain_state.reboot_required
+      - name: Reboot
+        ansible.windows.win_reboot:
+        when: domain_state.reboot_required
 
 - name: Add DNS records
-  hosts: all
+  hosts: ad01
   vars:
     ansible_user: Kurma
     ansible_password: HailTheTurtle345
