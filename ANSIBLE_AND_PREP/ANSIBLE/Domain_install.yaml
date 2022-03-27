@@ -9,11 +9,22 @@
       name: AD-Domain-Services
       include_management_tools: yes
       state: present
+    register: domain_state
+  
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: domain_state.reboot_required
 
   - name: Create new domain in a new forest on ad01
     win_domain:
+      install_dns: yes
       dns_domain_name: tortoise.local
       safe_mode_password: Shmear69420
+    register: domain_state
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: domain_state.reboot_required
 
 - name: Make Domain users
   tasks:
@@ -38,6 +49,11 @@
         domain_admin_user: Kurma
         domain_admin_password: enterpass
         state: domain
+      register: host_restart
+
+    - name: Reboot
+      ansible.windows.win_reboot:
+      when: domain_state.reboot_required
 
 - name: Add DNS records
   hosts: all
