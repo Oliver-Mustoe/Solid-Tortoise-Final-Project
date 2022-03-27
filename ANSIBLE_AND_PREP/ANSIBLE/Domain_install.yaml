@@ -2,9 +2,9 @@
 # Maybe add ability to automatically add other machines? (Like trigger another playbook with variables?)
 # Version: 0.2
 - name: Install Active Directory
+  hosts: ad01
   tasks:
   - name: Install Active Directory Domain Services on ad01
-    hosts: ad01
     win_feature:
       name: AD-Domain-Services
       include_management_tools: yes
@@ -15,7 +15,6 @@
       when: domain_state.reboot_required
 
   - name: Create new domain in a new forest on ad01
-    hosts: ad01
     win_domain:
       dns_domain_name: tortoise.local
       safe_mode_password: Shmear69420
@@ -27,8 +26,8 @@
 - name: Make Domain users
   tasks:
   - name: Create domain admin user "Kurma"
-    hosts: ad01
     win_domain_user:
+      domain_server: ad01.tortoise.local
       name: Kurma
       password: HailTheTurtle345
       password_never_expires: yes
@@ -38,9 +37,9 @@
       state: present
 
 - name: Add computers to domain
+  hosts: mgmt01
   tasks:
     - name: Add mgmt01 to Domain
-      hosts: mgmt01
       win_domain_membership:
         dns_domain_name: tortoise.local
         hostname: mgmt01

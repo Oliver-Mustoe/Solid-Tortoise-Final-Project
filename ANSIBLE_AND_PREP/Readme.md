@@ -17,8 +17,6 @@ https://galaxy.ansible.com/ansible/windows
 
 https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_domain_membership_module.html
 
-https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_domain_membership_module.html
-
 https://docs.ansible.com/ansible/2.9/modules/win_feature_module.html#win-feature-module
 
 https://docs.ansible.com/ansible/2.9/modules/win_domain_user_module.html#win-domain-user-module
@@ -50,4 +48,6 @@ https://docs.ansible.com/ansible/latest/collections/community/windows/win_dns_zo
 https://docs.ansible.com/ansible/latest/collections/community/windows/win_dns_record_module.html
 
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+
+https://docs.ansible.com/ansible/latest/network/getting_started/first_playbook.html
 
