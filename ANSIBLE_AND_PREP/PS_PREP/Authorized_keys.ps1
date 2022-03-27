@@ -1,4 +1,4 @@
-# Creates authorized folder (if doesn't exist) & authorizes any keys in the file for administrators
+# Creates authorized folder (if doesn't exist) & authorizes any keys in the file for administrators, run before OpenSSH_Configer (VALIDATE BEFORE 1.0)
 # Version 0.2
 
 # Create authorized keys file (if it doesn't exist)

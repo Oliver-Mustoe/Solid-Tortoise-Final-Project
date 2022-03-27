@@ -8,4 +8,4 @@ This happens due to a key issue when re-running the install command from what I 
 ---
 Steps to add keys to Windows hosts:
 1. Use PS_PREP (use the commands)
-2. Use Authorized_keys to authorize any keys from mgmt02
+2. If C:\ProgramData\ssh is empty, rerun OpenSSH script
