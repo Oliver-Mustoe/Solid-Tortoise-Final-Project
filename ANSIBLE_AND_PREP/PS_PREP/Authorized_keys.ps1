@@ -1,13 +1,11 @@
-# Creates authorized folder (if doesn't exist) & authorizes any keys in the file for administrators, run before OpenSSH_Configer (VALIDATE BEFORE 1.0)
-# Version 0.2
+# Authorizes key file, run after key has been ssh'd into 
+# Version 0.3
 
-# Create authorized keys file (if it doesn't exist)
+# See if key file exists
 if (Test-Path "C:\ProgramData\ssh\administrators_authorized_keys"){
-    break
+    # Appropriately ACL the keys in the folder
+    icacls.exe "C:\ProgramData\ssh\administrators_authorized_keys" /inheritance:r /grant "Administrators:F" /grant "SYSTEM:F"
 }
 else{    
-    md C:\ProgramData\ssh\administrators_authorized_keys
+    Write-Output "NO KEY FILE"
 }
-
-# Appropriately ACL the keys in the folder
-icacls.exe "C:\ProgramData\ssh\administrators_authorized_keys" /inheritance:r /grant "Administrators:F" /grant "SYSTEM:F"
