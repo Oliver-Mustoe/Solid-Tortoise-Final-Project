@@ -1,9 +1,12 @@
 # Creates authorized folder (if doesn't exist) & authorizes any keys in the file for administrators
-# Version 0.1
+# Version 0.2
 
 # Create authorized keys file (if it doesn't exist)
-if (Test-Path C:\ProgramData\ssh\administrators_authorized_keys){
-    mkdir C:\ProgramData\ssh\administrators_authorized_keys
+if (Test-Path "C:\ProgramData\ssh\administrators_authorized_keys"){
+    continue
+}
+else{    
+    New-Item -Path 'C:\ProgramData\ssh\administrators_authorized_keys' -ItemType Directory
 }
 
 # Appropriately ACL the keys in the folder

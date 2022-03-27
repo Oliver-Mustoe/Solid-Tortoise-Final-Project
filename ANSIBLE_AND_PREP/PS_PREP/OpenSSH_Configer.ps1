@@ -3,9 +3,14 @@
 # Version: 1.1 - NEEDS DOUBLE CHECK
 #Requires -RunAsAdministrator
 # Install OpenSSH , does not install if "ssh" folder exists
-if (Test-Path C:\ProgramData\ssh) {
-Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+if (Test-Path "C:\ProgramData\ssh") {
+    continue
 }
+else{
+    Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+}
+
+# Start now and on startup
 Start-Service sshd
 Set-Service -Name sshd -StartupType Automatic
 
