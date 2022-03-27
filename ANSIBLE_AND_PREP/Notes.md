@@ -7,7 +7,8 @@ If sshd doesnt want to start, remove the folder "C:\ProgramData\ssh" and the ssh
 This happens due to a key issue when re-running the install command from what I can tell.
 ---
 Steps to add keys to Windows hosts:
-1. Use PS_PREP (use the commands if cant run the files, openssh then keys)
-2. If C:\ProgramData\ssh is empty, rerun OpenSSH script then keys
-3. Copy keys from mgmt02 to the host authorized keys (command from PS_PREP)
-4. Append host keys to authorized keys
+1. Use OpenSSH_Configer.ps1
+2. Copy keys from mgmt02 to the windows host authorized keys (command from OpenSSH_Configer)
+3. Append windows host keys to authorized keys on mgmt02
+4. Run Authorized_keys.ps1
+5. Use ansible win_ping to make sure everything is running as it should be

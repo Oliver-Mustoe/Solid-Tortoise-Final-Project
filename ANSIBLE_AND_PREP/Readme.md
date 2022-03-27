@@ -42,3 +42,10 @@ https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/
 https://shellgeek.com/powershell-create-directory-if-not-exists/#:~:text=PowerShell%20Create%20Directory%20If%20Not%20Exists%20using%20Test%2DPath,-PowerShell%20Test%2DPath&text=If%20a%20directory%20exists%20then,not%20exists%20using%20Test%2DPath.
 
 https://phoenixnap.com/kb/generate-ssh-key-windows-10
+
+https://superuser.com/questions/1319402/passwordless-ssh-from-linux-to-windows
+
+https://docs.ansible.com/ansible/latest/collections/community/windows/win_dns_zone_module.html
+
+https://docs.ansible.com/ansible/latest/collections/community/windows/win_dns_record_module.html
+
