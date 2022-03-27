@@ -20,7 +20,7 @@ sudo su - deployer -c 'ssh-keygen -t rsa -C "controller"'
 
 # Install needed Windows modules
 sudo ansible-galaxy collection install ansible.windows
-ansible-galaxy collection install community.windows
+sudo ansible-galaxy collection install community.windows
 
 # Let user know what they now need to do
 echo "[Will need to know run the command 'ssh-copy-id -i ~/.ssh/mykey deployer@ansible1-oliver' to copy your SSH to Linux users]"
