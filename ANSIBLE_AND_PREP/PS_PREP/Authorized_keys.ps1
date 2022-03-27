@@ -4,6 +4,7 @@
 # Create authorized keys file (if it doesn't exist)
 if (Test-Path "C:\ProgramData\ssh\administrators_authorized_keys"){
     break
+}
 else{    
     md C:\ProgramData\ssh\administrators_authorized_keys
 }
