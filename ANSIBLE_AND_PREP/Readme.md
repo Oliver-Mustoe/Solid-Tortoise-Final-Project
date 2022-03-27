@@ -49,3 +49,5 @@ https://docs.ansible.com/ansible/latest/collections/community/windows/win_dns_zo
 
 https://docs.ansible.com/ansible/latest/collections/community/windows/win_dns_record_module.html
 
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+

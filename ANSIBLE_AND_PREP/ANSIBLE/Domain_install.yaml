@@ -9,6 +9,10 @@ tasks:
     include_management_tools: yes
     state: present
 
+- name: Reboot
+  win_reboot:
+    when: domain_state.reboot_required
+
 - name: Create new domain in a new forest on ad01
   hosts: ad01
   win_domain:
@@ -44,44 +48,5 @@ tasks:
   win_reboot:
     when: domain_state.reboot_required
 
-- name: Create primary dns zone
-  community.windows.win_dns_zone:
-    name: tortoise.local
-    replication: domain
-    type: primary
-    state: present
-
-- name: Create reverse-lookup zone
-  community.windows.win_dns_zone:
-    name: 172.16.1-addr.arpa
-    replication: domain
-    type: primary
-    state: present
-
-- name: Create mgmt01 A record
-  community.windows.win_dns_record:
-    name: "mgmt01"
-    type: "A"
-    value: "172.16.1.14"
-    zone: "tortoise.local"
-
-- name: Create ad01 A record
-  community.windows.win_dns_record:
-    name: "ad01"
-    type: "A"
-    value: "172.16.1.12"
-    zone: "tortoise.local"
-
-- name: Create mgmt01 PTR record
-  community.windows.win_dns_record:
-    name: "172.16.1.14"
-    type: "PTR"
-    value: "mgmt01"
-    zone: "172.16.1-addr.arpa"
-
-- name: Create ad01 PTR record
-  community.windows.win_dns_record:
-    name: "172.16.1.12"
-    type: "PTR"
-    value: "ad01"
-    zone: "172.16.1-addr.arpa"
+- name: Setup DNS records
+  import_playbook: DNS_Additions.yml
