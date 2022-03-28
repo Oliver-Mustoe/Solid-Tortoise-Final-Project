@@ -46,7 +46,7 @@
   - name: Make ad01 into a domain controller
     ansible.windows.win_domain_controller:
       dns_domain_name: tortoise.local
-      domain_admin_user: Kurma
+      domain_admin_user: TORTOISE\Kurma
       domain_admin_password: HailTheTurtle345
       safe_mode_password: password123!
       state: domain_controller
@@ -62,7 +62,7 @@
     win_domain_membership:
       dns_domain_name: tortoise.local
       hostname: mgmt01
-      domain_admin_user: Kurma
+      domain_admin_user: TORTOISE\Kurma
       domain_admin_password: HailTheTurtle345
       state: domain
     register: host_restart
