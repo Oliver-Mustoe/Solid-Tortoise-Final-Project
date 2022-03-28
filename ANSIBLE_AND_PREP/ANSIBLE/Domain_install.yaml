@@ -1,7 +1,7 @@
 # Setup for domain, adds mgmt01 to domain
 # Maybe add ability to automatically add other machines? (Like trigger another playbook with variables?)
-# Version: 0.5
-- name: Install Active Directory
+# Version: 0.7
+- name: Install Active Directory Domain Services
   hosts: ad01
   tasks:
   - name: Install Active Directory Domain Services on ad01
@@ -41,6 +41,21 @@
       state: present
 
 # Add computers to domain
+- hosts: ad01
+  tasks:
+  - name: Make ad01 into a domain controller
+    ansible.windows.win_domain_controller:
+      dns_domain_name: tortoise.local
+      domain_admin_user: Kurma
+      domain_admin_password: HailTheTurtle345
+      safe_mode_password: password123!
+      state: domain_controller
+    register: dc_promotion
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: dc_promotion.reboot_required
+
 - hosts: mgmt01
   tasks:
   - name: Add mgmt01 to Domain

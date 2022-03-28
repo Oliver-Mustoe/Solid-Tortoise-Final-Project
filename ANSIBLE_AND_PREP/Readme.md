@@ -57,3 +57,4 @@ https://fedingo.com/how-to-pause-shell-script/#:~:text=If%20you%20want%20to%20su
 
 https://www.ntweekly.com/2020/11/18/upgrade-ansible-to-version-2-10/
 
+https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_domain_controller_module.html
