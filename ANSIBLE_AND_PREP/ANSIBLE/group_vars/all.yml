@@ -5,7 +5,7 @@ mgmt01_local_password:
 ad01_local_user: 
 ad01_local_password: 
 
-domain_admin_1_user: TORTOISE\
-domain_admin_1_password: TORTOISE\
+domain_admin_1_user: 
+domain_admin_1_password: 
 
 safemode_password: 
