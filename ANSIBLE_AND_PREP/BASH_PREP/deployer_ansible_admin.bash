@@ -1,3 +1,4 @@
+#!/bin/bash
 # Script to setup Linux (Ubuntu) host for Ansible SSH deployment
 # Version: 1.2 - NEEDS DOUBLE CHECK
 # Add deployer user

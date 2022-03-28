@@ -69,7 +69,7 @@
 
   - name: Reboot
     ansible.windows.win_reboot:
-    when: domain_state.reboot_required
+    when: host_restart.reboot_required
 
 - name: Add DNS records
   hosts: ad01

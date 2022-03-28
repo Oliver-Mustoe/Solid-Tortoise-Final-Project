@@ -1,3 +1,4 @@
+#!/bin/bash
 # Script to setup Linux (CentOS 7) hosts for Ansible SSH
 # Version: 0.5
 # Add deployer user
