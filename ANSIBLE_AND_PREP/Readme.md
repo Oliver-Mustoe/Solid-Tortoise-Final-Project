@@ -64,3 +64,5 @@ https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_dns_clie
 https://docs.ansible.com/ansible/2.8/user_guide/playbooks_vault.html
 
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+
+https://geekdudes.wordpress.com/2018/11/20/installing-second-domain-controller-using-ansible/

@@ -1,4 +1,5 @@
-# Input variables for assigned sections here, "TORTOISE\" is incomplete and needs a username set afterwards
+# Input variables for assigned sections here, recommended to vault this file after input using the command "ansible-vault encrypt $PATH/all.yml"
+# IF VAULTED USE THE COMMAND "ansible-vault edit" TO EDIT
 mgmt01_local_user: 
 mgmt01_local_password: 
 
