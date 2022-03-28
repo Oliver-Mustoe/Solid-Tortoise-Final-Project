@@ -62,3 +62,5 @@ https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_domain_c
 https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_dns_client_module.html
 
 https://docs.ansible.com/ansible/2.8/user_guide/playbooks_vault.html
+
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
