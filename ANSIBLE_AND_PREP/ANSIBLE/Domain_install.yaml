@@ -1,4 +1,4 @@
-# Some information will need to be placed in vars.yaml
+# Some information will need to be placed in all.yml
 # Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>"
 
 # Setup for domain, adds mgmt01 to domain

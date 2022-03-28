@@ -10,6 +10,6 @@ ansible_password= "{{ mgmt01_local_password }}"
 ansible_shell_type=powershell
 
 [ad01:vars]
-ansible_user= "{{ mgmt01_local_user }}
-ansible_password= "{{ mgmt01_local_password }}"
+ansible_user= "{{ ad01_local_user }}
+ansible_password= "{{ ad01_local_password }}"
 ansible_shell_type=powershell
