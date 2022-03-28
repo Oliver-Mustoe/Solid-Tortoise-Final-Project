@@ -5,11 +5,11 @@
 172.16.1.14
 
 [mgmt01:vars]
-ansible_user=<INSERT USER HERE PLACEHOLDER>
-ansible_password=<INSERT PASSWORD HERE PLACEHOLDER>
+ansible_user=<PLACEHOLDER, INSERT LOCAL USER HERE>
+ansible_password=<PLACEHOLDER, INSERT LOCAL PASSWORD HERE>
 ansible_shell_type=powershell
 
 [ad01:vars]
-ansible_user=<INSERT USER HERE PLACEHOLDER>
-ansible_password=<INSERT PASSWORD HERE PLACEHOLDER>
+ansible_user=<PLACEHOLDER, INSERT LOCAL USER HERE>
+ansible_password=<PLACEHOLDER, INSERT LOCAL PASSWORD HERE>
 ansible_shell_type=powershell
