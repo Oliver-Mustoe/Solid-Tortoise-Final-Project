@@ -60,3 +60,5 @@ https://www.ntweekly.com/2020/11/18/upgrade-ansible-to-version-2-10/
 https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_domain_controller_module.html
 
 https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_dns_client_module.html
+
+https://docs.ansible.com/ansible/2.8/user_guide/playbooks_vault.html

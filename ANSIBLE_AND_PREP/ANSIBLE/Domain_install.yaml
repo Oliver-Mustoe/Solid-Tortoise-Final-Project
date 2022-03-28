@@ -1,6 +1,8 @@
+# Some information will need to be placed in vars.yaml
+# Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>"
+
 # Setup for domain, adds mgmt01 to domain
-# Maybe add ability to automatically add other machines? (Like trigger another playbook with variables?)
-# Version: 1.0 - NEEDS TO BE DOUBLE CHECKED
+# Version: 1.1 - NEEDS TO BE DOUBLE CHECKED
 
 # Install Active directory
 - name: Install Active Directory Domain Services
@@ -21,7 +23,7 @@
     win_domain:
       install_dns: yes
       dns_domain_name: tortoise.local
-      safe_mode_password: Shmear69420
+      safe_mode_password: {{ safemode_password }}
     register: domain_state
 
   - name: Reboot
@@ -35,8 +37,8 @@
   - name: Create domain admin user "Kurma"
     win_domain_user:
       domain_server: ad01.tortoise.local
-      name: Kurma
-      password: HailTheTurtle345
+      name: {{ domain_admin_1_user }}
+      password: {{ domain_admin_1_password }}
       password_never_expires: yes
       group_action: add
       groups:
@@ -49,9 +51,9 @@
   - name: Make ad01 into a domain controller
     ansible.windows.win_domain_controller:
       dns_domain_name: tortoise.local
-      domain_admin_user: TORTOISE\Kurma
-      domain_admin_password: HailTheTurtle345
-      safe_mode_password: password123!
+      domain_admin_user: TORTOISE\{{ domain_admin_1_user }}
+      domain_admin_password: {{ domain_admin_1_password }}
+      safe_mode_password: {{ safemode_password }}
       state: domain_controller
     register: dc_promotion
 
@@ -72,8 +74,8 @@
     win_domain_membership:
       dns_domain_name: tortoise.local
       hostname: mgmt01
-      domain_admin_user: TORTOISE\Kurma
-      domain_admin_password: HailTheTurtle345
+      domain_admin_user: TORTOISE\{{ domain_admin_1_user }}
+      domain_admin_password: {{ domain_admin_1_password }}
       state: domain
     register: host_restart
 
@@ -81,12 +83,12 @@
     ansible.windows.win_reboot:
     when: host_restart.reboot_required
 
-# Add DNS records
+# Add Initial DNS records
 - name: Add DNS records
   hosts: ad01
   vars:
-    ansible_user: Kurma
-    ansible_password: HailTheTurtle345
+    ansible_user: {{ domain_admin_1_user }}
+    ansible_password: {{ domain_admin_1_password }}
     ansible_shell_type: powershell
   tasks:
   - name: Create primary dns zone
