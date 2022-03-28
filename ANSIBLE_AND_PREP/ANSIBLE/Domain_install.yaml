@@ -48,7 +48,7 @@
       dns_domain_name: tortoise.local
       hostname: mgmt01
       domain_admin_user: Kurma
-      domain_admin_password: enterpass
+      domain_admin_password: HailTheTurtle345
       state: domain
     register: host_restart
 
