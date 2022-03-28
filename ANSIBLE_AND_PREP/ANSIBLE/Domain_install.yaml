@@ -23,7 +23,7 @@
     win_domain:
       install_dns: yes
       dns_domain_name: tortoise.local
-      safe_mode_password: {{ safemode_password }}
+      safe_mode_password: "{{ safemode_password }}"
     register: domain_state
 
   - name: Reboot
@@ -37,8 +37,8 @@
   - name: Create domain admin user "Kurma"
     win_domain_user:
       domain_server: ad01.tortoise.local
-      name: {{ domain_admin_1_user }}
-      password: {{ domain_admin_1_password }}
+      name: "{{ domain_admin_1_user }}"
+      password: "{{ domain_admin_1_password }}"
       password_never_expires: yes
       group_action: add
       groups:
@@ -51,9 +51,9 @@
   - name: Make ad01 into a domain controller
     ansible.windows.win_domain_controller:
       dns_domain_name: tortoise.local
-      domain_admin_user: TORTOISE\{{ domain_admin_1_user }}
-      domain_admin_password: {{ domain_admin_1_password }}
-      safe_mode_password: {{ safemode_password }}
+      domain_admin_user: TORTOISE\"{{ domain_admin_1_user }}"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      safe_mode_password: "{{ safemode_password }}"
       state: domain_controller
     register: dc_promotion
 
@@ -74,8 +74,8 @@
     win_domain_membership:
       dns_domain_name: tortoise.local
       hostname: mgmt01
-      domain_admin_user: TORTOISE\{{ domain_admin_1_user }}
-      domain_admin_password: {{ domain_admin_1_password }}
+      domain_admin_user: TORTOISE\"{{ domain_admin_1_user }}"
+      domain_admin_password: "{{ domain_admin_1_password }}"
       state: domain
     register: host_restart
 
@@ -87,8 +87,8 @@
 - name: Add DNS records
   hosts: ad01
   vars:
-    ansible_user: {{ domain_admin_1_user }}
-    ansible_password: {{ domain_admin_1_password }}
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_password: "{{ domain_admin_1_password }}"
     ansible_shell_type: powershell
   tasks:
   - name: Create primary dns zone
