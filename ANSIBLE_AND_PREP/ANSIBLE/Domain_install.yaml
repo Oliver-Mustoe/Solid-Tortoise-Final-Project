@@ -61,9 +61,9 @@
   tasks:
   - name: Change mgmt01 dns to point to ad01
     ansible.windows.win_dns_client:
-    adapter_names: 'Ethernet*'
-    dns_servers:
-    - 172.16.1.12
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
 
   - name: Add mgmt01 to Domain
     win_domain_membership:
