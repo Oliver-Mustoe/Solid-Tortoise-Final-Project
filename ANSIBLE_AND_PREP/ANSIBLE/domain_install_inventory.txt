@@ -1,4 +1,4 @@
-[ad01]
+[dc01]
 172.16.1.12
 
 [mgmt01]
@@ -9,7 +9,7 @@ ansible_user= "{{ mgmt01_local_user }}"
 ansible_password= "{{ mgmt01_local_password }}"
 ansible_shell_type=powershell
 
-[ad01:vars]
-ansible_user= "{{ ad01_local_user }}"
-ansible_password= "{{ ad01_local_password }}"
+[dc01:vars]
+ansible_user= "{{ dc01_local_user }}"
+ansible_password= "{{ dc01_local_password }}"
 ansible_shell_type=powershell

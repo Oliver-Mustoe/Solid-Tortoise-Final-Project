@@ -1,6 +1,6 @@
 # Adds DNS records, safe to rerun
 # Version 0.2.2
-- hosts: ad01
+- hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     ansible_password: "{{ domain_admin_1_password }}"
@@ -38,9 +38,9 @@
       value: "172.16.1.14"
       zone: "tortoise.local"
 
-  - name: Create ad01 A record
+  - name: Create dc01 A record
     community.windows.win_dns_record:
-      name: "ad01"
+      name: "dc01"
       type: "A"
       value: "172.16.1.12"
       zone: "tortoise.local"
@@ -118,11 +118,11 @@
       value: "mgmt01"
       zone: "172.16.1-addr.arpa"
 
-  - name: Create ad01 PTR record
+  - name: Create dc01 PTR record
     community.windows.win_dns_record:
       name: "172.16.1.12"
       type: "PTR"
-      value: "ad01"
+      value: "dc01"
       zone: "172.16.1-addr.arpa"
       
   - name: Create ad02 PTR record

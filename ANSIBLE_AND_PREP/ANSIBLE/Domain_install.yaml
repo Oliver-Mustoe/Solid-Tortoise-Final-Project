@@ -1,14 +1,14 @@
 # Some information will need to be placed in all.yml
-# Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>"
+# Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
 
 # Setup for domain, adds mgmt01 to domain
 # Version: 1.1 - NEEDS TO BE DOUBLE CHECKED
 
 # Install Active directory
 - name: Install Active Directory Domain Services
-  hosts: ad01
+  hosts: dc01
   tasks:
-  - name: Install Active Directory Domain Services on ad01
+  - name: Install Active Directory Domain Services on dc01
     win_feature:
       name: AD-Domain-Services
       include_management_tools: yes
@@ -19,7 +19,7 @@
     ansible.windows.win_reboot:
     when: domain_state.reboot_required
 
-  - name: Create new domain in a new forest on ad01
+  - name: Create new domain in a new forest on dc01
     win_domain:
       install_dns: yes
       dns_domain_name: tortoise.local
@@ -32,11 +32,11 @@
 
 # Make Users
 - name: Make Domain users
-  hosts: ad01
+  hosts: dc01
   tasks:
   - name: Create domain admin user
     win_domain_user:
-      domain_server: ad01.tortoise.local
+      domain_server: dc01.tortoise.local
       name: "{{ domain_admin_1_user }}"
       password: "{{ domain_admin_1_password }}"
       password_never_expires: yes
@@ -46,9 +46,9 @@
       state: present
 
 # Add computers to domain
-- hosts: ad01
+- hosts: dc01
   tasks:
-  - name: Make ad01 into a domain controller
+  - name: Make dc01 into a domain controller
     ansible.windows.win_domain_controller:
       dns_domain_name: tortoise.local
       domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
@@ -64,7 +64,7 @@
 # Everything under "mgmt01" is an example for other hosts
 - hosts: mgmt01
   tasks:
-  - name: Change mgmt01 dns to point to ad01
+  - name: Change mgmt01 dns to point to dc01
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
@@ -85,7 +85,7 @@
 
 # Add Initial DNS records
 - name: Add DNS records
-  hosts: ad01
+  hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     ansible_password: "{{ domain_admin_1_password }}"
@@ -112,9 +112,9 @@
       value: "172.16.1.14"
       zone: "tortoise.local"
 
-  - name: Create ad01 A record
+  - name: Create dc01 A record
     community.windows.win_dns_record:
-      name: "ad01"
+      name: "dc01"
       type: "A"
       value: "172.16.1.12"
       zone: "tortoise.local"
@@ -126,9 +126,9 @@
       value: "mgmt01"
       zone: "172.16.1-addr.arpa"
 
-  - name: Create ad01 PTR record
+  - name: Create dc01 PTR record
     community.windows.win_dns_record:
       name: "172.16.1.12"
       type: "PTR"
-      value: "ad01"
+      value: "dc01"
       zone: "172.16.1-addr.arpa"

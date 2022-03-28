@@ -1,0 +1,80 @@
+# Script to add all needed computers onto tortoise.local
+# Version 0.1
+- name: Add dc02 to the domain and set it up as a domain controller
+  hosts: dc02
+  tasks:
+  - name: Change dc02 dns to point to dc01
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
+
+  - name: Add dc02 to Domain
+    win_domain_membership:
+      dns_domain_name: tortoise.local
+      hostname: dc02
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required
+
+  - name: Make dc02 into a domain controller
+    ansible.windows.win_domain_controller:
+      dns_domain_name: tortoise.local
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      safe_mode_password: "{{ safemode_password }}"
+      state: domain_controller
+    register: dc_promotion
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: dc_promotion.reboot_required
+
+- name: Ass wks01 to the domain
+- hosts: wks01
+  tasks:
+  - name: Change wks01 dns to point to dc01
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
+
+  - name: Add wks01 to Domain
+    win_domain_membership:
+      dns_domain_name: tortoise.local
+      hostname: wks01
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required
+
+- name: Add wks02
+  hosts: wks02
+  tasks:
+  - name: Change mgmt01 dns to point to dc01
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
+
+  - name: Add wks02 to Domain
+    win_domain_membership:
+      dns_domain_name: tortoise.local
+      hostname: mgmt01
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required
