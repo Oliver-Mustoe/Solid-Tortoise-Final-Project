@@ -21,6 +21,16 @@ task:
     type: primary
     state: present
 
+# A type records below
+######################
+
+- name: Create fw01 A record
+  community.windows.win_dns_record:
+    name: "fw01"
+    type: "A"
+    value: "172.16.1.2"
+    zone: "tortoise.local"
+
 - name: Create mgmt01 A record
   community.windows.win_dns_record:
     name: "mgmt01"
@@ -92,6 +102,15 @@ task:
     zone: "tortoise.local"
     
 # PRT Records Below
+###################
+
+- name: Create fw01 PTR record
+  community.windows.win_dns_record:
+    name: "172.16.1.2"
+    type: "PTR"
+    value: "fw01"
+    zone: "172.16.1-addr.arpa"
+    
 - name: Create mgmt01 PTR record
   community.windows.win_dns_record:
     name: "172.16.1.14"
