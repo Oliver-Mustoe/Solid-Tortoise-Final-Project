@@ -1,6 +1,8 @@
 # Setup for domain, adds mgmt01 to domain
 # Maybe add ability to automatically add other machines? (Like trigger another playbook with variables?)
-# Version: 0.7
+# Version: 1.0 - NEEDS TO BE DOUBLE CHECKED
+
+# Install Active directory
 - name: Install Active Directory Domain Services
   hosts: ad01
   tasks:
@@ -26,6 +28,7 @@
     ansible.windows.win_reboot:
     when: domain_state.reboot_required
 
+# Make Users
 - name: Make Domain users
   hosts: ad01
   tasks:
@@ -78,6 +81,7 @@
     ansible.windows.win_reboot:
     when: host_restart.reboot_required
 
+# Add DNS records
 - name: Add DNS records
   hosts: ad01
   vars:
