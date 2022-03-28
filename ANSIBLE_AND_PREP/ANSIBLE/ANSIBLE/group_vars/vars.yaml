@@ -1,0 +1,11 @@
+# Input variables for assigned sections here
+mgmt01_local_user: 
+mgmt01_local_password: 
+
+ad01_local_user: 
+ad01_local-password: 
+
+domain_admin_1_user: 
+domain_admin_1_password: 
+
+safemode_password: 

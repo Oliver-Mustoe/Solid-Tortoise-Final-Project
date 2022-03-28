@@ -1,0 +1,15 @@
+[ad01]
+172.16.1.12
+
+[mgmt01]
+172.16.1.14
+
+[mgmt01:vars]
+ansible_user= {{ mgmt01_local_user }}
+ansible_password= {{ mgmt01_local_password }}
+ansible_shell_type=powershell
+
+[ad01:vars]
+ansible_user= {{ mgmt01_local_user }}
+ansible_password= {{ mgmt01_local_password }}
+ansible_shell_type=powershell
