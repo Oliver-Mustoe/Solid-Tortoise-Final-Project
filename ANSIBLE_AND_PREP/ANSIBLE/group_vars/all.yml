@@ -1,11 +1,11 @@
-# Input variables for assigned sections here
+# Input variables for assigned sections here, "TORTOISE\" is incomplete and needs a username set afterwards
 mgmt01_local_user: 
 mgmt01_local_password: 
 
 ad01_local_user: 
 ad01_local_password: 
 
-domain_admin_1_user: 
-domain_admin_1_password: 
+domain_admin_1_user: TORTOISE\
+domain_admin_1_password: TORTOISE\
 
 safemode_password: 
