@@ -1,0 +1,182 @@
+# Adds DNS records, safe to rerun
+# Version 0.2.2
+- hosts: dc01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_password: "{{ domain_admin_1_password }}"
+    ansible_shell_type: powershell
+  tasks:
+  # Make sure that DNS zones exist
+  - name: Create primary dns zone
+    community.windows.win_dns_zone:
+      name: tortoise.local
+      replication: domain
+      type: primary
+      state: present
+
+  - name: Create reverse-lookup zone
+    community.windows.win_dns_zone:
+      name: 172.16.1-addr.arpa
+      replication: domain
+      type: primary
+      state: present
+
+  # A type records below
+  ######################
+
+  - name: Create fw01 A record
+    community.windows.win_dns_record:
+      name: "fw01"
+      type: "A"
+      value: "172.16.1.2"
+      zone: "tortoise.local"
+
+  - name: Create mgmt01 A record
+    community.windows.win_dns_record:
+      name: "mgmt01"
+      type: "A"
+      value: "172.16.1.14"
+      zone: "tortoise.local"
+
+  - name: Create dc01 A record
+    community.windows.win_dns_record:
+      name: "dc01"
+      type: "A"
+      value: "172.16.1.12"
+      zone: "tortoise.local"
+      
+  - name: Create ad02 A record
+    community.windows.win_dns_record:
+      name: "ad02"
+      type: "A"
+      value: "172.16.1.13"
+      zone: "tortoise.local"
+      
+  - name: Create mgmt02 A record
+    community.windows.win_dns_record:
+      name: "mgmt02"
+      type: "A"
+      value: "172.16.1.16"
+      zone: "tortoise.local"
+      
+  - name: Create dhcp01 A record
+    community.windows.win_dns_record:
+      name: "dhcp01"
+      type: "A"
+      value: "172.16.1.10"
+      zone: "tortoise.local"
+      
+  - name: Create dhcp02 A record
+    community.windows.win_dns_record:
+      name: "dhcp02"
+      type: "A"
+      value: "172.16.1.11"
+      zone: "tortoise.local"
+
+  - name: Create dfs01 A record
+    community.windows.win_dns_record:
+      name: "dfs01"
+      type: "A"
+      value: "172.16.1.20"
+      zone: "tortoise.local"
+      
+  - name: Create dfs02 A record
+    community.windows.win_dns_record:
+      name: "dfs02"
+      type: "A"
+      value: "172.16.1.21"
+      zone: "tortoise.local"
+    
+  - name: Create util A record
+    community.windows.win_dns_record:
+      name: "util"
+      type: "A"
+      value: "172.16.1.15"
+      zone: "tortoise.local"
+      
+  - name: Create docker A record
+    community.windows.win_dns_record:
+      name: "docker"
+      type: "A"
+      value: "172.16.1.5"
+      zone: "tortoise.local"
+      
+  # PRT Records Below
+  ###################
+
+  - name: Create fw01 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.2"
+      type: "PTR"
+      value: "fw01"
+      zone: "172.16.1-addr.arpa"
+      
+  - name: Create mgmt01 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.14"
+      type: "PTR"
+      value: "mgmt01"
+      zone: "172.16.1-addr.arpa"
+
+  - name: Create dc01 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.12"
+      type: "PTR"
+      value: "dc01"
+      zone: "172.16.1-addr.arpa"
+      
+  - name: Create ad02 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.13"
+      type: "PTR"
+      value: "ad02"
+      zone: "172.16.1-addr.arpa"
+
+  - name: Create mgmt02 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.16"
+      type: "PTR"
+      value: "mgmt02"
+      zone: "172.16.1-addr.arpa"
+      
+  - name: Create dhcp01 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.10"
+      type: "PTR"
+      value: "dhcp01"
+      zone: "172.16.1-addr.arpa"
+
+  - name: Create dhcp02 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.11"
+      type: "PTR"
+      value: "dhcp02"
+      zone: "172.16.1-addr.arpa"
+      
+  - name: Create dfs01 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.20"
+      type: "PTR"
+      value: "dfs01"
+      zone: "172.16.1-addr.arpa"
+
+  - name: Create dfs02 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.21"
+      type: "PTR"
+      value: "dfs02"
+      zone: "172.16.1-addr.arpa"
+      
+  - name: Create docker PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.5"
+      type: "PTR"
+      value: "docker"
+      zone: "172.16.1-addr.arpa"
+
+  - name: Create util PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.15"
+      type: "PTR"
+      value: "util"
+      zone: "172.16.1-addr.arpa"
