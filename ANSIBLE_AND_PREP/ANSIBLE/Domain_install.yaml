@@ -70,11 +70,12 @@
     ansible_password: "{{ mgmt01_local_password }}"
     ansible_shell_type: powershell
   tasks:
-  - name: Change mgmt01 dns to point to dc01
+  - name: Change mgmt01 dns to point to domain controllers
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - domain_controller
+      - dc01
+      - dc02
 
   - name: Add mgmt01 to Domain
     win_domain_membership:

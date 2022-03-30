@@ -3,7 +3,7 @@
 # Version: 1.2 - NEEDS DOUBLE CHECK
 #Requires -RunAsAdministrator
 # Install OpenSSH , does not install if "ssh" folder exists
-if (Test-Path "C:\ProgramData\ssh\ssh_host_rsa_key") {
+if (!(Test-Path "C:\ProgramData\ssh\ssh_host_rsa_key")) {
     break
 }
 else{
@@ -19,4 +19,4 @@ Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\PowerShell\1\ShellIds" -Name ConsoleP
 New-ItemProperty -Path HKLM:\SOFTWARE\OpenSSH -Name Defaultshell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
 
 # Add ssh-keys
-ssh-keyscan.exe
+ssh-keygen.exe
