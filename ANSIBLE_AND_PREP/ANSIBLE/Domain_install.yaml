@@ -32,6 +32,10 @@
 # Make Users
 - name: Make Domain users
   hosts: dc01
+  vars:
+    ansible_user: "{{ dc01_local_user }}"
+    ansible_password: "{{ dc01_local_password }}"
+    ansible_shell_type: powershell
   tasks:
   - name: Create domain admin user
     win_domain_user:

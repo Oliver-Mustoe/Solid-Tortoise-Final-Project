@@ -3,7 +3,7 @@
 # Version: 1.2 - NEEDS DOUBLE CHECK
 #Requires -RunAsAdministrator
 # Install OpenSSH , does not install if "ssh" folder exists
-if (Test-Path "C:\ProgramData\ssh") {
+if (Test-Path "C:\ProgramData\ssh\ssh_host_rsa_key") {
     break
 }
 else{
