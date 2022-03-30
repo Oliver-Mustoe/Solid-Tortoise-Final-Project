@@ -1,4 +1,4 @@
-ad01 needs the contents of "OpenSSH_Configer" run manually
+ad01 needs the contents of "OpenSSH_Configer" run manually, or scp'd over to it
 ---  
 DONT RE-RUN ANY COMMANDS IN "OpenSSH_Configer"
 
@@ -12,3 +12,5 @@ Steps to add keys to Windows hosts:
 3. Append windows host keys to authorized keys on mgmt02
 4. Run Authorized_keys.ps1
 5. Use ansible win_ping to make sure everything is running as it should be
+---
+For any ansible host, you will need to ssh into it before running the playbook to add it to known hosts

@@ -18,5 +18,5 @@ Set-Service -Name sshd -StartupType Automatic
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\PowerShell\1\ShellIds" -Name ConsolePrompting -Value $true
 New-ItemProperty -Path HKLM:\SOFTWARE\OpenSSH -Name Defaultshell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
 
-# Make ssh keys
-ssh-keygen.exe
+# Add ssh-keys
+ssh-keyscan.exe
