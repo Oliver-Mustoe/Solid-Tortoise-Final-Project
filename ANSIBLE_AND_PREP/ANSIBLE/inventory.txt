@@ -13,6 +13,6 @@
 [wks02]
 172.16.1.101
 
-[domain controller]
+[domain_controller]
 172.16.1.12
 172.16.1.13

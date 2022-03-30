@@ -3,7 +3,7 @@
 # Version 0.1
 
 # Install needed prerequisites
-sudo apt install pip sshpass python3-paramiko -y
+sudo apt install pip3 sshpass python3-paramiko -y
 wait
 
 # Installs Ansible

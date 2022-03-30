@@ -70,7 +70,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - domain controller
+      - domain_controller
 
   - name: Add mgmt01 to Domain
     win_domain_membership:
