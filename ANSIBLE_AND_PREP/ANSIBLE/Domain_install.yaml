@@ -74,8 +74,8 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - dc01
-      - dc02
+      - 172.16.1.12
+      - 172.16.1.13
 
   - name: Add mgmt01 to Domain
     win_domain_membership:

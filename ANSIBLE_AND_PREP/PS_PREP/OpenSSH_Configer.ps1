@@ -4,9 +4,6 @@
 #Requires -RunAsAdministrator
 # Install OpenSSH , does not install if "ssh" folder exists
 if (!(Test-Path "C:\ProgramData\ssh\ssh_host_rsa_key")) {
-    break
-}
-else{
     Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 }
 
@@ -20,3 +17,6 @@ New-ItemProperty -Path HKLM:\SOFTWARE\OpenSSH -Name Defaultshell -Value "C:\Wind
 
 # Add ssh-keys
 ssh-keygen.exe
+
+# Recommend restart
+Write-Output "Recommended to restart machine now :)"
