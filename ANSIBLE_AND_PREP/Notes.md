@@ -19,3 +19,7 @@ Known issues:
 Failure to create DNS zone because of partitions - the issue is believed to be caused by reloading snapshots or virtualization and has been fixed by completely shutting down virtual machines involved (particularly mgmt02) and turning them back on or restarting the ansible playbook.
 
 If any failure happens while installing the "Add_Domain_Computers" DO NOT RESET DC02, you will have to rejoin the computer to the domain by hand with a different hostname if you do.
+---
+Make sure to run a "eval $(ssh-agent)" & "ssh-add -t 'PLACEHOLDER, INPUT NUMBER HERE' before running playbook"
+---
+BEFORE windows workstation install, ssh to host to see if it is using mgmt02 keys or not

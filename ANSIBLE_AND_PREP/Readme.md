@@ -69,3 +69,5 @@ https://geekdudes.wordpress.com/2018/11/20/installing-second-domain-controller-u
 
 https://docs.ansible.com/ansible/2.9/modules/import_playbook_module.html
 
+https://www.edureka.co/community/80641/how-to-turn-gathering-facts-task-off-in-ansible#:~:text=Hi%40akhtar%2C,will%20disable%20this%20task%20automatically.
+

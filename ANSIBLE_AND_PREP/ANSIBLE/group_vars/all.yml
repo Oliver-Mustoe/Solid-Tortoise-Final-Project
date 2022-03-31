@@ -10,10 +10,8 @@ dc02_local_user:
 dc02_local_password: 
 
 wks01_local_user:
-wks01_local_password:
 
 wks02_local_user:
-wks02_local_password:
 
 domain_admin_1_user: 
 domain_admin_1_password: 
