@@ -2,7 +2,7 @@
 # Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
 
 # Adds DNS records
-# Version 0.2.2
+# Version 1.0 - NEEDS DOUBLE CHECK
 - hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"

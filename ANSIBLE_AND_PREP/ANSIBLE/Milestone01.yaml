@@ -2,6 +2,7 @@
 # Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
 
 # This file plays the needed playbooks in order to complete the requirments for Milestone 1
+# Version 1.0 - NEEDS DOUBLE CHECK
 
 - name: Play "Domain_install"
   import_playbook: Domain_install.yaml
