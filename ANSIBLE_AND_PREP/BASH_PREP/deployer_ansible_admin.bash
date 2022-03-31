@@ -21,7 +21,7 @@ sudo ansible-galaxy collection install community.windows
 
 # Let user know what they now need to do
 echo "[Will need to know run the command 'ssh-copy-id -i ~/.ssh/mykey deployer@<HOST>' to copy your SSH to Linux users]"
-echo "[The scp command for mgmt02 to windows is 'scp ~/.ssh/id_rsa.pub <USERNAME>@<HOST>:/C:/ProgramData/ssh/administrator_authorized_keys']"
+echo "[The scp command for mgmt02 to windows is 'scp ~/.ssh/id_rsa.pub <USERNAME>@<HOST>:/C:/ProgramData/ssh/administrators_authorized_keys']"
 echo "[Run 'Authorized_keys.ps1' on the windows host]"
 echo "[scp the windows users public key (located in .ssh) back to mgmt02 and append it to the authorized_keys file in .ssh (create if it does not exist)]"
 # Change to deployer

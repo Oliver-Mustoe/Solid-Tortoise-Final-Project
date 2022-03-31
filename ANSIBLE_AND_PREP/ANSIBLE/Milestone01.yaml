@@ -6,8 +6,8 @@
 - name: Play "Domain_install"
   import_playbook: Domain_install.yaml
 
-- name: Play "DNS_Additions"
-  import_playbook: DNS_Additions.yaml
+- name: Play "DNS_Complete"
+  import_playbook: DNS_Complete.yaml
 
-- name: Add_Domain_Computers
-  import_playbook: Add_Domain_Computers.yaml
+- name: Play "Add_Domain_Computers"
+  import_playbook: Add_Domain_Computers_M1.yaml
