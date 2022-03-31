@@ -1,8 +1,9 @@
+# CANNOT BE RUN TWICE!!!
 # Some information will need to be placed in all.yml
 # Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
 
 # Essentials setup for domain, adds mgmt01 to domain
-# Version: 1.2 - NEEDS TO BE DOUBLE CHECKED
+# Version: 1.3 - NEEDS TO BE DOUBLE CHECKED
 
 # Install Active directory
 - name: Install Active Directory Domain Services
@@ -98,13 +99,6 @@
     ansible_password: "{{ domain_admin_1_password }}"
     ansible_shell_type: powershell
   tasks:
-  - name: Create primary dns zone
-    community.windows.win_dns_zone:
-      name: tortoise.local
-      replication: domain
-      type: primary
-      state: present
-
   - name: Create reverse-lookup zone
     community.windows.win_dns_zone:
       name: 172.16.1-addr.arpa

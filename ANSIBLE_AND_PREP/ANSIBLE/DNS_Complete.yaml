@@ -10,14 +10,14 @@
     ansible_shell_type: powershell
   tasks:
   # Make sure that DNS zones exist
-  - name: Create primary dns zone
+  - name: Ensure primary dns zone exists
     community.windows.win_dns_zone:
       name: tortoise.local
       replication: domain
       type: primary
       state: present
 
-  - name: Create reverse-lookup zone
+  - name: Ensure reverse-lookup zone exists
     community.windows.win_dns_zone:
       name: 172.16.1-addr.arpa
       replication: domain
