@@ -1,2 +1,2 @@
-# Unsolid-Tortoise
-Files here are before there 1.0 release/testing for a later version and are very much in the testing/debugging phase
+# Solid-Tortoise
+Files here are 1.0+ and should be ready for use
