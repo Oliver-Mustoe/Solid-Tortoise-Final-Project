@@ -17,9 +17,5 @@ sudo su - deployer -c 'ssh-keygen -t rsa -C "controller"'
 
 # Let user know what they now need to do
 ehco "[Will need to git clone https://Solid-Tortoise/Oliver-Mustoe/Solid-Tortoise]"
-echo "[Will need to know run the command 'ssh-copy-id -i ~/.ssh/mykey deployer@<HOST>' to copy your SSH to Linux users]"
-echo "[The scp command for mgmt02 to windows is 'scp ~/.ssh/id_rsa.pub <USERNAME>@<HOST>:/C:/ProgramData/ssh/administrators_authorized_keys']"
-echo "[Run 'Authorized_keys.ps1' on the windows host]"
-echo "[scp the windows users public key (located in .ssh) back to mgmt02 and append it to the authorized_keys file in .ssh (create if it does not exist)]"
 # Change to deployer
 sudo su - deployer
