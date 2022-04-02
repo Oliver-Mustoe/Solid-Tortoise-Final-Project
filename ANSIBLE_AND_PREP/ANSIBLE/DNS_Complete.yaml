@@ -80,14 +80,14 @@
     community.windows.win_dns_record:
       name: "dfs01"
       type: "A"
-      value: "172.16.1.20"
+      value: "172.16.1.22"
       zone: "tortoise.local"
       
   - name: Create dfs02 A record
     community.windows.win_dns_record:
       name: "dfs02"
       type: "A"
-      value: "172.16.1.21"
+      value: "172.16.1.23"
       zone: "tortoise.local"
     
   - name: Create util A record
