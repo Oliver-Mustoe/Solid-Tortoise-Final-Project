@@ -36,7 +36,7 @@
     ansible.windows.win_reboot:
     when: dc_promotion.reboot_required
  
- - name: Reset DNS servers to self
+  - name: Reset DNS servers to self
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
