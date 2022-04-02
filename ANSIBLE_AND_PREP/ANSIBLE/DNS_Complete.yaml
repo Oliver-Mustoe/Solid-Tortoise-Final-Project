@@ -128,11 +128,11 @@
       value: "dc01"
       zone: "172.16.1-addr.arpa"
       
-  - name: Create ad02 PTR record
+  - name: Create dc02 PTR record
     community.windows.win_dns_record:
       name: "172.16.1.13"
       type: "PTR"
-      value: "ad02"
+      value: "dc02"
       zone: "172.16.1-addr.arpa"
 
   - name: Create mgmt02 PTR record
