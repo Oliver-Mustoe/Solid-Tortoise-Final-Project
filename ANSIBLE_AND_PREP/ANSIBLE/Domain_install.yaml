@@ -8,6 +8,8 @@
 # Install Active directory
 - name: Install Active Directory Domain Services
   hosts: dc01
+  vars:
+   ansible_shell_type: powershell
   tasks:
   - name: Install Active Directory Domain Services on dc01
     win_feature:
@@ -54,6 +56,8 @@
 # Add mgmt01 as a domain computer
 # Everything under "mgmt01" is an example for other hosts
 - hosts: mgmt01
+  vars:
+   ansible_shell_type: powershell
   tasks:
   - name: Change mgmt01 dns to point to domain controllers
     ansible.windows.win_dns_client:
@@ -78,6 +82,8 @@
 # Add Initial DNS records
 - name: Add DNS records
   hosts: dc01
+  vars:
+   ansible_shell_type: powershell
   tasks:
   - name: Create reverse-lookup zone
     community.windows.win_dns_zone:
