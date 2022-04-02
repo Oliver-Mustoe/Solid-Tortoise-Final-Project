@@ -56,6 +56,12 @@
   - name: Reboot
     ansible.windows.win_reboot:
     when: dc_promotion.reboot_required
+ 
+ - name: Reset DNS servers to self
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 127.0.0.1
 
 # Setup wks01 in the domain
 - name: Add wks01 to the domain
