@@ -3,6 +3,7 @@
 mgmt01_local_user: 
 
 dc01_local_user: 
+dc01_local_password:
 
 dc02_local_user: 
 
