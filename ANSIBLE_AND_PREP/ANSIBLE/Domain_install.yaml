@@ -73,7 +73,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.12
+      - 172.16.1.20
       - 172.16.1.13
 
   - name: Add mgmt01 to Domain
@@ -115,7 +115,7 @@
     community.windows.win_dns_record:
       name: "dc01"
       type: "A"
-      value: "172.16.1.12"
+      value: "172.16.1.20"
       zone: "tortoise.local"
 
   - name: Create mgmt01 PTR record
@@ -127,7 +127,7 @@
 
   - name: Create dc01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.12"
+      name: "172.16.1.20"
       type: "PTR"
       value: "dc01"
       zone: "172.16.1-addr.arpa"
