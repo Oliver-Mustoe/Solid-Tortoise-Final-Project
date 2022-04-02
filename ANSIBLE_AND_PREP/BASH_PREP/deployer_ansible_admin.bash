@@ -9,7 +9,7 @@ sudo usermod -aG sudo deployer
 # Create "sys265" file
 echo "deployer     ALL=(ALL)     NOPASSWD: ALL" >> sys265
 
-# Copy sys265 to "/etc/sudoers.d/sys264"
+# Copy sys265 to "/etc/sudoers.d/sys265"
 sudo cp sys265 /etc/sudoers.d/sys265
 
 # Generate SSH key for ansible as the deployer user
