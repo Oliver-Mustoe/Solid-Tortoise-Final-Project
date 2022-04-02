@@ -9,6 +9,7 @@
 - name: Add dc02 to the domain
   hosts: dc02
   vars:
+    ansible_user: "{{ dc02_local_user }}"
     ansible_shell_type: powershell   
   tasks:
   - name: Change dc02 dns to point to domain controllers
@@ -35,7 +36,13 @@
   - name: Reboot
     ansible.windows.win_reboot:
     when: dc_promotion.reboot_required
- 
+
+- name: Add dc02 to the domain
+  hosts: dc02
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell   
+  tasks:
   - name: Reset DNS servers to self
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
