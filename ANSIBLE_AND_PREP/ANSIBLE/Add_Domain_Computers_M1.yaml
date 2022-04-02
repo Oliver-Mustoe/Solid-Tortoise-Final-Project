@@ -16,7 +16,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.12
+      - 172.16.1.20
       - 172.16.1.13
 
   - name: Add dc02 to Domain
@@ -68,7 +68,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.12
+      - 172.16.1.20
       - 172.16.1.13
 
   - name: Add wks01 to Domain
@@ -95,7 +95,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.12
+      - 172.16.1.20
       - 172.16.1.13
 
   - name: Add wks02 to Domain
