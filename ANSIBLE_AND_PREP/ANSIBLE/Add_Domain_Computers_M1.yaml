@@ -9,7 +9,6 @@
 - name: Add dc02 to the domain
   hosts: dc02
   vars:
-    ansible_user: "{{ dc02_local_user }}"
     ansible_shell_type: powershell   
   tasks:
   - name: Change dc02 dns to point to domain controllers
@@ -17,27 +16,7 @@
       adapter_names: 'Ethernet*'
       dns_servers:
       - 172.16.1.20
-      - 172.16.1.13
 
-  - name: Add dc02 to Domain
-    win_domain_membership:
-      dns_domain_name: tortoise.local
-      hostname: dc02
-      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
-      domain_admin_password: "{{ domain_admin_1_password }}"
-      state: domain
-    register: host_restart
-
-  - name: Reboot
-    ansible.windows.win_reboot:
-    when: host_restart.reboot_required
-
-- name: Setup dc02 as a domain controller
-  hosts: dc02
-  vars:
-    ansible_user: "{{ domain_admin_1_user }}"
-    ansible_shell_type: powershell
-  tasks:
   - name: Install Active Directory Domain Services on dc01
     win_feature:
       name: AD-Domain-Services
@@ -66,9 +45,6 @@
 # Setup wks01 in the domain
 - name: Add wks01 to the domain
   hosts: wks01
-  vars:
-   ansible_user: "{{ wks01_local_user }}"
-   ansible_shell_type: powershell
   tasks:
   - name: Change wks01 dns to point to domain controllers
     ansible.windows.win_dns_client:
@@ -93,9 +69,6 @@
 # Setup wks02 in the domain
 - name: Add wks02
   hosts: wks02
-  vars:
-   ansible_user: "{{ wks02_local_user }}"
-   ansible_shell_type: powershell
   tasks:
   - name: Change wks02 dns to point to domain controllers
     ansible.windows.win_dns_client:
