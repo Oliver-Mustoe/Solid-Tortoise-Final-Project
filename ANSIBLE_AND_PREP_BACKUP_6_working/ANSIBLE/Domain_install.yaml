@@ -1,0 +1,124 @@
+# CANNOT BE RUN TWICE!!!
+# Some information will need to be placed in all.yml
+# Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
+
+# Essentials setup for domain, adds mgmt01 to domain
+# Version: 1.3 - NEEDS TO BE DOUBLE CHECKED
+
+# Install Active directory
+- name: Install Active Directory Domain Services
+  hosts: dc01
+  vars:
+   ansible_user: "{{ dc01_local_user }}"
+   ansible_shell_type: powershell
+  tasks:
+  - name: Install Active Directory Domain Services on dc01
+    win_feature:
+      name: AD-Domain-Services
+      include_management_tools: yes
+      state: present
+
+  - name: Create new domain in a new forest on dc01
+    win_domain:
+      install_dns: yes
+      dns_domain_name: tortoise.local
+      safe_mode_password: "{{ safemode_password }}"
+    register: domain_state
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: domain_state.reboot_required
+    
+  - name: Create domain admin user
+    win_domain_user:
+      domain_server: dc01.tortoise.local
+      name: "{{ domain_admin_1_user }}"
+      password: "{{ domain_admin_1_password }}"
+      password_never_expires: yes
+      group_action: add
+      groups:
+        - domain admins
+      state: present
+
+# Add dc01 as a domain controller
+  - name: Make dc01 into a domain controller
+    ansible.windows.win_domain_controller:
+      dns_domain_name: tortoise.local
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      safe_mode_password: "{{ safemode_password }}"
+      state: domain_controller
+    register: dc_promotion
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: dc_promotion.reboot_required
+
+# Add mgmt01 as a domain computer
+# Everything under "mgmt01" is an example for other hosts
+- hosts: mgmt01
+  vars:
+   ansible_user: "{{ mgmt01_local_user }}"
+   ansible_shell_type: powershell
+  tasks:
+  - name: Change mgmt01 dns to point to domain controllers
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.20
+      - 172.16.1.13
+
+  - name: Add mgmt01 to Domain
+    win_domain_membership:
+      dns_domain_name: tortoise.local
+      hostname: mgmt01
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required
+
+# Add Initial DNS records
+- name: Add DNS records
+  hosts: dc01
+  vars:
+   ansible_user: "{{ domain_admin_1_user }}"
+   ansible_shell_type: powershell
+  tasks:
+  - name: Create reverse-lookup zone
+    community.windows.win_dns_zone:
+      name: 172.16.1-addr.arpa
+      replication: domain
+      type: primary
+      state: present
+
+  - name: Create mgmt01 A record
+    community.windows.win_dns_record:
+      name: "mgmt01"
+      type: "A"
+      value: "172.16.1.14"
+      zone: "tortoise.local"
+
+  - name: Create dc01 A record
+    community.windows.win_dns_record:
+      name: "dc01"
+      type: "A"
+      value: "172.16.1.20"
+      zone: "tortoise.local"
+
+  - name: Create mgmt01 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.14"
+      type: "PTR"
+      value: "mgmt01"
+      zone: "172.16.1-addr.arpa"
+
+  - name: Create dc01 PTR record
+    community.windows.win_dns_record:
+      name: "172.16.1.20"
+      type: "PTR"
+      value: "dc01"
+      zone: "172.16.1-addr.arpa"

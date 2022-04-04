@@ -1,0 +1,14 @@
+# Some information will need to be placed in all.yml
+# Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
+
+# This file plays the needed playbooks in order to complete the requirments for Milestone 1
+# Version 1.0 - NEEDS DOUBLE CHECK
+
+- name: Play "Domain_install"
+  import_playbook: Domain_install.yaml
+
+- name: Play "DNS_Complete"
+  import_playbook: DNS_Complete.yaml
+
+- name: Play "Add_Domain_Computers"
+  import_playbook: Add_Domain_Computers_M1.yaml
