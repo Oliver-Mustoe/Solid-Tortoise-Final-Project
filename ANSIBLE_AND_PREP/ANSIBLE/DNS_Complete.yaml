@@ -6,7 +6,6 @@
 - hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
-    ansible_password: "{{ domain_admin_1_password }}"
     ansible_shell_type: powershell
   tasks:
   # Make sure that DNS zones exist
@@ -45,12 +44,12 @@
     community.windows.win_dns_record:
       name: "dc01"
       type: "A"
-      value: "172.16.1.12"
+      value: "172.16.1.20"
       zone: "tortoise.local"
       
-  - name: Create ad02 A record
+  - name: Create dc02 A record
     community.windows.win_dns_record:
-      name: "ad02"
+      name: "dc02"
       type: "A"
       value: "172.16.1.13"
       zone: "tortoise.local"
@@ -80,14 +79,14 @@
     community.windows.win_dns_record:
       name: "dfs01"
       type: "A"
-      value: "172.16.1.20"
+      value: "172.16.1.22"
       zone: "tortoise.local"
       
   - name: Create dfs02 A record
     community.windows.win_dns_record:
       name: "dfs02"
       type: "A"
-      value: "172.16.1.21"
+      value: "172.16.1.23"
       zone: "tortoise.local"
     
   - name: Create util A record
@@ -123,16 +122,16 @@
 
   - name: Create dc01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.12"
+      name: "172.16.1.20"
       type: "PTR"
       value: "dc01"
       zone: "172.16.1-addr.arpa"
       
-  - name: Create ad02 PTR record
+  - name: Create dc02 PTR record
     community.windows.win_dns_record:
       name: "172.16.1.13"
       type: "PTR"
-      value: "ad02"
+      value: "dc02"
       zone: "172.16.1-addr.arpa"
 
   - name: Create mgmt02 PTR record
@@ -158,14 +157,14 @@
       
   - name: Create dfs01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.20"
+      name: "172.16.1.21"
       type: "PTR"
       value: "dfs01"
       zone: "172.16.1-addr.arpa"
 
   - name: Create dfs02 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.21"
+      name: "172.16.1.22"
       type: "PTR"
       value: "dfs02"
       zone: "172.16.1-addr.arpa"

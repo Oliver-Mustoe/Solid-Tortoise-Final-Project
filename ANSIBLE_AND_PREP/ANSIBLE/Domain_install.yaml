@@ -9,9 +9,8 @@
 - name: Install Active Directory Domain Services
   hosts: dc01
   vars:
-    ansible_user: "{{ dc01_local_user }}"
-    ansible_password: "{{ dc01_local_password }}"
-    ansible_shell_type: powershell
+   ansible_user: "{{ dc01_local_user }}"
+   ansible_shell_type: powershell
   tasks:
   - name: Install Active Directory Domain Services on dc01
     win_feature:
@@ -29,15 +28,7 @@
   - name: Reboot
     ansible.windows.win_reboot:
     when: domain_state.reboot_required
-
-# Make Users
-- name: Make Domain users
-  hosts: dc01
-  vars:
-    ansible_user: "{{ dc01_local_user }}"
-    ansible_password: "{{ dc01_local_password }}"
-    ansible_shell_type: powershell
-  tasks:
+    
   - name: Create domain admin user
     win_domain_user:
       domain_server: dc01.tortoise.local
@@ -67,15 +58,14 @@
 # Everything under "mgmt01" is an example for other hosts
 - hosts: mgmt01
   vars:
-    ansible_user: "{{ mgmt01_local_user }}"
-    ansible_password: "{{ mgmt01_local_password }}"
-    ansible_shell_type: powershell
+   ansible_user: "{{ mgmt01_local_user }}"
+   ansible_shell_type: powershell
   tasks:
   - name: Change mgmt01 dns to point to domain controllers
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.12
+      - 172.16.1.20
       - 172.16.1.13
 
   - name: Add mgmt01 to Domain
@@ -95,9 +85,8 @@
 - name: Add DNS records
   hosts: dc01
   vars:
-    ansible_user: "{{ domain_admin_1_user }}"
-    ansible_password: "{{ domain_admin_1_password }}"
-    ansible_shell_type: powershell
+   ansible_user: "{{ domain_admin_1_user }}"
+   ansible_shell_type: powershell
   tasks:
   - name: Create reverse-lookup zone
     community.windows.win_dns_zone:
@@ -117,7 +106,7 @@
     community.windows.win_dns_record:
       name: "dc01"
       type: "A"
-      value: "172.16.1.12"
+      value: "172.16.1.20"
       zone: "tortoise.local"
 
   - name: Create mgmt01 PTR record
@@ -129,7 +118,7 @@
 
   - name: Create dc01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.12"
+      name: "172.16.1.20"
       type: "PTR"
       value: "dc01"
       zone: "172.16.1-addr.arpa"

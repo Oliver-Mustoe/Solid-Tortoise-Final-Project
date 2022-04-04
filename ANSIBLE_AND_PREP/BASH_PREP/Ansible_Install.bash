@@ -3,13 +3,16 @@
 # Version 1.0 - NEEDS DOUBLE CHECK
 
 # Install needed prerequisites
-sudo apt install pip3 sshpass python3-paramiko -y
+sudo apt install pip sshpass python3-paramiko -y
 wait
 
 # Installs Ansible
 pip3 install ansible
 wait
 # Prompts user that system will now reboot
+echo "After reboot run the following:"
+echo "ansible-galaxy collection install ansible.windows"
+echo "ansible-galaxy collection install community.windows"
 read -p "Your system will now reboot..."
 wait
 # Reboot system

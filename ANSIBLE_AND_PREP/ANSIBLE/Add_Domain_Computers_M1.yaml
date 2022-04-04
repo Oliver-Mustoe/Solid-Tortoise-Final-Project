@@ -10,15 +10,19 @@
   hosts: dc02
   vars:
     ansible_user: "{{ dc02_local_user }}"
-    ansible_password: "{{ dc02_local_password }}"
     ansible_shell_type: powershell   
   tasks:
   - name: Change dc02 dns to point to domain controllers
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.12
-      - 172.16.1.13
+      - 172.16.1.20
+
+  - name: Install Active Directory Domain Services on dc01
+    win_feature:
+      name: AD-Domain-Services
+      include_management_tools: yes
+      state: present
 
   - name: Add dc02 to Domain
     win_domain_membership:
@@ -32,20 +36,7 @@
   - name: Reboot
     ansible.windows.win_reboot:
     when: host_restart.reboot_required
-
-- name: Setup dc02 as a domain controller
-  hosts: dc02
-  vars:
-    ansible_user: "{{ domain_admin_1_user }}"
-    ansible_password: "{{ domain_admin_1_password }}"
-    ansible_shell_type: powershell
-  tasks:
-  - name: Install Active Directory Domain Services on dc01
-    win_feature:
-      name: AD-Domain-Services
-      include_management_tools: yes
-      state: present
-
+    
   - name: Make dc02 into a domain controller
     ansible.windows.win_domain_controller:
       dns_domain_name: tortoise.local
@@ -59,6 +50,18 @@
     ansible.windows.win_reboot:
     when: dc_promotion.reboot_required
 
+- name: Reset DNS to the domain
+  hosts: dc02
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell   
+  tasks:
+  - name: Reset DNS servers to self
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 127.0.0.1
+
 # Setup wks01 in the domain
 - name: Add wks01 to the domain
   hosts: wks01
@@ -70,7 +73,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.12
+      - 172.16.1.20
       - 172.16.1.13
 
   - name: Add wks01 to Domain
@@ -97,13 +100,13 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.12
+      - 172.16.1.20
       - 172.16.1.13
 
   - name: Add wks02 to Domain
     win_domain_membership:
       dns_domain_name: tortoise.local
-      hostname: wks0201
+      hostname: wks02
       domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
       domain_admin_password: "{{ domain_admin_1_password }}"
       state: domain
