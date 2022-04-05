@@ -1,0 +1,26 @@
+# Ensure that Milestone 1 is ran, installs needed applications on all the needed systems
+# Version V0.1
+
+# Setup DHCP
+- name: Configure DHCP
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Run dhcp configure script
+    # Incomplete
+    ansible.builtin.shell: bash PLACEHOLDER_FOR_THE_DHCP_SCRIPT
+
+# Workstation setup for DHCP
+- name: Set Windows workstations to use DHCP
+  hosts: wks01,wks02
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+   - name: Set workstations to get new DNS
+     ansible.windows.win_dns_client:
+       adapter_names: 'Ethernet*'
+       dns_servers: []
+
+   - name: Refresh DNS
+     ansible.windows.win_shell: ipconfig /release; ipconfig /renew

@@ -17,6 +17,25 @@
       adapter_names: 'Ethernet*'
       dns_servers:
       - 172.16.1.20
+
+  - name: Install Active Directory Domain Services on dc01
+    win_feature:
+      name: AD-Domain-Services
+      include_management_tools: yes
+      state: present
+
+  - name: Add dc02 to Domain
+    win_domain_membership:
+      dns_domain_name: tortoise.local
+      hostname: dc02
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required
     
   - name: Make dc02 into a domain controller
     ansible.windows.win_domain_controller:
@@ -58,7 +77,7 @@
       - 172.16.1.13
 
   - name: Add wks01 to Domain
-    community.windows.win_domain_membership:
+    win_domain_membership:
       dns_domain_name: tortoise.local
       hostname: wks01
       domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
@@ -85,7 +104,7 @@
       - 172.16.1.13
 
   - name: Add wks02 to Domain
-    community.windows.win_domain_membership:
+    win_domain_membership:
       dns_domain_name: tortoise.local
       hostname: wks02
       domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"

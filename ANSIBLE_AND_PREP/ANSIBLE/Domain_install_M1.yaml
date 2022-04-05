@@ -9,17 +9,17 @@
 - name: Install Active Directory Domain Services
   hosts: dc01
   vars:
-   ansible_user: "{{ dc01_local_user }}"
-   ansible_shell_type: powershell
+    ansible_user: "{{ dc01_local_user }}"
+    ansible_shell_type: powershell
   tasks:
   - name: Install Active Directory Domain Services on dc01
-    win_feature:
+    ansible.windowswin_feature:
       name: AD-Domain-Services
       include_management_tools: yes
       state: present
 
   - name: Create new domain in a new forest on dc01
-    win_domain:
+    ansible.windowswin_domain:
       install_dns: yes
       dns_domain_name: tortoise.local
       safe_mode_password: "{{ safemode_password }}"
@@ -30,7 +30,7 @@
     when: domain_state.reboot_required
     
   - name: Create domain admin user
-    win_domain_user:
+    ansible.windows.win_domain_user:
       domain_server: dc01.tortoise.local
       name: "{{ domain_admin_1_user }}"
       password: "{{ domain_admin_1_password }}"
@@ -58,8 +58,8 @@
 # Everything under "mgmt01" is an example for other hosts
 - hosts: mgmt01
   vars:
-   ansible_user: "{{ mgmt01_local_user }}"
-   ansible_shell_type: powershell
+    ansible_user: "{{ mgmt01_local_user }}"
+    ansible_shell_type: powershell
   tasks:
   - name: Change mgmt01 dns to point to domain controllers
     ansible.windows.win_dns_client:
@@ -69,7 +69,7 @@
       - 172.16.1.13
 
   - name: Add mgmt01 to Domain
-    win_domain_membership:
+    community.windows.win_domain_membership:
       dns_domain_name: tortoise.local
       hostname: mgmt01
       domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
@@ -85,8 +85,8 @@
 - name: Add DNS records
   hosts: dc01
   vars:
-   ansible_user: "{{ domain_admin_1_user }}"
-   ansible_shell_type: powershell
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
   tasks:
   - name: Create reverse-lookup zone
     community.windows.win_dns_zone:

@@ -71,3 +71,13 @@ https://docs.ansible.com/ansible/2.9/modules/import_playbook_module.html
 
 https://www.edureka.co/community/80641/how-to-turn-gathering-facts-task-off-in-ansible#:~:text=Hi%40akhtar%2C,will%20disable%20this%20task%20automatically.
 
+https://superuser.com/questions/612409/how-do-i-run-multiple-commands-on-one-line-in-powershell
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html#ansible-collections-ansible-builtin-shell-module
+
+https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_shell_module.html#ansible-collections-ansible-windows-win-shell-module
+
+https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_command_module.html#
+
+https://www.pdq.com/blog/how-to-install-remote-server-administration-tools-rsat/
+

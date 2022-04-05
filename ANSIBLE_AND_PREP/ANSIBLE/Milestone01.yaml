@@ -5,10 +5,11 @@
 # Version 1.0 - NEEDS DOUBLE CHECK
 
 - name: Play "Domain_install"
-  import_playbook: Domain_install.yaml
+  import_playbook: Domain_install_M1.yaml
 
 - name: Play "DNS_Complete"
   import_playbook: DNS_Complete.yaml
 
+# Add " - Copy" to the end of if results in an error attempting to connect to the domain
 - name: Play "Add_Domain_Computers"
   import_playbook: Add_Domain_Computers_M1.yaml
