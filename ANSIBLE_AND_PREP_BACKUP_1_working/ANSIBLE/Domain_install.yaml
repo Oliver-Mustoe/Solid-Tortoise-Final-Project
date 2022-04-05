@@ -50,7 +50,7 @@
     ansible.windows.win_domain_controller:
       dns_domain_name: tortoise.local
       domain_admin_user: TORTOISE\Kurma
-      domain_admin_password: HailTheTurtle345
+      domain_admin_password: 
       safe_mode_password: password123!
       state: domain_controller
     register: dc_promotion
