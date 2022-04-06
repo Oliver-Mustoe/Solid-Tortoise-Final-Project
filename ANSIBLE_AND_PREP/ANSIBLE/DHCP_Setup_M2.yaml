@@ -10,15 +10,16 @@
     ansible.builtin.shell: bash ~/Solid-Tortoise-Final-Project/dhcp_script.sh
 
 # Ensure DHCP is running
-- name: Ensure myservice  is in a running state
-  hosts: dhcp01,dhcp02
-  service:
-    name: dhcpd
-    state: started
-  register: dhcp_start
-  until: dhcp_start.status.ActiveState == "active"
-  retries: 50
-  delay: 10
+- hosts: dhcp01,dhcp02
+  tasks:
+  - name: Ensure myservice  is in a running state
+    service:
+      name: dhcpd
+      state: started
+    register: dhcp_start
+    until: dhcp_start.status.ActiveState == "active"
+    retries: 50
+    delay: 10
 
 # Workstation setup for DHCP
 - name: Set Windows workstations to use DHCP
