@@ -81,3 +81,7 @@ https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_command_
 
 https://www.pdq.com/blog/how-to-install-remote-server-administration-tools-rsat/
 
+https://stackoverflow.com/questions/63781603/how-can-i-get-ansible-to-wait-until-a-service-is-active
+
+https://www.golinuxcloud.com/add-linux-to-windows-ad-domain-realm/
+

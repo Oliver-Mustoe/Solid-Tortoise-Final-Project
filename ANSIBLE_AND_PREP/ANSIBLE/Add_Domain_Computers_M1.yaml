@@ -3,7 +3,7 @@
 # Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
 
 # Script to add all needed computers onto tortoise.local
-# Version 1.0 - NEEDS DOUBLE CHECK
+# Version 1.1 - NEEDS DOUBLE CHECK
 
 # Setup dc02 into the domain, install needed features, set as a domain controller
 - name: Add dc02 to the domain
@@ -16,7 +16,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.20
+      - 172.16.1.12
     
   - name: Make dc02 into a domain controller
     ansible.windows.win_domain_controller:
@@ -54,7 +54,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.20
+      - 172.16.1.12
       - 172.16.1.13
 
   - name: Add wks01 to Domain
@@ -81,7 +81,7 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      - 172.16.1.20
+      - 172.16.1.12
       - 172.16.1.13
 
   - name: Add wks02 to Domain

@@ -1,0 +1,41 @@
+# Installs all needed Linux systems to the domain, might need to add more systems depending
+# Version 0.1
+
+# Ensure DHCP is running
+- name: Ensure myservice  is in a running state
+  hosts: util
+  tasks:
+  - name: Run dhcp configure script
+    ansible.builtin.shell: sudo yum install realmd
+
+  - name: Ensure that realmd is running
+    service:
+      name: realmd
+      state: started
+    register: realmd_start
+    until: realmd_start.status.ActiveState == "active"
+    retries: 50
+    delay: 10
+
+  - name: Run dhcp configure script
+    ansible.builtin.shell: sudo yum install oddjob oddjob-mkhomedir sssd adcli openldap-clients policycoreutils-python samba-common samba-common-tools krb5-workstation
+
+  - name: Join the domain
+    ansible.builtin.expect:
+      command: "realm join --user={{ domain_admin_1_user }} tortoise.local"
+      responses:
+        (?i)password: "{{ domain_admin_1_user }}"
+  # no passwords in logs
+    no_log: true
+
+- name: Give sssd.conf the appropriate permissions
+  ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
+
+- name: Ensure that sssd is running
+  service:
+    name: sssd
+    state: started
+  register: sssd_start
+  until: sssd_start.status.ActiveState == "active"
+  retries: 50
+  delay: 10

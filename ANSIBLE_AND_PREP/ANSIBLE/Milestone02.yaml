@@ -9,3 +9,6 @@
 
 - name: Play "DHCP_Setup"
   import_playbook: DHCP_Setup_M2.yaml
+
+- name: Play "Linux_Domain_Join"
+  import_playbook: Linux_Domain_Join_M2.yaml
