@@ -58,7 +58,7 @@
       - 172.16.1.13
 
   - name: Add wks01 to Domain
-    community.windows.win_domain_membership:
+    ansible.windows.win_domain_membership:
       dns_domain_name: tortoise.local
       hostname: wks01
       domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
@@ -85,7 +85,7 @@
       - 172.16.1.13
 
   - name: Add wks02 to Domain
-    community.windows.win_domain_membership:
+    ansible.windows.win_domain_membership:
       dns_domain_name: tortoise.local
       hostname: wks02
       domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
