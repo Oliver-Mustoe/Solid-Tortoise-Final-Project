@@ -29,3 +29,8 @@ Make sure to run a "eval $(ssh-agent)" & "ssh-add -t 'PLACEHOLDER, INPUT NUMBER 
 
 ---
 BEFORE windows workstation install, ssh to host to see if it is using mgmt02 keys or not. Any host that does not require a special password, using the mgmt02 password, they no longer need the password variable in the playbooks.
+
+---
+HIGHLY RECOMMENDED TO RUN PLAYBOOKS WITH:  
+"--syntaxt-check" TO ENSURE PROPER SYNTAX
+"--check" TO DRY RUN THE PLAYBOOK
