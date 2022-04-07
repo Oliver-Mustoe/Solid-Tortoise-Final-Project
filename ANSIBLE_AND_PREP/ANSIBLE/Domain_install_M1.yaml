@@ -30,7 +30,7 @@
     when: domain_state.reboot_required
     
   - name: Create domain admin user
-    ansible.windows.win_domain_user:
+    community.windows.win_domain_user:
       domain_server: dc01.tortoise.local
       name: "{{ domain_admin_1_user }}"
       password: "{{ domain_admin_1_password }}"
