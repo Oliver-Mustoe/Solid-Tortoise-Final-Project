@@ -28,14 +28,14 @@
   # no passwords in logs
     no_log: true
 
-- name: Give sssd.conf the appropriate permissions
-  ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
+  - name: Give sssd.conf the appropriate permissions
+    ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
 
-- name: Ensure that sssd is running
-  service:
-    name: sssd
-    state: started
-  register: sssd_start
-  until: sssd_start.status.ActiveState == "active"
-  retries: 50
-  delay: 10
+  - name: Ensure that sssd is running
+    service:
+      name: sssd
+      state: started
+    register: sssd_start
+    until: sssd_start.status.ActiveState == "active"
+    retries: 50
+    delay: 10
