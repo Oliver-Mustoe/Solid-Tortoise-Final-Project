@@ -16,6 +16,6 @@
 [dhcp01]
 
 
-[dchp02]
+[dhcp02]
 
 [util]

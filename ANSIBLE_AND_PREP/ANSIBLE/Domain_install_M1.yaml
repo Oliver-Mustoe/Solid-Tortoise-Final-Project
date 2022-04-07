@@ -13,13 +13,13 @@
     ansible_shell_type: powershell
   tasks:
   - name: Install Active Directory Domain Services on dc01
-    ansible.windowswin_feature:
+    ansible.windows.win_feature:
       name: AD-Domain-Services
       include_management_tools: yes
       state: present
 
   - name: Create new domain in a new forest on dc01
-    ansible.windowswin_domain:
+    ansible.windows.win_domain:
       install_dns: yes
       dns_domain_name: tortoise.local
       safe_mode_password: "{{ safemode_password }}"
