@@ -69,7 +69,7 @@
       - 172.16.1.13
 
   - name: Add mgmt01 to Domain
-    community.windows.win_domain_membership:
+    community.windows.win_domain_group_membership:
       dns_domain_name: tortoise.local
       hostname: mgmt01
       domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
