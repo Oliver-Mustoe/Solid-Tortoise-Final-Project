@@ -4,6 +4,9 @@
 # This file plays the needed playbooks in order to complete the requirments for Milestone 2
 # Version 0.1 - NEEDS DOUBLE CHECK
 
+- name: Play "Reqs"
+  import_playbook: Reqs.yaml
+
 - name: Play "Install_Apps"
   import_playbook: Install_Apps_M2.yaml
 

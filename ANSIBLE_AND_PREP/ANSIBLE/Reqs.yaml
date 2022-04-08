@@ -1,0 +1,21 @@
+# Installs all needed prerequsites for milestones
+# Version 0.1
+
+- name: Install prereqs
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Install collection 'ansible.windows'
+    community.general.ansible_galaxy_install:
+      type: collection
+      name: ansible.windows
+
+  - name: Install collection 'community.windows'
+    community.general.ansible_galaxy_install:
+      type: collection
+      name: community.windows
+
+  - name: Install role 'geerlingguy.apach'
+    community.general.ansible_galaxy_install:
+      type: role
+      name: geerlingguy.apach

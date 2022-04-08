@@ -12,7 +12,7 @@
 # Ensure DHCP is running
 - hosts: dhcp01,dhcp02
   tasks:
-  - name: Ensure myservice  is in a running state
+  - name: Ensure DHCP is in a running state
     service:
       name: dhcpd
       state: started

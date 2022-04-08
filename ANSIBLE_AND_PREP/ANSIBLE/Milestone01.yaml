@@ -4,6 +4,9 @@
 # This file plays the needed playbooks in order to complete the requirments for Milestone 1
 # Version 1.0 - NEEDS DOUBLE CHECK
 
+- name: Play "Reqs"
+  import_playbook: Reqs.yaml
+
 - name: Play "Domain_install"
   import_playbook: Domain_install_M1.yaml
 

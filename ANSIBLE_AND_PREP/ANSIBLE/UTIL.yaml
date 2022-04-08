@@ -1,4 +1,4 @@
-# Installs all needed Linux systems to the domain, might need to add more systems depending
+# Adds UTIL to the domain, then setups a webserver on it (MUST FIRST HAVE RAN 'ansible-galaxy install geerlingguy.apache')
 # Version 0.2
 
 # Get UTIL running in the domain, example of getting a linux machine running in the domain
@@ -6,6 +6,7 @@
   hosts: util
   tasks:
   - name: Install all needed pre-requisites
+    # Could use 'ansible.builtin.package' instead
     ansible.builtin.yum:
       name:
         - realmd
@@ -40,3 +41,4 @@
     retries: 50
     delay: 10
 # Example end here
+  - name: 
