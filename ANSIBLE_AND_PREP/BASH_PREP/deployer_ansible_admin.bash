@@ -16,6 +16,6 @@ sudo cp sys265 /etc/sudoers.d/sys265
 sudo su - deployer -c 'ssh-keygen -t rsa -C "controller"'
 
 # Let user know what they now need to do
-echo "[Will need to git clone https://Solid-Tortoise/Oliver-Mustoe/Solid-Tortoise]"
+echo "[Will need to git clone https://Solid-Tortoise/Oliver-Mustoe/Solid-Tortoise], and run 'Ansible_Install.bash'"
 # Change to deployer
 sudo su - deployer
