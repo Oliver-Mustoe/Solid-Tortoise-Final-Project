@@ -4,6 +4,9 @@
 # Runs all of the milestones in order, meaning this script will be incomplete until all of the milestones are completed
 # Version 0.1
 
+- name: Play "Reqs"
+  import_playbook: Reqs.yaml
+
 - name: Play "Milestone 1"
   import_playbook: Milestone01.yaml
 

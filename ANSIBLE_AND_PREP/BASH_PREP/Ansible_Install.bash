@@ -10,9 +10,6 @@ wait
 pip3 install ansible
 wait
 # Prompts user that system will now reboot
-echo "After reboot run the following:"
-echo "ansible-galaxy collection install ansible.windows"
-echo "ansible-galaxy collection install community.windows"
 read -p "Your system will now reboot..."
 wait
 # Reboot system

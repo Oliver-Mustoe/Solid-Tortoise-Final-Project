@@ -1,4 +1,4 @@
-# Adds UTIL to the domain, then setups a webserver on it (MUST FIRST HAVE RAN 'ansible-galaxy install geerlingguy.apache')
+# Adds UTIL to the domain, then setups a webserver on it
 # Version 0.2
 
 # Get UTIL running in the domain, example of getting a linux machine running in the domain
