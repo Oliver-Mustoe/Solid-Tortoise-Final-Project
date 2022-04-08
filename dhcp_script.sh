@@ -12,6 +12,7 @@ ssh root@172.16.1.10 <<END
   systemctl restart dhcpd
   systemctl enable dhcpd
   firewall-cmd --add-service=dhcp --permanent
+  firewall-cmd --add-port=647/udp --permanent
   firewall-cmd --reload
 END
 
@@ -23,5 +24,6 @@ ssh root@172.16.1.11 <<END
   systemctl restart dhcpd
   systemctl enable dhcpd
   firewall-cmd --add-service=dhcp --permanent
+  firewall-cmd --add-port=647/udp --permanent
   firewall-cmd --reload
 END
