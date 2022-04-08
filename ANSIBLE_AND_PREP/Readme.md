@@ -85,3 +85,5 @@ https://stackoverflow.com/questions/63781603/how-can-i-get-ansible-to-wait-until
 
 https://www.golinuxcloud.com/add-linux-to-windows-ad-domain-realm/
 
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/expect_module.html
+

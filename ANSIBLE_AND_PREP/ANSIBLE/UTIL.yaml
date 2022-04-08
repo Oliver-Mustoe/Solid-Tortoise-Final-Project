@@ -1,24 +1,24 @@
 # Installs all needed Linux systems to the domain, might need to add more systems depending
-# Version 0.1
+# Version 0.2
 
-# Ensure DHCP is running
-- name: Ensure myservice  is in a running state
+# Get UTIL running in the domain, example of getting a linux machine running in the domain
+- name: Add UTIL to the domain
   hosts: util
   tasks:
-  - name: Run dhcp configure script
-    ansible.builtin.shell: sudo yum install realmd
-
-  - name: Ensure that realmd is running
-    service:
-      name: realmd
-      state: started
-    register: realmd_start
-    until: realmd_start.status.ActiveState == "active"
-    retries: 50
-    delay: 10
-
-  - name: Run dhcp configure script
-    ansible.builtin.shell: sudo yum install oddjob oddjob-mkhomedir sssd adcli openldap-clients policycoreutils-python samba-common samba-common-tools krb5-workstation
+  - name: Install all needed pre-requisites
+    ansible.builtin.yum:
+      name:
+        - realmd
+        - oddjob 
+        - oddjob-mkhomedir
+        - sssd
+        - adcli
+        - openldap-clients
+        - policycoreutils-python
+        - samba-common
+        - samba-common-tools
+        - krb5-workstation -y
+      state: present
 
   - name: Join the domain
     ansible.builtin.expect:
@@ -39,3 +39,4 @@
     until: sssd_start.status.ActiveState == "active"
     retries: 50
     delay: 10
+# Example end here
