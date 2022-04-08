@@ -2,6 +2,8 @@
 
 # Version 0.4
 
+# Config Source: https://www.lisenet.com/2018/configure-dhcp-failover-with-dynamic-dns-on-centos-7/ 
+
 ssh root@172.16.1.10 <<END
   yum install dhcp -y
   cd /etc/dhcp/
