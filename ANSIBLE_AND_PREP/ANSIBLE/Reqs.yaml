@@ -19,4 +19,4 @@
     community.general.ansible_galaxy_install:
       type: role
       name: geerlingguy.apache
-      dest: ~/
+      dest: '~/'

@@ -41,3 +41,8 @@
     retries: 50
     delay: 10
 # Example end here
+  - name: Add Apache role
+    include_role:
+      name: geerlingguy.apache
+    vars:
+      dir: '~/'
