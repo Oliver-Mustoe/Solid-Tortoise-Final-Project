@@ -4,6 +4,7 @@
 # Get UTIL running in the domain, example of getting a linux machine running in the domain
 - name: Add UTIL to the domain
   hosts: util
+  become: yes
   tasks:
   - name: Install all needed pre-requisites
     # Could use 'ansible.builtin.package' instead
@@ -22,12 +23,7 @@
       state: present
 
   - name: Join the domain
-    ansible.builtin.expect:
-      command: "realm join --user={{ domain_admin_1_user }} tortoise.local"
-      responses:
-        (?i)password: "{{ domain_admin_1_user }}"
-  # no passwords in logs
-    no_log: true
+    ansible.builtin.shell: "echo {{ domain_admin_1_password }} | realm join --user={{ domain_admin_1_user }} tortoise.local"
 
   - name: Give sssd.conf the appropriate permissions
     ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
