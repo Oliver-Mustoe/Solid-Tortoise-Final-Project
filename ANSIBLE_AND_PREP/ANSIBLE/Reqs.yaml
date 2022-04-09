@@ -14,8 +14,3 @@
     community.general.ansible_galaxy_install:
       type: collection
       name: community.windows
-
-  - name: Install role 'geerlingguy.apach'
-    community.general.ansible_galaxy_install:
-      type: role
-      name: geerlingguy.apach
