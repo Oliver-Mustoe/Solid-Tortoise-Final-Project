@@ -23,7 +23,7 @@
       state: present
 
   - name: Join the domain
-    ansible.builtin.shell: "echo {{ domain_admin_1_password }} | realm join --user={{ domain_admin_1_user }} tortoise.local"
+    ansible.builtin.shell: "sudo -sh -c 'echo {{ domain_admin_1_password }} | realm join --user={{ domain_admin_1_user }} tortoise.local'"
 
   - name: Give sssd.conf the appropriate permissions
     ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
