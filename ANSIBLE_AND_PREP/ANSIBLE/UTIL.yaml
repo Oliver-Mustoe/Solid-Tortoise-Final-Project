@@ -21,23 +21,20 @@
         - samba-common-tools
         - krb5-workstation
         # Below is needed for expect module to work
-        - epel-release
-        - python3-paramiko
-        - pip
-        - setuptools
+        - python-pip
+        - python-setuptools
       state: present
    
   # Needed for expect module
   - name: Install pexpect
     ansible.builtin.pip:
       name: pexpect
-      executable: pip3
       
   - name: Join the domain
     ansible.builtin.expect:
-      command: "realm join -U {{ domain_admin_1_user }} tortoise.local"
+      command: realm join -U "{{ domain_admin_1_user }}" tortoise.local
       responses:
-         Password*: "{{ domain_admin_1_password }}" 
+         Password*: "{{ domain_admin_1_password }}"
 
   - name: Give sssd.conf the appropriate permissions
     ansible.builtin.shell: sudo sh -c "chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd"
@@ -54,5 +51,4 @@
   - name: Add Apache role
     include_role:
       name: geerlingguy.apache
-    vars:
-      dir: '~/'
+
