@@ -5,6 +5,8 @@
 - name: Add UTIL to the domain
   hosts: util
   become: yes
+  become_user: root
+  become_method: sudo
   tasks:
   - name: Install all needed pre-requisites
     # Could use 'ansible.builtin.package' instead
@@ -25,13 +27,13 @@
 
     # Spawns initial command, expects a response and sends it, then exits
   - name: Join the domain
-    ansible.builtin.shell: | 
+    ansible.builtin.shell: |
       set timeout 60
       
-      spawn "sudo realm join -U {{ domain_admin_1_user }} tortoise.local"
+      spawn "realm join -U {{ domain_admin_1_user }} tortoise.local"
       
-      expect "password for {{ domain_admin_1_user }}*"
-      send "{{ domain_admin_1_password }}"
+      expect "Password for {{ domain_admin_1_user }}:"
+      send "{{ domain_admin_1_password }}\n"
 
       exit 0
     args:
