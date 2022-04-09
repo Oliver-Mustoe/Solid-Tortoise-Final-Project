@@ -22,14 +22,16 @@
         - krb5-workstation
         # Below is needed for expect module to work
         - epel-release
-        - python3-pip
-        - python3-setuptools
+        - python3-paramiko
+        - pip
+        - setuptools
       state: present
    
   # Needed for expect module
   - name: Install pexpect
     ansible.builtin.pip:
       name: pexpect
+      executable: pip3
       
   - name: Join the domain
     ansible.builtin.expect:
