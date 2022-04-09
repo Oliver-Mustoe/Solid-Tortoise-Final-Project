@@ -5,6 +5,7 @@
 - hosts: mgmt01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
+    ansible_password: "{{ domain_admin_1_password }}"
     ansible_shell_type: powershell
   tasks:
    - name: Install needed RSTAT tools

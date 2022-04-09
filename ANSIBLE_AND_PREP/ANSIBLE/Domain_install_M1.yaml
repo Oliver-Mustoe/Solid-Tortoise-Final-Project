@@ -10,6 +10,7 @@
   hosts: dc01
   vars:
     ansible_user: "{{ dc01_local_user }}"
+    ansible_password: "{{ dc01_local_password }}"
     ansible_shell_type: powershell
   tasks:
   - name: Install Active Directory Domain Services on dc01
@@ -59,6 +60,7 @@
 - hosts: mgmt01
   vars:
     ansible_user: "{{ mgmt01_local_user }}"
+    ansible_password: "{{ mgmt01_local_password }}"
     ansible_shell_type: powershell
   tasks:
   - name: Change mgmt01 dns to point to domain controllers
@@ -86,6 +88,7 @@
   hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
+    ansible_password: "{{ domain_admin_1_password }}"
     ansible_shell_type: powershell
   tasks:
   - name: Create reverse-lookup zone

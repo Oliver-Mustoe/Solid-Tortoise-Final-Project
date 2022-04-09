@@ -21,10 +21,10 @@ sudo su - deployer -c 'pip3 install ansible'
 wait
 
 # Generate SSH key for ansible as the deployer user
-sudo su - deployer -c 'ssh-keygen -t rsa -C "controller"'
+sudo su - deployer -c 'ssh-keygen -t rsa'
 
 # Let user know what they now need to do
-echo "[Will need to git clone https://Solid-Tortoise/Oliver-Mustoe/Solid-Tortoise], and run 'Ansible_Install.bash'"
+echo "[Will need to git clone https://Solid-Tortoise/Oliver-Mustoe/Solid-Tortoise for deployer]"
 
 # Prompts user that system will now reboot
 read -p "Your system will now reboot..."
