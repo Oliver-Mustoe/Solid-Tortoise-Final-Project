@@ -39,7 +39,7 @@
       
   - name: Join the domain
     ansible.builtin.expect:
-      command: /bin/bash -c "realm join -U {{ domain_admin_1_user }} tortoise.local"
+      command: "realm join -U {{ domain_admin_1_user }} tortoise.local"
       responses:
          Password*: "{{ domain_admin_1_password }}"
 
