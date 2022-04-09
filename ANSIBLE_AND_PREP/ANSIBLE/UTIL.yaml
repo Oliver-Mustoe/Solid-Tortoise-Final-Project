@@ -1,5 +1,5 @@
 # Adds UTIL to the domain, then setups a webserver on it
-# Version 0.2
+# Version 0.5
 
 # Get UTIL running in the domain, example of getting a linux machine running in the domain
 - name: Add UTIL to the domain
@@ -21,6 +21,7 @@
         - samba-common-tools
         - krb5-workstation
         # Below is needed for expect module to work
+        - epel-release
         - python-pip
         - python-setuptools
       state: present
