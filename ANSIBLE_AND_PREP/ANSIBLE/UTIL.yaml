@@ -22,10 +22,15 @@
         - krb5-workstation
         # Below is needed for expect module to work
         - epel-release
+      state: present
+
+  # This too
+  - name: Install Items for pip module
+    ansible.builting.yum:
+      name:
         - python-pip
         - python-setuptools
-      state: present
-   
+    
   # Needed for expect module
   - name: Install pexpect
     ansible.builtin.pip:
