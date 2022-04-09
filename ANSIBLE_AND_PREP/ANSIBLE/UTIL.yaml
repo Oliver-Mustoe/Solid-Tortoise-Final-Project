@@ -18,7 +18,7 @@
         - policycoreutils-python
         - samba-common
         - samba-common-tools
-        - krb5-workstation -y
+        - krb5-workstation
       state: present
 
   - name: Join the domain
