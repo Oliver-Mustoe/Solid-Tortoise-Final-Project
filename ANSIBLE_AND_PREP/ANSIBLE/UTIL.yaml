@@ -5,8 +5,6 @@
 - name: Add UTIL to the domain
   hosts: util
   become: yes
-  become_user: root
-  become_method: sudo
   tasks:
   - name: Install all needed pre-requisites
     # Could use 'ansible.builtin.package' instead
@@ -22,22 +20,16 @@
         - samba-common
         - samba-common-tools
         - krb5-workstation
-        - expect
+        # Python and pexpext needed for expect module
+        - python
+        - pexpect
       state: present
 
-    # Spawns initial command, expects a response and sends it, then exits
   - name: Join the domain
-    ansible.builtin.shell: |
-      set timeout 60
-      
-      spawn "realm join -U {{ domain_admin_1_user }} tortoise.local"
-      
-      expect "Password for {{ domain_admin_1_user }}:"
-      send "{{ domain_admin_1_password }}\n"
-
-      exit 0
-    args:
-      executable: /usr/bin/expect
+    ansible.builtin.expect:
+      command: "realm join -U {{ domain_admin_1_user }} tortoise.local"
+      responses:
+         Password*: "{{ domain_admin_1_password }}" 
 
   - name: Give sssd.conf the appropriate permissions
     ansible.builtin.shell: sudo sh -c "chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd"

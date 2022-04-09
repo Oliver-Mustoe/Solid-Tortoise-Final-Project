@@ -5,12 +5,15 @@
 - name: Configure DHCP
   hosts: localhost
   connection: local
+  # Become an administrator
+  become: yes
   tasks:
   - name: Run dhcp configure script
     ansible.builtin.shell: bash ~/Solid-Tortoise-Final-Project/dhcp_script.sh
 
 # Ensure DHCP is running
 - hosts: dhcp01,dhcp02
+  become: yes
   tasks:
   - name: Ensure DHCP is in a running state
     service:
