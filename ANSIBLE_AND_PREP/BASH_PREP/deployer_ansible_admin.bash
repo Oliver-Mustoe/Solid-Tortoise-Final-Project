@@ -16,7 +16,7 @@ sudo cp sys265 /etc/sudoers.d/sys265
 sudo su - deployer -c 'sudo apt install pip sshpass python3-paramiko -y'
 wait
 
-# Installs Ansible
+# Installs Ansible, (pip3 for python3)
 sudo su - deployer -c 'pip3 install ansible'
 wait
 

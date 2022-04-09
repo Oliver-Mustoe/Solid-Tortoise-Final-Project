@@ -91,7 +91,6 @@ https://superuser.com/questions/1319402/passwordless-ssh-from-linux-to-windows
 
 https://docs.ansible.com/ansible/latest/collections/community/general/ansible_galaxy_install_module.html
 
-https://www.reddit.com/r/ansible/comments/d3m7wz/alternatives_to_expect_module/
-
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html#examples
 
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html

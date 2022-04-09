@@ -20,11 +20,17 @@
         - samba-common
         - samba-common-tools
         - krb5-workstation
-        # Python and pexpext needed for expect module
-        - python
-        - pexpect
+        # Below is needed for expect module to work
+        - epel-release
+        - python3-pip
+        - python3-setuptools
       state: present
-
+   
+  # Needed for expect module
+  - name: Install pexpect
+    ansible.builtin.pip:
+      name: pexpect
+      
   - name: Join the domain
     ansible.builtin.expect:
       command: "realm join -U {{ domain_admin_1_user }} tortoise.local"
