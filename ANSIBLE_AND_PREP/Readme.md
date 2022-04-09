@@ -87,3 +87,4 @@ https://www.golinuxcloud.com/add-linux-to-windows-ad-domain-realm/
 
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/expect_module.html
 
+https://superuser.com/questions/1319402/passwordless-ssh-from-linux-to-windows

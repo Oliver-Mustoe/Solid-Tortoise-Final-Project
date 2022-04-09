@@ -6,7 +6,6 @@
 - hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
-    ansible_password: "{{ domain_admin_1_password }}"
     ansible_shell_type: powershell
   tasks:
   # Make sure that DNS zones exist
