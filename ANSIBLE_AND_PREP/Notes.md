@@ -11,7 +11,7 @@ This happens due to a key issue when re-running the install command from what I 
 Steps to add keys to Windows hosts:
 1. Use OpenSSH_Configer.ps1 on windows host (or its commands, host needs to be named)
 2. Append windows host keys to authorized keys on mgmt02 (.ssh/authorized_keys)
-3. Copy keys from mgmt02 to the windows host authorized keys (command from deplyer_ansible_admin.bash)
+3. Copy keys from mgmt02 to the windows host authorized keys (scp ~/.ssh/id_rsa.pub (USERNAME)@(HOST):/C:/ProgramData/ssh/administrators_authorized_keys)
 4. Run Authorized_keys.ps1 (or its commands)
 (2 & 3 can be done in any order)
 
@@ -29,3 +29,11 @@ Make sure to run a "eval $(ssh-agent)" & "ssh-add -t 'PLACEHOLDER, INPUT NUMBER 
 
 ---
 BEFORE windows workstation install, ssh to host to see if it is using mgmt02 keys or not. Any host that does not require a special password, using the mgmt02 password, they no longer need the password variable in the playbooks.
+
+---
+HIGHLY RECOMMENDED TO RUN PLAYBOOKS WITH:  
+"--syntaxt-check" TO ENSURE PROPER SYNTAX
+"--check" TO DRY RUN THE PLAYBOOK
+
+---
+ssh-copy-id -i ~/.ssh/mykey deployer@(HOST)' to copy your SSH to Linux users

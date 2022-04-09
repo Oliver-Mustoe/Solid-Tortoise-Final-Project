@@ -44,7 +44,7 @@
     community.windows.win_dns_record:
       name: "dc01"
       type: "A"
-      value: "172.16.1.20"
+      value: "172.16.1.12"
       zone: "tortoise.local"
       
   - name: Create dc02 A record
@@ -122,7 +122,7 @@
 
   - name: Create dc01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.20"
+      name: "172.16.1.12"
       type: "PTR"
       value: "dc01"
       zone: "172.16.1-addr.arpa"

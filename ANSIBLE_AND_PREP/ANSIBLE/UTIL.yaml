@@ -1,0 +1,43 @@
+# Adds UTIL to the domain, then setups a webserver on it
+# Version 0.2
+
+# Get UTIL running in the domain, example of getting a linux machine running in the domain
+- name: Add UTIL to the domain
+  hosts: util
+  tasks:
+  - name: Install all needed pre-requisites
+    # Could use 'ansible.builtin.package' instead
+    ansible.builtin.yum:
+      name:
+        - realmd
+        - oddjob 
+        - oddjob-mkhomedir
+        - sssd
+        - adcli
+        - openldap-clients
+        - policycoreutils-python
+        - samba-common
+        - samba-common-tools
+        - krb5-workstation -y
+      state: present
+
+  - name: Join the domain
+    ansible.builtin.expect:
+      command: "realm join --user={{ domain_admin_1_user }} tortoise.local"
+      responses:
+        (?i)password: "{{ domain_admin_1_user }}"
+  # no passwords in logs
+    no_log: true
+
+  - name: Give sssd.conf the appropriate permissions
+    ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
+
+  - name: Ensure that sssd is running
+    service:
+      name: sssd
+      state: started
+    register: sssd_start
+    until: sssd_start.status.ActiveState == "active"
+    retries: 50
+    delay: 10
+# Example end here
