@@ -30,7 +30,7 @@
       
       spawn "sudo realm join -U {{ domain_admin_1_user }} tortoise.local"
       
-      expect "password for {{ domain_admin_1_user }}"
+      expect "password for {{ domain_admin_1_user }}*"
       send "{{ domain_admin_1_password }}"
 
       exit 0
@@ -38,7 +38,7 @@
       executable: /usr/bin/expect
 
   - name: Give sssd.conf the appropriate permissions
-    ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
+    ansible.builtin.shell: sudo sh -c "chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd"
 
   - name: Ensure that sssd is running
     service:
