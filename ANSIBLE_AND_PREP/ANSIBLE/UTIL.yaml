@@ -44,7 +44,7 @@
          Password*: "{{ domain_admin_1_password }}"
 
   - name: Give sssd.conf the appropriate permissions
-    ansible.builtin.shell: sudo sh -c "chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd"
+    ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
 
   - name: Ensure that sssd is running
     service:
@@ -55,7 +55,26 @@
     retries: 50
     delay: 10
 # Example end here
+
   - name: Add Apache role
     include_role:
       name: geerlingguy.apache
 
+  - name: Setup a basic HTML page
+    ansible.builtin.copy:
+       dest: "/var/www/html/index.html"
+       content: |
+         <html>
+         <head>
+         <title>
+         Solid-Tortoise
+         </title>
+         </head>
+         <body>
+         <center>
+         <h1>
+         WELCOME TO SOLID-TORTOISE INTERNENT EDITION
+         </h1>
+         </center>
+         </body>
+         </html>

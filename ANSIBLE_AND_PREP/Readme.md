@@ -94,3 +94,5 @@ https://docs.ansible.com/ansible/latest/collections/community/general/ansible_ga
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html#examples
 
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html
+
+https://phoenixnap.com/kb/ansible-create-file
