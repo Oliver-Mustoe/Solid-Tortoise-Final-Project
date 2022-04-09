@@ -96,3 +96,5 @@ https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html
 
 https://phoenixnap.com/kb/ansible-create-file
+
+https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html

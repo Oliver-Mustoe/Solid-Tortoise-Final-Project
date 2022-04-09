@@ -73,8 +73,14 @@
          <body>
          <center>
          <h1>
-         WELCOME TO SOLID-TORTOISE INTERNENT EDITION
+         WELCOME TO SOLID-TORTOISE INTERNET EDITION
          </h1>
          </center>
          </body>
          </html>
+  
+  - name: Open Firewall
+    ansible.posix.firewalld:
+      service: http
+      permanent: yes
+      state: enabled
