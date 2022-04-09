@@ -30,7 +30,8 @@
       name:
         - python-pip
         - python-setuptools
-    
+      state: present
+      
   # Needed for expect module
   - name: Install pexpect
     ansible.builtin.pip:
