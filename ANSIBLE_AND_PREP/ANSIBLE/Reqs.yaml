@@ -14,3 +14,9 @@
     community.general.ansible_galaxy_install:
       type: collection
       name: community.windows
+
+  - name: Install Apache role
+  community.general.ansible_galaxy_install:
+    type: role
+    name: geerlingguy.apache
+    dest: ~/
