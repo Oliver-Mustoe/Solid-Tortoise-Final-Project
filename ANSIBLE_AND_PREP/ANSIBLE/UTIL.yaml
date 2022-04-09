@@ -22,8 +22,19 @@
         - krb5-workstation
       state: present
 
+    # Spawns initial command, expects a response and sends it, then exits
   - name: Join the domain
-    ansible.builtin.shell: "printf y\n{{ domain_admin_1_password }}\n | sudo realm join -U {{ domain_admin_1_user }} tortoise.local'"
+    ansible.builtin.shell: | 
+      set timeout 60
+      
+      spawn "sudo realm join -U {{ domain_admin_1_user }} tortoise.local"
+      
+      expect "password for {{ domain_admin_1_user }}"
+      send "{{ domain_admin_1_password }}"
+
+      exit 0
+    args:
+      executable: /usr/bin/expect
 
   - name: Give sssd.conf the appropriate permissions
     ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
