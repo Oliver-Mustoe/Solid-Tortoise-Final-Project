@@ -1,7 +1,7 @@
 # Installs needed/wanted software on many different guests, Milestone 1 must have been completed
 # Version 0.1
 
-# RSAT tools for mgmt01
+# RSAT tools for mgmt01, this dont work
 - hosts: mgmt01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
