@@ -1,12 +1,22 @@
-# Installs needed/wanted software on many different guests, Milestone 1 must have been completed
+# Installs needed/wanted software on many different guests & a test linux user account
 # Version 0.1
 
-# RSAT tools for mgmt01, this dont work
-- hosts: mgmt01
-  vars:
-    ansible_user: "{{ domain_admin_1_user }}"
-    ansible_shell_type: powershell
+# Makes a linux user and installs neofetch
+- name: Configure DHCP
+  hosts: localhost
+  connection: local
+  # Become an administrator
+  become: yes
   tasks:
-   - name: Install needed RSTAT tools
-     ansible.windows.win_shell: Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online
-     
+  
+  - name: Add the linux test user
+    ansible.builtin.user:
+      name: "{{ linux_test_user }}"
+      password: "{{ linux_test_password }}"
+      comment: A test user
+      state: present
+  
+  - name: Install neofetch
+    ansible.builtin.apt:
+      name: neofetch
+      state: present

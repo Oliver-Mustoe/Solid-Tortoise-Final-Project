@@ -13,4 +13,7 @@ wks02_local_user:
 domain_admin_1_user: 
 domain_admin_1_password: 
 
+linux_test_user: 
+linux_test_password: 
+
 safemode_password: 

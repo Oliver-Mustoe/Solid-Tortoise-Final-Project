@@ -4,6 +4,7 @@
 # Add deployer user
 sudo useradd -mk /etc/skel -s /bin/bash -d /home/deployer -G wheel deployer
 
+echo "SET THE SAME PASSWORD AS ON THE ADMIN NODE"
 # Set a password for "deployer" (will require a prompt, MUST BE SAME ACROSS ALL SYSTEMS)
 sudo passwd deployer
 wait

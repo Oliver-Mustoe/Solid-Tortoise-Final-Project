@@ -98,3 +98,6 @@ https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.h
 https://phoenixnap.com/kb/ansible-create-file
 
 https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html
+
+https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+
