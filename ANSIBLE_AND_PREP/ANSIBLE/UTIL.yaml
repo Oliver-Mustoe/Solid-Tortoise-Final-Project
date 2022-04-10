@@ -20,6 +20,7 @@
         - samba-common
         - samba-common-tools
         - krb5-workstation
+        - httpd
         # Below is needed for expect module to work
         - epel-release
       state: present
@@ -56,10 +57,6 @@
     delay: 10
 # Example end here
 
-  - name: Add Apache role
-    include_role:
-      name: geerlingguy.apache
-
   - name: Setup a basic HTML page
     ansible.builtin.copy:
        dest: "/var/www/html/index.html"
@@ -85,3 +82,10 @@
       permanent: yes
       immediate: yes
       state: enabled
+  
+  - name: Start Apache
+    ansible.builtin.service:
+      name: httpd
+      enabled: yes
+      # Restarted since it applies to all cases
+      state: restarted
