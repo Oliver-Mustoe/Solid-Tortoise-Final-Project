@@ -20,10 +20,13 @@
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     ansible_shell_type: powershell
-  community.windows.win_timezone:
-    timezone: Eastern Standard Time
+  tasks:
+    - community.windows.win_timezone:
+        timezone: Eastern Standard Time
   
 - name: Set Linux Timezones to 'America/New_York'
   hosts: linux
-  community.general.timezone:
-    name: America/New_York
+  become: true
+  tasks:
+    - community.general.timezone:
+      name: America/New_York
