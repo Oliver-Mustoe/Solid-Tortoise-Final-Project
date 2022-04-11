@@ -15,17 +15,15 @@
       type: collection
       name: community.windows
   
-  - name: Install collection 'community.general'
-    community.general.ansible_galaxy_install:
-      type: collection
-      name: community.general
-  
-- name: Set Windows Timezones
+- name: Set Windows Timezones to 'Eastern Standard Time'
   hosts: windows
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
   community.windows.win_timezone:
     timezone: Eastern Standard Time
   
-- name: Set Linux Timezones
+- name: Set Linux Timezones to 'America/New_York'
   hosts: linux
   community.general.timezone:
     name: America/New_York

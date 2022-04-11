@@ -101,3 +101,6 @@ https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_modu
 
 https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
 
+https://docs.ansible.com/ansible/latest/collections/community/general/timezone_module.html
+
+https://docs.ansible.com/ansible/latest/collections/community/windows/win_timezone_module.html
