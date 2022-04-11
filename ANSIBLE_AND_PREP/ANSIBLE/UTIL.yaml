@@ -61,4 +61,5 @@
 # Example end here
 
   - name: Install 'geerlingguy.clamav'
-    include_role: geerlingguy.clamav
+    include_role:
+      name: geerlingguy.clamav
