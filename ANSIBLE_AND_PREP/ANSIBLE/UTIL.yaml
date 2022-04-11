@@ -2,6 +2,9 @@
 # Version 1.0 - NEEDS DOUBLE CHECK
 
 # Get UTIL running in the domain, example of getting a linux machine running in the domain
+- name: Pre-Reqs
+  import_playbook: util_reqs.yaml
+
 - name: Add UTIL to the domain
   hosts: util
   become: yes
@@ -48,7 +51,7 @@
     ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
 
   - name: Ensure that sssd is running
-    service:
+    ansible.builtin.service:
       name: sssd
       state: started
     register: sssd_start
@@ -57,35 +60,5 @@
     delay: 10
 # Example end here
 
-  - name: Setup a basic HTML page
-    ansible.builtin.copy:
-       dest: "/var/www/html/index.html"
-       content: |
-         <html>
-         <head>
-         <title>
-         Solid-Tortoise
-         </title>
-         </head>
-         <body>
-         <center>
-         <h1>
-         WELCOME TO SOLID-TORTOISE INTERNET EDITION
-         </h1>
-         </center>
-         </body>
-         </html>
-  
-  - name: Open Firewall
-    ansible.posix.firewalld:
-      port: 80/tcp
-      permanent: yes
-      immediate: yes
-      state: enabled
-  
-  - name: Start Apache
-    ansible.builtin.service:
-      name: httpd
-      enabled: yes
-      # Restarted since it applies to all cases
-      state: restarted
+  - name: Install 'geerlingguy.clamav'
+    include_role: geerlingguy.clamav
