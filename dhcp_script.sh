@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version 0.4
+# Version 0.5
 
 # Config Source: https://www.lisenet.com/2018/configure-dhcp-failover-with-dynamic-dns-on-centos-7/ 
 
