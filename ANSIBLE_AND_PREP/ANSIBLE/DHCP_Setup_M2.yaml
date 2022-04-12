@@ -9,7 +9,7 @@
   become: yes
   tasks:
   - name: Run dhcp configure script
-    ansible.builtin.shell: bash ~/Solid-Tortoise-Final-Project/dhcp_script.sh
+    ansible.builtin.shell: bash /home/deployer/Solid-Tortoise/dhcp_script.sh
 
 # Ensure DHCP is running
 - hosts: dhcp01,dhcp02
@@ -32,9 +32,4 @@
     ansible_shell_type: powershell
   tasks:
    - name: Set workstations to get new DNS
-     ansible.windows.win_dns_client:
-       adapter_names: 'Ethernet*'
-       dns_servers: []
-
-   - name: Refresh DNS
-     ansible.windows.win_shell: ipconfig /release; ipconfig /renew
+     ansible.windows.win_shell: netsh interface ip set address "Ethernet*" dhcp
