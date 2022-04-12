@@ -1,4 +1,4 @@
-# Ensure that Milestone 1 is ran, installs and setups DHCP
+# Ensure that Milestone 1 is ran, installs and setups DHCP, TIME ON BOTH DHCP MACHINES MUST BE THE SAME!!!!!!!!!
 # Version 0.1
 
 # Setup DHCP
