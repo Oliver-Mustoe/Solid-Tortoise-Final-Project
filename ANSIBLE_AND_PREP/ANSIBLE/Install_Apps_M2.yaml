@@ -2,7 +2,7 @@
 # Version 0.1
 
 # Makes a linux user and installs neofetch
-- name: Configure DHCP
+- name: Install Apps
   hosts: localhost
   connection: local
   # Become an administrator
