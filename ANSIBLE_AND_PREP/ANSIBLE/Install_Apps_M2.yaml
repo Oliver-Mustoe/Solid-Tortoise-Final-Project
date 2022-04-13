@@ -1,5 +1,5 @@
 # Installs needed/wanted software on many different guests & a test linux user account
-# Version 0.1
+# Version 1.0
 
 # Makes a linux user and installs neofetch
 - name: Install Apps

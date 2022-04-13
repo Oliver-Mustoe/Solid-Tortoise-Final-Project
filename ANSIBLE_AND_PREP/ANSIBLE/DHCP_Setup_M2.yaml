@@ -1,5 +1,5 @@
 # Ensure that Milestone 1 is ran, installs and setups DHCP, TIME ON BOTH DHCP MACHINES MUST BE THE SAME!!!!!!!!!
-# Version 0.1
+# Version 1.0
 
 # Setup DHCP
 - name: Configure DHCP
@@ -9,7 +9,7 @@
   become: yes
   tasks:
   - name: Run dhcp configure script
-    ansible.builtin.shell: bash /home/deployer/Solid-Tortoise/dhcp_script.sh
+    ansible.builtin.shell: bash /home/hatchling/Solid-Tortoise/dhcp_script.sh
 
 # Ensure DHCP is running
 - hosts: dhcp01,dhcp02

@@ -1,5 +1,5 @@
 # Installs all needed prerequsites for milestones
-# Version 0.1
+# Version 1.0
 
 - name: Install prereqs
   hosts: localhost

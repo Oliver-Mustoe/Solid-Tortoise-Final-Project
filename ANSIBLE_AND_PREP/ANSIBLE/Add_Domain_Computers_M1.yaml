@@ -16,9 +16,6 @@
     ansible.windows.win_dns_client:
       adapter_names: 'Ethernet*'
       dns_servers:
-      # May need to remove this
-      - 172.16.1.2
-      # ^ This
       - 172.16.1.12
     
   - name: Make dc02 into a domain controller
