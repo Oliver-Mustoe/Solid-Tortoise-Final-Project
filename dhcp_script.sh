@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version 0.4
+# Version 0.5
 
 # Config Source: https://www.lisenet.com/2018/configure-dhcp-failover-with-dynamic-dns-on-centos-7/ 
 
@@ -12,8 +12,10 @@ ssh root@172.16.1.10 <<END
   systemctl restart dhcpd
   systemctl enable dhcpd
   firewall-cmd --add-service=dhcp --permanent
+  firewall-cmd --add-port=647/tcp --permanent
   firewall-cmd --add-port=647/udp --permanent
   firewall-cmd --reload
+  systemctl restart dhcpd
 END
 
 ssh root@172.16.1.11 <<END
@@ -24,6 +26,8 @@ ssh root@172.16.1.11 <<END
   systemctl restart dhcpd
   systemctl enable dhcpd
   firewall-cmd --add-service=dhcp --permanent
+  firewall-cmd --add-port=647/tcp --permanent
   firewall-cmd --add-port=647/udp --permanent
   firewall-cmd --reload
+  systemctl restart dhcpd
 END

@@ -1,0 +1,90 @@
+@startuml
+
+title Tortoise Network
+
+class WAN {
+  +IP: 10.0.17.202
+}
+
+class FW01 {
+  +IP: 172.16.1.2
+  +OS: pfsense
+}
+
+class Network {
+  +LAN: 172.16.1.0/24
+}
+
+class MGMT01 {
+  +IP: 172.16.1.14
+  +OS: Microsoft Windows Server 2019 (64-bit)
+}
+
+class MGMT02 {
+  +IP: 172.16.1.16
+  +OS: Ubuntu
+  +Service: Ansible
+}
+
+class DC01 {
+  +IP: 172.16.1.20
+  +OS: Windows Server Core
+  +Service: Active Directory, Domain Services, DNS
+}
+
+class DC02 {
+  +IP: 172.16.1.13
+  +OS: Windows Server Core
+  +Service: Active Directory, Domain Services, DNS
+}
+
+class WKS1 {
+  +IP: DHCP
+  +OS: Microsoft Windows 10
+}
+
+class WKS2 {
+  +IP: DHCP
+  +OS: Microsoft Windows 10
+}
+
+class DHCP01 {
+  +IP: 172.16.1.10
+  +OS: Centos 7
+  +Service: DHCP
+}
+
+class DHCP02 {
+  +IP: 172.16.1.11
+  +OS: Centos 7
+  +Service: DHCP
+}
+
+class UTIL {
+  +IP: 172.16.1.15
+  +OS: Centos 7
+}
+
+class Domain {
+  +tortoise.local
+}
+
+FW01 <|-up- WAN
+Domain <|-up- DC01
+Domain <|-up- DC02
+Network <|-up- FW01
+DC01 <|-up- Network
+DC02 <|-up- Network
+Domain <|-down- MGMT01
+Domain <|-down- MGMT02
+MGMT01 <|-up- Domain
+MGMT02 <|-up- Domain
+UTIL <|-up- Domain
+DHCP01 <|-up- Domain
+DHCP02 <|-up- Domain
+WKS1 <|-up- DHCP01
+WKS1 <|-up- DHCP02
+WKS2 <|-up- DHCP01
+WKS2 <|-up- DHCP02
+
+@enduml
