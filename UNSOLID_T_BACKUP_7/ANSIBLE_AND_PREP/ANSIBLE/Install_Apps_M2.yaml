@@ -1,0 +1,22 @@
+# Installs needed/wanted software on many different guests & a test linux user account
+# Version 0.1
+
+# Makes a linux user and installs neofetch
+- name: Install Apps
+  hosts: localhost
+  connection: local
+  # Become an administrator
+  become: yes
+  tasks:
+  
+  - name: Add the linux test user
+    ansible.builtin.user:
+      name: "{{ linux_test_user }}"
+      generate_ssh_key: yes
+      state: present
+  
+  
+  - name: Install neofetch
+    ansible.builtin.apt:
+      name: neofetch
+      state: present
