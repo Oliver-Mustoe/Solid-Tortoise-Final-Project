@@ -12,9 +12,9 @@
   - name: Add the linux test user
     ansible.builtin.user:
       name: "{{ linux_test_user }}"
-      password: "{{ linux_test_password }}"
-      comment: A test user
+      generate_ssh_key: yes
       state: present
+  
   
   - name: Install neofetch
     ansible.builtin.apt:
