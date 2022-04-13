@@ -28,7 +28,7 @@
 - name: Set Windows workstations to use DHCP
   hosts: wks01,wks02
   vars:
-    ansible_user: administrator
+    ansible_user: "{{ domain_admin_1_user }}"
     ansible_shell_type: powershell
   tasks:
    - name: Set workstations to get new DNS
