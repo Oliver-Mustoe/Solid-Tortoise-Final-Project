@@ -21,3 +21,15 @@
 
 [util]
 172.16.1.15
+
+[windows:children]
+dc01
+dc02
+mgmt01
+wks01
+wks02
+
+[linux:children]
+dhcp01
+dhcp02
+util

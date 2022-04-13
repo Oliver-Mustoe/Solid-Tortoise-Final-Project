@@ -90,3 +90,17 @@ https://docs.ansible.com/ansible/latest/collections/ansible/builtin/expect_modul
 https://superuser.com/questions/1319402/passwordless-ssh-from-linux-to-windows
 
 https://docs.ansible.com/ansible/latest/collections/community/general/ansible_galaxy_install_module.html
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html#examples
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html
+
+https://phoenixnap.com/kb/ansible-create-file
+
+https://docs.ansible.com/ansible/latest/collections/ansible/posix/firewalld_module.html
+
+https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+
+https://docs.ansible.com/ansible/latest/collections/community/general/timezone_module.html
+
+https://docs.ansible.com/ansible/latest/collections/community/windows/win_timezone_module.html

@@ -1,0 +1,11 @@
+# This file installs the requirments for util, excluded from main reqs since it is ONLY required for util
+# Version 1.0
+
+- name: Install prereqs
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Install role 'geerlingguy.clamav'
+    community.general.ansible_galaxy_install:
+      type: role
+      name: geerlingguy.clamav

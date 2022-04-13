@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install pre-requisites for ansible
+# Install pre-requisites for ansible, LEGACY
 # Version 1.0 - NEEDS DOUBLE CHECK
 
 # Install needed prerequisites

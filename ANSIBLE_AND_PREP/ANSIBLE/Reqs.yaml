@@ -1,5 +1,5 @@
 # Installs all needed prerequsites for milestones
-# Version 0.1
+# Version 1.0
 
 - name: Install prereqs
   hosts: localhost
@@ -15,8 +15,19 @@
       type: collection
       name: community.windows
 
-  - name: Install Apache role
-    community.general.ansible_galaxy_install:
-      type: role
-      name: geerlingguy.apache
-      dest: ~/
+# Any failures in this and the linux sections "gathering" phase is fine since it most likely means the computer just isn't on :)
+- name: Set Windows Timezones to 'Eastern Standard Time'
+  hosts: windows
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+    - community.windows.win_timezone:
+        timezone: Eastern Standard Time
+  
+- name: Set Linux Timezones to 'America/New_York'
+  hosts: linux
+  become: true
+  tasks:
+    - community.general.timezone:
+        name: America/New_York
