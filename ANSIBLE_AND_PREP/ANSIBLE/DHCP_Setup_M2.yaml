@@ -9,7 +9,7 @@
   become: yes
   tasks:
   - name: Run dhcp configure script
-    ansible.builtin.shell: bash /home/deployer/Solid-Tortoise/dhcp_script.sh
+    ansible.builtin.shell: bash /home/hatchling/Solid-Tortoise/dhcp_script.sh
 
 # Ensure DHCP is running
 - hosts: dhcp01,dhcp02
