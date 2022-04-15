@@ -104,3 +104,8 @@ https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
 https://docs.ansible.com/ansible/latest/collections/community/general/timezone_module.html
 
 https://docs.ansible.com/ansible/latest/collections/community/windows/win_timezone_module.html
+
+https://stackoverflow.com/questions/36290485/how-to-add-user-and-group-without-a-password-using-ansible
+
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_prompts.html
+
