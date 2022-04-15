@@ -7,12 +7,22 @@
   connection: local
   # Become an administrator
   become: yes
+  vars_prompt:
+
+   - name: linux_test_password
+     prompt: Please enter a password for "{{ linux_test_user }}"
+     private: yes
+     encrypt: sha512_crypt
+     confirm: yes
+     
   tasks:
-  
+
   - name: Add the linux test user
     ansible.builtin.user:
       name: "{{ linux_test_user }}"
-      generate_ssh_key: yes
+      password: "{{ linux_test_password}}"
+      shell: /bin/bash
+      create_home: yes
       state: present
   
   
