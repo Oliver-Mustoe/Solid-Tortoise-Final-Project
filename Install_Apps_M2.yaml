@@ -12,7 +12,8 @@
   - name: Add the linux test user
     ansible.builtin.user:
       name: "{{ linux_test_user }}"
-      shell: /bin/bash
+      shell: /sbin/nologin
+      create_home: yes
       state: present
   
   
