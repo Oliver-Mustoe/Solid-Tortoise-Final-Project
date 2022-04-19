@@ -1,0 +1,99 @@
+# CANNOT BE RUN TWICE!!!
+# Some information will need to be placed in all.yml
+# Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
+
+# Script to add all needed computers onto tortoise.local
+# Version 1.1 - NEEDS DOUBLE CHECK
+
+# Setup dc02 into the domain, install needed features, set as a domain controller
+- name: Add dc02 to the domain
+  hosts: dc02
+  vars:
+    ansible_user: "{{ dc02_local_user }}"
+    ansible_shell_type: powershell   
+  tasks:
+  - name: Change dc02 dns to point to domain controllers
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
+    
+  - name: Make dc02 into a domain controller
+    ansible.windows.win_domain_controller:
+      dns_domain_name: tortoise.local
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      safe_mode_password: "{{ safemode_password }}"
+      state: domain_controller
+    register: dc_promotion
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: dc_promotion.reboot_required
+
+- name: Reset DNS to the domain
+  hosts: dc02
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_password: "{{ domain_admin_1_password }}"
+    ansible_shell_type: powershell   
+  tasks:
+  - name: Reset DNS servers to self
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 127.0.0.1
+
+# Setup wks01 in the domain
+- name: Add wks01 to the domain
+  hosts: wks01
+  vars:
+    ansible_user: "{{ wks01_local_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Change wks01 dns to point to domain controllers
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
+      - 172.16.1.13
+
+  - name: Add wks01 to Domain
+    ansible.windows.win_domain_membership:
+      dns_domain_name: tortoise.local
+      hostname: wks01
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required
+
+# Setup wks02 in the domain
+- name: Add wks02
+  hosts: wks02
+  vars:
+    ansible_user: "{{ wks02_local_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Change wks02 dns to point to domain controllers
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
+      - 172.16.1.13
+
+  - name: Add wks02 to Domain
+    ansible.windows.win_domain_membership:
+      dns_domain_name: tortoise.local
+      hostname: wks02
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required

@@ -1,0 +1,65 @@
+# Adds UTIL to the domain, then setups a webserver on it
+# Version 1.0 - NEEDS DOUBLE CHECK
+
+# Get UTIL running in the domain, example of getting a linux machine running in the domain
+- name: Pre-Reqs
+  import_playbook: util_reqs.yaml
+
+- name: Add UTIL to the domain
+  hosts: util
+  become: yes
+  tasks:
+  - name: Install all needed pre-requisites
+    # Could use 'ansible.builtin.package' instead
+    ansible.builtin.yum:
+      name:
+        - realmd
+        - oddjob 
+        - oddjob-mkhomedir
+        - sssd
+        - adcli
+        - openldap-clients
+        - policycoreutils-python
+        - samba-common
+        - samba-common-tools
+        - krb5-workstation
+        - httpd
+        # Below is needed for expect module to work
+        - epel-release
+      state: present
+
+  # This too
+  - name: Install Items for pip module
+    ansible.builtin.yum:
+      name:
+        - python-pip
+        - python-setuptools
+      state: present
+
+  # Needed for expect module
+  - name: Install pexpect
+    ansible.builtin.pip:
+      name: pexpect
+      
+  - name: Join the domain
+    ansible.builtin.expect:
+      command: "realm join -U {{ domain_admin_1_user }} tortoise.local"
+      responses:
+         Password*: "{{ domain_admin_1_password }}"
+
+  - name: Give sssd.conf the appropriate permissions
+    ansible.builtin.shell: chown root:root /etc/sssd/sssd.conf; chmod 0600 /etc/sssd/sssd.conf; restorecon /etc/sssd/sssd.conf; authconfig --enablesssd --enablesssdauth --enablemkhomedir --update; systemctl start sssd; systemctl enable sssd
+
+  - name: Ensure that sssd is running
+    ansible.builtin.service:
+      name: sssd
+      state: started
+    register: sssd_start
+    until: sssd_start.status.ActiveState == "active"
+    retries: 50
+    delay: 10
+# Example end here
+
+  - name: Install 'geerlingguy.clamav'
+    include_role:
+      name: geerlingguy.clamav

@@ -1,0 +1,25 @@
+# Ensure that Milestone 1 is ran, installs and setups DHCP, TIME ON BOTH DHCP MACHINES MUST BE THE SAME!!!!!!!!!
+# Version 1.0
+
+# Setup DHCP
+- name: Configure DHCP
+  hosts: localhost
+  connection: local
+  # Become an administrator
+  become: yes
+  tasks:
+  - name: Run dhcp configure script
+    ansible.builtin.shell: bash /home/hatchling/Solid-Tortoise/dhcp_script.sh
+
+# Ensure DHCP is running
+- hosts: dhcp01,dhcp02
+  become: yes
+  tasks:
+  - name: Ensure DHCP is in a running state
+    service:
+      name: dhcpd
+      state: started
+    register: dhcp_start
+    until: dhcp_start.status.ActiveState == "active"
+    retries: 50
+    delay: 10
