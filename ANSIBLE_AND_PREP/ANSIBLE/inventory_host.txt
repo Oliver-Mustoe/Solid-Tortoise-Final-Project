@@ -1,0 +1,11 @@
+[windows]
+dc01
+dc02
+mgmt01
+wks01
+wks02
+
+[linux]
+dhcp01
+dhcp02
+util

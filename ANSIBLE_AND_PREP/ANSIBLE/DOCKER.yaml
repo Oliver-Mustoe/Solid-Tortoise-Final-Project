@@ -1,0 +1,35 @@
+# This playbook fully setups DOCKER
+
+- hosts: docker
+  become: true
+  tasks:
+    - name: Install prereqs
+      ansible.builtin.package:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+      state: present
+      update_cache: true
+
+    - name: Add Dockers GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Install docker-ce
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: true
+    # The "|" indicates multiline commands
+    - name: Install docker-compose
+      ansible.builtin.shell: |
+        curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose

@@ -1,0 +1,70 @@
+# This playbook fully setups DFS for the final milestone
+# Version 0.1
+
+# Setup DFS's to the domain
+- hosts: dfs01,df02
+  vars:
+    ansible_user: "{{ dfs01_local_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Change dfs dns to point to domain controllers
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
+      - 172.16.1.13
+
+  - name: Add dfs to Domain
+    ansible.windows.win_domain_membership:
+      dns_domain_name: tortoise.local
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+    
+
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required
+
+# Setup DFS
+- name: Install features and setup shared folders on DFS systems
+  hosts: dfs01,dfs02
+  vars:
+    ansible_user: "Administrator@tortoise.local"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Install needed features on DFS the systems
+    ansible.windows.win_feature:
+      name:
+      - FS-FileServer
+      - FS-DFS-Replication
+      state: present
+
+  - name: Create dfs01 shared folder
+    ansible.windows.win_shell: New-Item 'c:\dfs01' -ItemType Directory; New-SMBShare -Name dfs01 -Path 'c:\dfs01' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
+    when: ansible_hostname == 'dfs01'
+
+  - name: Create dfs02 shared folder
+    ansible.windows.win_shell: New-Item 'c:\dfs02' -ItemType Directory; New-SMBShare -Name dfs02 -Path 'c:\dfs02' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
+    when: ansible_hostname == 'dfs02'
+
+# Setup Namespace
+- name: Setup Namespace and replication
+  hosts: mgmt01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Install needed roles on MGMT01
+    ansible.windows.win_feature:
+      name:
+      - FS-DFS-Namespace
+      - FS-DFS-Replication
+      - RSAT-DFS-Mgmt-Con
+      include_management_tools: yes
+      state: present
+  
+  - name: Create Namespace "t-share"
+    ansible.windows.win_shell: |
+      PLACE SCRIPT HERE!!!!

@@ -1,14 +1,18 @@
 # Input variables for assigned sections here, recommended to vault this file after input using the command "ansible-vault encrypt $PATH/all.yml"
 # IF VAULTED USE THE COMMAND "ansible-vault edit" TO EDIT
-mgmt01_local_user: 
+mgmt01_local_user:  
 
 dc01_local_user: 
 
 dc02_local_user: 
 
-wks01_local_user:
+wks01_local_user: 
 
-wks02_local_user:
+wks02_local_user: 
+
+dfs01_local_user: 
+
+dfs02_local_user:
 
 domain_admin_1_user: 
 domain_admin_1_password: 
