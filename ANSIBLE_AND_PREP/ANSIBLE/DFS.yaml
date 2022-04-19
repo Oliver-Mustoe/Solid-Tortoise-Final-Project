@@ -53,7 +53,7 @@
 - name: Setup Namespace and replication
   hosts: mgmt01
   vars:
-    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_user: "Administrator@tortoise.local"
     ansible_shell_type: powershell
   tasks:
   - name: Install needed roles on MGMT01
@@ -65,6 +65,34 @@
       include_management_tools: yes
       state: present
   
-  - name: Create Namespace "t-share"
-    ansible.windows.win_shell: |
-      PLACE SCRIPT HERE!!!!
+  - name: Add the DFSDsc module
+    community.windows.win_psmodule:
+      name: DFSDsc
+      state: present
+  
+  - name: Configure namespace 'shell_share' root
+    ansible.windows.win_dsc:
+    resource_name: DFSNamespaceRoot
+    Path: '\\MGMT01\shell_share'
+    TargetPath:  'C:\DFSRoots\shell_share'
+    Ensure: 'Present'
+    Type: 'DomainV2'
+  
+  - name: Configure namespace 'shell_share' folder 'user_info'
+    ansible.windows.win_dsc:
+    resource_name: DFSNamespaceFolder
+    Path: '\\MGMT01\shell_share\user_info'
+    TargetPath: 'C:\DFSRoots\shell_share\user_info'
+    Ensure: 'Present'
+
+  - name: Configure a replication group for 'shell_share'
+    ansible.windows.win_dsc:
+    resource_name: DFSReplicationGroup
+    GroupName: 'shell_share_synch'
+    Ensure: 'Present'
+    Members: 'dfs01''dfs02'
+    Folders: 'shell_share'
+    DfsnPath: '\\MGMT01\shell_share'
+    Topology: 'Fullmesh'
+    DomainName: 'tortoise.local'
+  

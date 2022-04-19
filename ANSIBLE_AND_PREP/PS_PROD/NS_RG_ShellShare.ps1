@@ -6,7 +6,7 @@ New-Item 'C:\DFSRoots\shell_share' -ItemType Directory
 
 New-SMBShare -Name shell_share -Path 'C:\DFSRoots\shell_share' ChangeAccess "tortoise\Domain Users"
 
-# Create the namespace "shell_share" (path is share, targetpath is namespace)
+# Create the namespace "shell_share" (path is namespace path,domain, targetpath is individual share path,local)
 New-DFsnRoot -TargetPath "\\MGMT01\shell_share" -Type DomainV2 -Path "C:\DFSRoots\shell_share"
 
 # Create folder in namespace

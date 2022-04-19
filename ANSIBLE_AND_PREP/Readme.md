@@ -130,3 +130,5 @@ https://docs.microsoft.com/en-us/powershell/module/dfsr/new-dfsreplicatedfolder?
 https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
 
 https://stackoverflow.com/questions/5130847/running-multiple-commands-in-one-line-in-shell
+
+https://github.com/dsccommunity/DFSDsc/wiki/DFSNamespaceRoot
