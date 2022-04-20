@@ -27,7 +27,7 @@
     ansible.windows.win_reboot:
     when: host_restart.reboot_required
 
-# Setup DFS
+# Setup DFS systems
 - name: Install features and setup shared folders on DFS systems
   hosts: dfs01,dfs02
   vars:
@@ -70,6 +70,7 @@
       name: DFSDsc
       state: present
   
+# path is namespace path,domain, targetpath is individual share path,loca
   - name: Configure namespace 'shell_share' root
     ansible.windows.win_dsc:
     resource_name: DFSNamespaceRoot
@@ -92,7 +93,29 @@
     Ensure: 'Present'
     Members: 'dfs01''dfs02'
     Folders: 'shell_share'
-    DfsnPath: '\\MGMT01\shell_share'
     Topology: 'Fullmesh'
     DomainName: 'tortoise.local'
   
+  - name: Configure a replication folder for shell_share
+    ansible.windows.win_dsc:
+    resource_name: DFSReplicationGroupFolder
+    GroupName: 'shell_share_synch'
+    FolderName: 'shell_share'
+    DfsnPath: '\\MGMT01\shell_share'
+
+  - name: Configure replication membership for 'dfs01'
+    ansible.windows.win_dsc:
+    resource_name: DFSReplicationGroupMembership
+    GroupName: 'shell_share_synch'
+    FolderName: 'shell_share'
+    ComputerName: 'dfs01'
+    ContentPath: 'C:\dfs01'
+    PrimaryMember: $true
+
+  - name: Configure replication membership for 'dfs02'
+    ansible.windows.win_dsc:
+    resource_name: DFSReplicationGroupMembership
+    GroupName: 'shell_share_synch'
+    FolderName: 'shell_share'
+    ComputerName: 'dfs02'
+    ContentPath: 'C:\dfs02'

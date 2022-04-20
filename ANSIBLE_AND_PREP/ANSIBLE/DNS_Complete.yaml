@@ -79,14 +79,14 @@
     community.windows.win_dns_record:
       name: "dfs01"
       type: "A"
-      value: "172.16.1.22"
+      value: "172.16.1.20"
       zone: "tortoise.local"
       
   - name: Create dfs02 A record
     community.windows.win_dns_record:
       name: "dfs02"
       type: "A"
-      value: "172.16.1.23"
+      value: "172.16.1.21"
       zone: "tortoise.local"
     
   - name: Create util A record
@@ -157,14 +157,14 @@
       
   - name: Create dfs01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.21"
+      name: "172.16.1.20"
       type: "PTR"
       value: "dfs01"
       zone: "172.16.1-addr.arpa"
 
   - name: Create dfs02 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.22"
+      name: "172.16.1.21"
       type: "PTR"
       value: "dfs02"
       zone: "172.16.1-addr.arpa"
