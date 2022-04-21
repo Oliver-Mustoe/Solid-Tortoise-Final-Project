@@ -22,7 +22,6 @@
       state: domain
     register: host_restart
     
-
   - name: Reboot
     ansible.windows.win_reboot:
     when: host_restart.reboot_required
@@ -76,7 +75,7 @@
     ansible.windows.win_dsc:
       resource_name: DFSNamespaceRoot
       Path: \\MGMT01\shell_share
-      TargetPath:  C:\DFSRoots\shell_share
+      TargetPath: C:\DFSRoots\shell_share
       Ensure: Present
       Type: DomainV2 
   
