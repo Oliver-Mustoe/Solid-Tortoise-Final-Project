@@ -4,5 +4,8 @@
 # This file plays the needed playbooks in order to complete the requirments for Milestone 1
 # Version .1 - NEEDS DOUBLE CHECK
 
-- name: Play ""
-  import_playbook: .yaml
+- name: Play "Reqs"
+  import_playbook: Reqs.yaml
+
+- name: Play "DFS"
+  import_playbook: DFS.yaml
