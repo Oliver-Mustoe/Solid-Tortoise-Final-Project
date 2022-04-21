@@ -71,45 +71,46 @@
       state: present
   
 # path is namespace path,domain, targetpath is individual share path,loca
+# No '' or "" for the resource even if the documentation has them, ansible no like  
   - name: Configure namespace 'shell_share' root
     ansible.windows.win_dsc:
       resource_name: DFSNamespaceRoot
-      Path: '\\MGMT01\shell_share'
-      TargetPath:  'C:\DFSRoots\shell_share'
-      Ensure: 'Present'
-      Type: 'DomainV2' 
+      Path: \\MGMT01\shell_share
+      TargetPath:  C:\DFSRoots\shell_share
+      Ensure: Present
+      Type: DomainV2 
   
   - name: Configure namespace 'shell_share' folder 'user_info'
     ansible.windows.win_dsc:
       resource_name: DFSNamespaceFolder
-      Path: '\\MGMT01\shell_share\user_info'
-      TargetPath: 'C:\DFSRoots\shell_share\user_info'
-      Ensure: 'Present'
+      Path: \\MGMT01\shell_share\user_info
+      TargetPath: C:\DFSRoots\shell_share\user_info
+      Ensure: Present
 
   - name: Configure a replication group for 'shell_share'
     ansible.windows.win_dsc:
       resource_name: DFSReplicationGroup
-      GroupName: 'shell_share_synch'
-      Ensure: 'Present'
-      Members: 'dfs01''dfs02'
-      Folders: 'shell_share'
-      Topology: 'Fullmesh'
-      DomainName: 'tortoise.local'
+      GroupName: shell_share_synch
+      Ensure: Present
+      Members: dfs01,dfs02
+      Folders: shell_share
+      Topology: Fullmesh
+      DomainName: tortoise.local
   
   - name: Configure a replication folder for shell_share
     ansible.windows.win_dsc:
       resource_name: DFSReplicationGroupFolder
-      GroupName: 'shell_share_synch'
-      FolderName: 'shell_share'
-      DfsnPath: '\\MGMT01\shell_share'
+      GroupName: shell_share_synch
+      FolderName: shell_share
+      DfsnPath: \\MGMT01\shell_share
 
   - name: Configure replication membership for 'dfs01'
     ansible.windows.win_dsc:
       resource_name: DFSReplicationGroupMembership
-      GroupName: 'shell_share_synch'
-      FolderName: 'shell_share'
-      ComputerName: 'dfs01'
-      ContentPath: 'C:\dfs01'
+      GroupName: shell_share_synch
+      FolderName: shell_share
+      ComputerName: dfs01
+      ContentPath: C:\dfs01
       PrimaryMember: $true
 
   - name: Configure replication membership for 'dfs02'
