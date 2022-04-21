@@ -1,8 +1,8 @@
 # This playbook fully setups DFS for the final milestone
 # Version 0.1
 
-# Setup DFS's to the domain
-- hosts: dfs01,df02
+- name: Add DFS's to the domain
+  hosts: dfs01,dsf02
   vars:
     ansible_user: "{{ dfs01_local_user }}"
     ansible_shell_type: powershell
