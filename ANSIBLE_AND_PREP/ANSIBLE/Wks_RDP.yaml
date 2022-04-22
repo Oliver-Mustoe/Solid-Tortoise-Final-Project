@@ -1,0 +1,11 @@
+# Ansible RDP GPO
+# Solid-Tortoise
+# v 0.1
+
+- name: RDP wks01 & wks02
+  hosts: wks01,wks02
+  vars:
+    become: yes
+  ansible.windows.win_powershell:
+    script: |
+      Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
