@@ -20,5 +20,6 @@ linux_test_user:
 
 safemode_password: 
 
-owncloud_user: 
-owncloud_password:
+mysql_root_password:
+mysql_user: 
+mysql_password:
