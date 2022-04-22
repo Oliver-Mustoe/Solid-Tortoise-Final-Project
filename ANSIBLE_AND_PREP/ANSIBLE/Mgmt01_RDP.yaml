@@ -4,7 +4,8 @@
 # v 0.1
 
 - name: mgmt01 install group policy management
-  hosts: mgmt01- name: Ensure the group Cow doesn't exist using the Distinguished Name
+  hosts: mgmt01
+  - name: Ensure the group Cow doesn't exist using the Distinguished Name
   community.windows.win_domain_group:
     name: CN=Cow,OU=groups,DC=ansible,DC=local
     state: absent
