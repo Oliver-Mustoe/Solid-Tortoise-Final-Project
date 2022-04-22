@@ -69,6 +69,11 @@
       name: DFSDsc
       state: present
   
+  - name: Create needed directory structure
+    ansible.windows.win_file:
+      path: C:\DFSRoots\shell_share
+      state: directory
+
 # path is namespace path,domain, targetpath is individual share path,loca
 # No '' or "" for the resource even if the documentation has them, ansible no like  
   - name: Configure namespace 'shell_share' root
