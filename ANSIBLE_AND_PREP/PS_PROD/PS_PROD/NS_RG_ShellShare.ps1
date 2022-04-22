@@ -4,16 +4,16 @@
 New-SMBShare -Name shell_share -Path 'C:\DFSRoots\shell_share' -ChangeAccess "tortoise\Domain Users"
 
 # Create the namespace "shell_share" | path is namespace path,domain, targetpath is individual share path,local
-New-DFsnRoot -TargetPath "C:\DFSRoots\shell_share" -Type DomainV2 -Path "\\MGMT01\shell_share"
+New-DFsnRoot -TargetPath "C:\DFSRoots\shell_share" -Type DomainV2 -Path "\\tortoise.local\shell_share"
 
 # Create folder in namespace
-New-DfsnFolder -Path "\\MGMT01\shell_share\user_info"
+New-DfsnFolder -Path "\\tortoise.local\shell_share\user_info"
 
 # Add folder targets (path is namespace path,domain, targetpath is individual share path,local)
-New-DfsnFolderTarget -Path "\\MGMT01\shell_share\user_info" -TargetPath "\\dfs01\dfs01_user"
+New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs01\dfs01_user"
 
 # Add folder targets (path is namespace path,domain, targetpath is individual share path,local)
-New-DfsnFolderTarget -Path "\\MGMT01\shell_share\user_info" -TargetPath "\\dfs02\dfs02_user"
+New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs02\dfs02_user"
 
 # Create replication group, folder, and add the appropriate members
 New-DfsReplicationGroup -GroupName "shell_share_user_sync" | Set-DfsReplicatedFolder -FolderName "user_info" | Add-DfsrMember -ComputerName "mgmt01","dfs01","dfs02"
