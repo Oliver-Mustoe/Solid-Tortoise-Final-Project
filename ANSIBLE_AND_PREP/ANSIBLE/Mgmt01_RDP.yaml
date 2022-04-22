@@ -13,6 +13,8 @@
          name: 
          - GPMC
          state: present 
+      register: host_restart
+      
     - name: Reboot
       ansible.windows.win_reboot:
       when: host_restart.reboot_required
