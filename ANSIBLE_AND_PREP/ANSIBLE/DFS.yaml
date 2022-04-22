@@ -41,11 +41,11 @@
       state: present
 
   - name: Create dfs01 shared folder
-    ansible.windows.win_shell: New-Item 'c:\dfs01' -ItemType Directory; New-SMBShare -Name dfs01 -Path 'c:\dfs01' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
+    ansible.windows.win_shell: New-Item 'c:\dfs01_user' -ItemType Directory; New-SMBShare -Name dfs01 -Path 'c:\dfs01_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
     when: ansible_hostname == 'dfs01'
 
   - name: Create dfs02 shared folder
-    ansible.windows.win_shell: New-Item 'c:\dfs02' -ItemType Directory; New-SMBShare -Name dfs02 -Path 'c:\dfs02' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
+    ansible.windows.win_shell: New-Item 'c:\dfs02_user' -ItemType Directory; New-SMBShare -Name dfs02 -Path 'c:\dfs02_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
     when: ansible_hostname == 'dfs02'
 
 # Setup Namespace
@@ -64,63 +64,22 @@
       include_management_tools: yes
       state: present
   
-  - name: Add the DFSDsc module
-    community.windows.win_psmodule:
-      name: DFSDsc
-      state: present
-  
   - name: Create needed directory structure
     ansible.windows.win_file:
       path: C:\DFSRoots\shell_share
       state: directory
 
-# path is namespace path,domain, targetpath is individual share path,loca
-# No '' or "" for the resource even if the documentation has them, ansible no like  
-  - name: Configure namespace 'shell_share' root
-    ansible.windows.win_dsc:
-      resource_name: DFSNamespaceRoot
-      Path: \\MGMT01\shell_share
-      TargetPath: C:\DFSRoots\shell_share
-      Ensure: Present
-      Type: DomainV2 
-  
-  - name: Configure namespace 'shell_share' folder 'user_info'
-    ansible.windows.win_dsc:
-      resource_name: DFSNamespaceFolder
-      Path: \\MGMT01\shell_share\user_info
-      TargetPath: C:\DFSRoots\shell_share\user_info
-      Ensure: Present
-
-  - name: Configure a replication group for 'shell_share'
-    ansible.windows.win_dsc:
-      resource_name: DFSReplicationGroup
-      GroupName: shell_share_synch
-      Ensure: Present
-      Members: dfs01,dfs02
-      Folders: shell_share
-      Topology: Fullmesh
-      DomainName: tortoise.local
-  
-  - name: Configure a replication folder for shell_share
-    ansible.windows.win_dsc:
-      resource_name: DFSReplicationGroupFolder
-      GroupName: shell_share_synch
-      FolderName: shell_share
-      DfsnPath: \\MGMT01\shell_share
-
-  - name: Configure replication membership for 'dfs01'
-    ansible.windows.win_dsc:
-      resource_name: DFSReplicationGroupMembership
-      GroupName: shell_share_synch
-      FolderName: shell_share
-      ComputerName: dfs01
-      ContentPath: C:\dfs01
-      PrimaryMember: $true
-
-  - name: Configure replication membership for 'dfs02'
-    ansible.windows.win_dsc:
-      resource_name: DFSReplicationGroupMembership
-      GroupName: 'shell_share_synch'
-      FolderName: 'shell_share'
-      ComputerName: 'dfs02'
-      ContentPath: 'C:\dfs02'
+# path is namespace path,domain, targetpath is individual share path,local
+  - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync'
+    ansible.windows.win_shell: |
+      New-SMBShare -Name shell_share -Path 'C:\DFSRoots\shell_share' ChangeAccess "tortoise\Domain Users"
+      New-DFsnRoot -TargetPath "C:\DFSRoots\shell_share" -Type DomainV2 -Path "\\MGMT01\shell_share"
+      New-DfsnFolder -Path "\\MGMT01\shell_share\user_info"
+      New-DfsnFolderTarget -Path "\\MGMT01\shell_share\user_info" -TargetPath "\\dfs01\dfs01_user"
+      New-DfsnFolderTarget -Path "\\MGMT01\shell_share\user_info" -TargetPath "\\dfs02\dfs02_user"
+      New-DfsReplicationGroup -GroupName "shell_share_user_sync" | Set-DfsReplicatedFolder -FolderName "user_info" | Add-DfsrMember -ComputerName "mgmt01","dfs01","dfs02"
+      Add-DfsrConnection -GroupName "shell_share_user_sync" -SourceComputerName "mgmt01" -DestinationComputerName "dfs01"
+      Add-DfsrConnection -GroupName "shell_share_user_sync" -SourceComputerName "mgmt01" -DestinationComputerName "dfs02"
+      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "c:\dfs01_user" -ComputerName "dfs01" -PrimaryMember $True -StagingPathQuotaInMB 16384 -Force
+      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "c:\dfs02_user" -ComputerName "dfs02" -StagingPathQuotaInMB 16384 -Force
+      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "C:\DFSRoots\shell_share" -ComputerName "mgmt01" -StagingPathQuotaInMB 16384 -Force

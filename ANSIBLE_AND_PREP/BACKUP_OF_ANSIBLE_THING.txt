@@ -1,9 +1,3 @@
-- name: Add the DFSDsc module
-    community.windows.win_psmodule:
-      name: DFSDsc
-      state: present
-  
-# path is namespace path,domain, targetpath is individual share path,loca
 # No '' or "" for the resource even if the documentation has them, ansible no like  
   - name: Configure namespace 'shell_share' root
     ansible.windows.win_dsc:

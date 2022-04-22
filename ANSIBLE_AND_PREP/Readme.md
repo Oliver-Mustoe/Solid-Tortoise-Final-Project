@@ -131,4 +131,14 @@ https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-a
 
 https://stackoverflow.com/questions/5130847/running-multiple-commands-in-one-line-in-shell
 
-https://github.com/dsccommunity/DFSDsc/wiki/DFSNamespaceRoot
+https://docs.microsoft.com/en-us/powershell/module/dfsr/new-dfsreplicationgroup?view=windowsserver2022-ps
+
+https://docs.microsoft.com/en-us/powershell/module/dfsr/new-dfsreplicationgroup?view=windowsserver2022-ps
+
+https://docs.microsoft.com/en-us/powershell/module/dfsr/set-dfsreplicatedfolder?view=windowsserver2022-ps
+
+https://docs.microsoft.com/en-us/search/?terms=New-DFsnRoot&category=Reference
+
+https://docs.microsoft.com/en-us/powershell/module/dfsn/new-dfsnfolder
+
+https://docs.microsoft.com/en-us/powershell/module/dfsn/new-dfsnfoldertarget
