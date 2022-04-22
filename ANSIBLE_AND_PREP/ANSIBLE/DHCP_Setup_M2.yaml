@@ -6,11 +6,11 @@
   become: yes
   become_user: root
   tasks:
-  - name: curl script
+  - name: curl script dhcp01
     shell: "curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/main/dhcp01/dhcpd.conf > /etc/dhcp/dhcpd.conf"
     when: ansible_hostname == 'dhcp01'
   
-  - name: curl script
+  - name: curl script dhcp02
     shell: "curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/main/dhcp02/dhcpd.conf > /etc/dhcp/dhcpd.conf"
     when: ansible_hostname == 'dhcp02'
   
