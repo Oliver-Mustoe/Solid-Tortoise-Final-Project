@@ -5,6 +5,7 @@
 - name: mgmt01 rdp setup
   hosts: mgmt01
   vars:
+    ansible_user: Jonathan
     become: yes
     ansible_shell_type: powershell
   tasks:
