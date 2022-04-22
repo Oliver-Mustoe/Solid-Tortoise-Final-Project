@@ -7,5 +7,4 @@
   vars:
     become: yes
   ansible.windows.win_powershell:
-    script: |
-      Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+    script: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
