@@ -5,6 +5,7 @@
 - name: RDP wks01 & wks02
   hosts: wks01,wks02
   vars:
-    become: yes
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
   ansible.windows.win_powershell:
     script: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
