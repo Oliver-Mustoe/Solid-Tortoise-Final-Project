@@ -74,4 +74,5 @@
 
   - name: Setup namespace 'shell_share' and replication group 'shell_share_user_sync'
     ansible.windows.win_shell: |
-      curl 
+      curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/Unsolid-Tortoise/ANSIBLE_AND_PREP/PS_PROD/NS_RG_ShellShare.ps1
+      .\NS_RG_ShellShare.ps1
