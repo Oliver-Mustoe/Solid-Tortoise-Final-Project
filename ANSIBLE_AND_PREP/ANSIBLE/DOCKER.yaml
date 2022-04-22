@@ -10,8 +10,8 @@
           - ca-certificates
           - curl
           - software-properties-common
-      state: present
-      update_cache: true
+        state: present
+        update_cache: true
 
     - name: Add Dockers GPG apt Key
       apt_key:
