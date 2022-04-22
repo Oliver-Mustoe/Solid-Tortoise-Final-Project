@@ -43,6 +43,13 @@
       adapter_names: 'Ethernet*'
       dns_servers:
       - 127.0.0.1
+      
+- name: Ensure forwarder has specific DNS servers
+  community.windows.win_dns_zone:
+    name: tortoise.local
+    type: forwarder
+    dns_servers:
+      - 172.16.1.2
 
 # Setup wks01 in the domain
 - name: Add wks01 to the domain
