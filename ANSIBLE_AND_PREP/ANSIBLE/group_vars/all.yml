@@ -19,3 +19,6 @@ domain_admin_1_password:
 linux_test_user: 
 
 safemode_password: 
+
+owncloud_user:
+owncloud_password:
