@@ -2,6 +2,18 @@
 # Solid-Tortoise
 # v 0.1
 
+- name: mgmt01 install group policy management
+  hosts: mgmt01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+    - name: "Install GPMC"
+      ansible.windows.win_feature:
+         name: 
+         - GPMC
+         state: present 
+
 - name: dc01 rdp setup
   hosts: dc01
   vars:
