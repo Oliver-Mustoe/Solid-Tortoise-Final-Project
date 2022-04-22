@@ -1,9 +1,13 @@
 # Ansible RDP GPO MGMT01
 # Solid-Tortoise
+# CAN'T RUN TWICE!!!
 # v 0.1
 
 - name: mgmt01 install group policy management
-  hosts: mgmt01
+  hosts: mgmt01- name: Ensure the group Cow doesn't exist using the Distinguished Name
+  community.windows.win_domain_group:
+    name: CN=Cow,OU=groups,DC=ansible,DC=local
+    state: absent
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     ansible_shell_type: powershell
