@@ -2,8 +2,8 @@
 # Solid-Tortoise
 # v 0.1
 
-- name: mgmt01 rdp setup
-  hosts: mgmt01
+- name: dc01 rdp setup
+  hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     become: yes
