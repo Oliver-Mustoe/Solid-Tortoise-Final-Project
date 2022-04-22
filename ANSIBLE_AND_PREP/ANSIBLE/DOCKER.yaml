@@ -33,25 +33,23 @@
       ansible.builtin.shell: |
         curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
-    
-    - name: Prep owncloud
-       ansible.builtin.shell: |
-          mkdir owncloud-docker-server
-          cd owncloud-docker-server
-          wget https://raw.githubusercontent.com/owncloud/docs-server/master/modules/admin_manual/examples/installation/docker/docker-compose.yml
-          cat << EOF > .env
-          OWNCLOUD_VERSION=10.9
-          OWNCLOUD_DOMAIN=localhost:8080
-          ADMIN_USERNAME="{{ owncloud_user }}"
-          ADMIN_PASSWORD="{{ owncloud_password }}"
-          HTTP_PORT=8080
-          EOF
       
-    - name: Install 'owncloud_compose.yml'
+    - name: Create and Install 'owncloud_compose'
       community.docker.docker_compose:
-        # Needs full path
-        project_src: owncloud_compose
+        project_name: owncloud_compose
+        definition:
+            db:
+              image: postgres
+            web:
+              build: "{{ playbook_dir }}/flask"
+              command: "python manage.py runserver 0.0.0.0:8000"
+              volumes:
+                - "{{ playbook_dir }}/flask:/code"
+              ports:
+                - "8000:8000"
+              links:
+                - db
       register: output
 
-    - ansible.builtin.debug:
+    - debug:
         var: output
