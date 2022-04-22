@@ -57,7 +57,7 @@
                   MYSQL_DATABASE: mariadb
                   MYSQL_USER: "{{ mysql_user }}"
                   MYSQL_PASSWORD: "{{ mysql_password }}"
-                  register: output
+       register: output
 
     - debug:
         var: output
