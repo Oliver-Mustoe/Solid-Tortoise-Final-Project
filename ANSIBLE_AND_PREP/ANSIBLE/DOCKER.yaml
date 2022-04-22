@@ -38,18 +38,26 @@
       community.docker.docker_compose:
         project_name: owncloud_compose
         definition:
-            db:
-              image: postgres
-            web:
-              build: "{{ playbook_dir }}/flask"
-              command: "python manage.py runserver 0.0.0.0:8000"
-              volumes:
-                - "{{ playbook_dir }}/flask:/code"
-              ports:
-                - "8000:8000"
-              links:
-                - db
-      register: output
+            version: '3.1'
+
+            services:
+
+              owncloud:
+                image: owncloud
+                restart: always
+                ports:
+                  - 8080:80
+
+
+              mysql:
+                image: mariadb
+                restart: always
+                environment:
+                  MYSQL_ROOT_PASSWORD: "{{ mysql_root_password }}"
+                  MYSQL_DATABASE: mariadb
+                  MYSQL_USER: "{{ mysql_user }}"
+                  MYSQL_PASSWORD: "{{ mysql_password }}"
+                  register: output
 
     - debug:
         var: output
