@@ -13,6 +13,9 @@
          name: 
          - GPMC
          state: present 
+    - name: Reboot
+      ansible.windows.win_reboot:
+      when: host_restart.reboot_required
 
 - name: dc01 rdp setup
   hosts: dc01
