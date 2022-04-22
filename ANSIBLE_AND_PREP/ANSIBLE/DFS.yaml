@@ -73,10 +73,10 @@
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync'
     ansible.windows.win_shell: |
       New-SMBShare -Name shell_share -Path 'C:\DFSRoots\shell_share' -ChangeAccess "tortoise\Domain Users"
-      New-DFsnRoot -TargetPath "C:\DFSRoots\shell_share" -Type DomainV2 -Path "\\MGMT01\shell_share"
-      New-DfsnFolder -Path "\\MGMT01\shell_share\user_info"
-      New-DfsnFolderTarget -Path "\\MGMT01\shell_share\user_info" -TargetPath "\\dfs01\dfs01_user"
-      New-DfsnFolderTarget -Path "\\MGMT01\shell_share\user_info" -TargetPath "\\dfs02\dfs02_user"
+      New-DFsnRoot -TargetPath "C:\DFSRoots\shell_share" -Type DomainV2 -Path "\\tortoise.local\shell_share"
+      New-DfsnFolder -Path "\\tortoise.local\shell_share\user_info"
+      New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs01\dfs01_user"
+      New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs02\dfs02_user"
       New-DfsReplicationGroup -GroupName "shell_share_user_sync" | Set-DfsReplicatedFolder -FolderName "user_info" | Add-DfsrMember -ComputerName "mgmt01","dfs01","dfs02"
       Add-DfsrConnection -GroupName "shell_share_user_sync" -SourceComputerName "mgmt01" -DestinationComputerName "dfs01"
       Add-DfsrConnection -GroupName "shell_share_user_sync" -SourceComputerName "mgmt01" -DestinationComputerName "dfs02"
