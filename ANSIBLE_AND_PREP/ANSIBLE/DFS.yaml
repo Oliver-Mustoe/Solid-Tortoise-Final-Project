@@ -72,11 +72,11 @@
 # path is namespace path,domain, targetpath is individual share path,local
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 1
     ansible.windows.win_shell: |
-      New-SMBShare -Name shell_share -Path 'C:\DFSRoots\shell_share' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
+      New-SMBShare -Name shell_share -Path '\\mgmt01.tortoise.local\shell_share' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
   
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 2
     ansible.windows.win_shell: |
-      New-DFsnRoot -TargetPath "C:\DFSRoots\shell_share" -Type DomainV2 -Path "\\tortoise.local\shell_share"
+      New-DFsnRoot -TargetPath "\\mgmt01.tortoise.local\shell_share" -Type DomainV2 -Path "\\tortoise.local\shell_share"
   
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 3
     ansible.windows.win_shell: |
@@ -84,25 +84,32 @@
         
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 4
     ansible.windows.win_shell: |
-      New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs01\dfs01_user"  
+      New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs01.tortoise.local\dfs01_user"  
+ 
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 5
     ansible.windows.win_shell: |
-      New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs02\dfs02_user"  
+      New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs02.tortoise.local\dfs02_user"  
+ 
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 6
     ansible.windows.win_shell: |
       New-DfsReplicationGroup -GroupName "shell_share_user_sync" | Set-DfsReplicatedFolder -FolderName "user_info" | Add-DfsrMember -ComputerName "mgmt01","dfs01","dfs02"  
+  
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 7
     ansible.windows.win_shell: |
-      Add-DfsrConnection -GroupName "shell_share_user_sync" -SourceComputerName "mgmt01" -DestinationComputerName "dfs01"  
+      Add-DfsrConnection -GroupName "shell_share_user_sync" -SourceComputerName "mgmt01" -DestinationComputerName "dfs01" 
+
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 8
     ansible.windows.win_shell: |
       Add-DfsrConnection -GroupName "shell_share_user_sync" -SourceComputerName "mgmt01" -DestinationComputerName "dfs02"  
+ 
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 9
     ansible.windows.win_shell: |
-      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "c:\dfs01_user" -ComputerName "dfs01" -PrimaryMember $True -StagingPathQuotaInMB 16384 -Force  
+      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "\\dfs01.tortoise.local\dfs01_user" -ComputerName "dfs01" -PrimaryMember $True -StagingPathQuotaInMB 16384 -Force  
+ 
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 10
     ansible.windows.win_shell: |
-      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "c:\dfs02_user" -ComputerName "dfs02" -StagingPathQuotaInMB 16384 -Force  
+      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "\\dfs02.tortoise.local\dfs02_user" -ComputerName "dfs02" -StagingPathQuotaInMB 16384 -Force  
+ 
   - name: Create namespace 'shell_share' & create a replication group 'shell_share-sync' pt 11
     ansible.windows.win_shell: |
-      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "C:\DFSRoots\shell_share" -ComputerName "mgmt01" -StagingPathQuotaInMB 16384 -Force  
+      Set-DfsrMembership -GroupName "shell_share_user_sync" -FolderName "user_info" -ContentPath "\\mgmt01.tortoise.local\shell_share" -ComputerName "mgmt01" -StagingPathQuotaInMB 16384 -Force  
