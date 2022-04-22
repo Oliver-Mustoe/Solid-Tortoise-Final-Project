@@ -7,5 +7,6 @@
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     ansible_shell_type: powershell
-  ansible.windows.win_powershell:
-    script: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+  tasks:
+  - name: Allow RDP
+    ansible.windows.win_shell: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
