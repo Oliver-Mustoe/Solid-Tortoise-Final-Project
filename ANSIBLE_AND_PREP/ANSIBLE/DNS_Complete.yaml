@@ -1,7 +1,7 @@
 # Some information will need to be placed in all.yml
 # Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
 
-# Adds DNS records
+# Adds DNS records, new reverse lookup zone can not exist
 # Version 1.0 - NEEDS DOUBLE CHECK
 - hosts: dc01
   vars:
@@ -24,7 +24,7 @@
       state: absent
 
   - name: Ensure new reverse-lookup zone does exist
-    ansible.windows.win_shell: add-dnsserverprimaryzone- networkid "172.16.1.0/24" -replicationscope "domain"
+    ansible.windows.win_shell: add-dnsserverprimaryzone -networkid "172.16.1.0/24" -replicationscope "domain"
 
   # A type records below
   ######################
@@ -111,77 +111,77 @@
 
   - name: Create fw01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.2"
+      name: "2"
       type: "PTR"
       value: "fw01"
       zone: "1.16.172.in-addr.arpa"
       
   - name: Create mgmt01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.14"
+      name: "14"
       type: "PTR"
       value: "mgmt01"
       zone: "1.16.172.in-addr.arpa"
 
   - name: Create dc01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.12"
+      name: "12"
       type: "PTR"
       value: "dc01"
       zone: "1.16.172.in-addr.arpa"
       
   - name: Create dc02 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.13"
+      name: "13"
       type: "PTR"
       value: "dc02"
       zone: "1.16.172.in-addr.arpa"
 
   - name: Create mgmt02 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.16"
+      name: "16"
       type: "PTR"
       value: "mgmt02"
       zone: "1.16.172.in-addr.arpa"
       
   - name: Create dhcp01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.10"
+      name: "10"
       type: "PTR"
       value: "dhcp01"
       zone: "1.16.172.in-addr.arpa"
 
   - name: Create dhcp02 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.11"
+      name: "11"
       type: "PTR"
       value: "dhcp02"
       zone: "1.16.172.in-addr.arpa"
       
   - name: Create dfs01 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.20"
+      name: "20"
       type: "PTR"
       value: "dfs01"
       zone: "1.16.172.in-addr.arpa"
 
   - name: Create dfs02 PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.21"
+      name: "21"
       type: "PTR"
       value: "dfs02"
       zone: "1.16.172.in-addr.arpa"
       
   - name: Create docker PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.5"
+      name: "5"
       type: "PTR"
       value: "docker"
       zone: "1.16.172.in-addr.arpa"
 
   - name: Create util PTR record
     community.windows.win_dns_record:
-      name: "172.16.1.15"
+      name: "15"
       type: "PTR"
       value: "util"
       zone: "1.16.172.in-addr.arpa"
