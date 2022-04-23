@@ -16,19 +16,15 @@
       type: primary
       state: present
 
-  - name: Ensure reverse-lookup zone does not exist
+  - name: Ensure old reverse-lookup zone does not exist
     community.windows.win_dns_zone:
       name: 172.16.1-addr.arpa
       replication: domain
       type: primary
       state: absent
 
-  - name: Ensure reverse-lookup zone does exist
-    community.windows.win_dns_zone:
-      name: 1.16.172.in-addr.arpa
-      replication: domain
-      type: primary
-      state: absent
+  - name: Ensure new reverse-lookup zone does exist
+    ansible.windows.win_shell: add-dnsserverprimaryzone- networkid "172.16.1.0/24" -replicationscope "domain"
 
   # A type records below
   ######################
