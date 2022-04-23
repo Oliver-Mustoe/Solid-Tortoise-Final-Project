@@ -1,5 +1,5 @@
 # This playbook partly setups DFS for the final milestone
-# Version 0.7
+# Version 0.85
 
 - name: Add DFS's to the domain
   hosts: dfs01,dfs02
@@ -40,13 +40,14 @@
       - FS-DFS-Replication
       state: present
 
+    # delegate_to essentially says to run this on a certain host
   - name: Create dfs01 shared folder
     ansible.windows.win_shell: New-Item 'c:\dfs01_user' -ItemType Directory; New-SMBShare -Name dfs01 -Path 'c:\dfs01_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
-    when: ansible_hostname == 'dfs01'
+    delegate_to: dfs01
 
   - name: Create dfs02 shared folder
     ansible.windows.win_shell: New-Item 'c:\dfs02_user' -ItemType Directory; New-SMBShare -Name dfs02 -Path 'c:\dfs02_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
-    when: ansible_hostname == 'dfs02'
+    delegate_to: dfs01
 
 # Setup Namespace
 - name: Setup Namespace and replication
@@ -65,6 +66,11 @@
       state: present
 
 ### DELETE EVERYTHING BELOW TO CONVERT TO MANUAL
+  - name: Add the DFSDsc module
+    community.windows.win_psmodule:
+      name: DFSDsc
+      state: present
+
 # No '' or "" for the resource even if the documentation has them, ansible no like  
   - name: Configure namespace 'shell_share' root on mgmt01
     ansible.windows.win_dsc:
