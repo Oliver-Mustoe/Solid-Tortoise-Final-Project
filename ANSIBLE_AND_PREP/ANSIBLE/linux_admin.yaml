@@ -1,0 +1,23 @@
+# Linux Admins
+# Solid-Tortoise
+# v 0.1
+
+- name: Setup Group
+  host: dc01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+    - name: Create linux-admins Group
+      ansible.windows.win_shell: New-ADGroup -Name "linux-admins" -SamAccountName linuxadmin -GroupCategory Security -GroupScope Global -DisplayName "linux-admins" -Path "CN=Users,DC=tortoise,DC=local" -Description "Members of this group are Linux Administrators"
+
+    - name: Create linux admin user
+      community.windows.win_domain_user:
+        domain_server: dc01.tortoise.local
+        name: "{{ linux_admin_1_user }}"
+        password: "{{ linux_admin_1_password }}"
+        password_never_expires: yes
+        group_action: add
+        groups:
+          - linux-admins
+        state: present
