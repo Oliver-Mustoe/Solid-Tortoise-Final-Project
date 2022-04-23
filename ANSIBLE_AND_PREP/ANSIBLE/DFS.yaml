@@ -1,5 +1,5 @@
-# This playbook fully setups DFS for the final milestone
-# Version 0.1
+# This playbook partly setups DFS for the final milestone
+# Version 0.7
 
 - name: Add DFS's to the domain
   hosts: dfs01,dfs02
@@ -63,3 +63,63 @@
       - RSAT-DFS-Mgmt-Con
       include_management_tools: yes
       state: present
+
+### DELETE EVERYTHING BELOW TO CONVERT TO MANUAL
+# No '' or "" for the resource even if the documentation has them, ansible no like  
+  - name: Configure namespace 'shell_share' root on mgmt01
+    ansible.windows.win_dsc:
+      resource_name: DFSNamespaceRoot
+      Path: \\tortoise.local\shell_share
+      TargetPath: \\mgmt01.tortoise.local\shell_share
+      Ensure: Present
+      Type: DomainV2
+  
+  - name: Configure namespace 'shell_share' root on dfs01
+    ansible.windows.win_dsc:
+      resource_name: DFSNamespaceRoot
+      Path: \\tortoise.local\shell_share
+      TargetPath: \\dfs01.tortoise.local\dfs01_user
+      Ensure: Present
+      Type: DomainV2
+
+  - name: Configure namespace 'shell_share' root on dfs02
+    ansible.windows.win_dsc:
+      resource_name: DFSNamespaceRoot
+      Path: \\tortoise.local\shell_share
+      TargetPath: \\dfs02.tortoise.local\dfs01_user
+      Ensure: Present
+      Type: DomainV2
+
+  - name: Configure a replication group for 'shell_share'
+    ansible.windows.win_dsc:
+      resource_name: DFSReplicationGroup
+      GroupName: shell_share_synch
+      Ensure: Present
+      Members: dfs01,dfs02
+      Folders: shell_share
+      Topology: Fullmesh
+      DomainName: tortoise.local
+  
+  - name: Configure a replication folder for shell_share
+    ansible.windows.win_dsc:
+      resource_name: DFSReplicationGroupFolder
+      GroupName: shell_share_synch
+      FolderName: shell_share
+      DfsnPath: \\tortoise.local\shell_share
+
+  - name: Configure replication membership for 'dfs01'
+    ansible.windows.win_dsc:
+      resource_name: DFSReplicationGroupMembership
+      GroupName: shell_share_synch
+      FolderName: shell_share
+      ComputerName: dfs01
+      ContentPath: \\dfs01.tortoise.local\dfs01_user
+      PrimaryMember: $true
+
+  - name: Configure replication membership for 'dfs02'
+    ansible.windows.win_dsc:
+      resource_name: DFSReplicationGroupMembership
+      GroupName: shell_share_synch
+      FolderName: shell_share
+      ComputerName: dfs02
+      ContentPath: \\dfs01.tortoise.local\dfs01_user
