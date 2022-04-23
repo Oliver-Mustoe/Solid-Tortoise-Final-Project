@@ -3,7 +3,7 @@
 # v 0.2
 
 - name: Setup Group
-  host: dc01
+  hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     ansible_shell_type: powershell
