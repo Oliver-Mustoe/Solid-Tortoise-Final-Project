@@ -1,5 +1,6 @@
 # create OU and setup wallpaper
 # Solid-Tortoise
+# CAN'T RUN TWICE!!!
 # v 0.1
 
 - name: dc01 rdp setup
