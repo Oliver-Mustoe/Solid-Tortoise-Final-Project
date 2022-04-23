@@ -21,3 +21,14 @@
   
   - name: Add a linuxadmin-adm to linux-admins
     ansible.windows.win_shell: Add-ADGroupMember -Identity "CN=linux-admins,CN=Users,DC=tortoise,DC=local" -Members linuxadmin-adm
+
+
+- name: Setup UTIL
+  hosts: util
+  vars:
+    become: yes
+    become_user: root
+  tasks:
+  - name: edit sudoers config:
+    shell: "tortoise.local\\linux-admins      ALL=(ALL) ALL" >> /etc/sudoers 
+  
