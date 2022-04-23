@@ -7,7 +7,7 @@ New-SMBShare -Name shell_share -Path 'C:\DFSRoots\shell_share' -FullAccess "tort
 New-DFsnRoot -TargetPath "\\mgmt01.tortoise.local\shell_share" -Type DomainV2 -Path "\\tortoise.local\shell_share"
 
 # Create folder in namespace
-New-DfsnFolder -Path "\\tortoise.local\shell_share\user_info"
+New-DfsnFolder -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\mgmt01.tortoise.local\shell_share\user_info"
 
 # Add folder targets (path is namespace path,domain, targetpath is individual share path,local)
 New-DfsnFolderTarget -Path "\\tortoise.local\shell_share\user_info" -TargetPath "\\dfs01.tortoise.local\dfs01_user"
