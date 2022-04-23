@@ -78,5 +78,6 @@
       dest: C:\Users\administrator.TORTOISE\NS_RG_ShellShare.ps1
   
   - name: Setup namespace 'shell_share' and replication group 'shell_share_user_sync'
-    ansible.windows.win_shell: |
-      C:\Users\administrator.TORTOISE\NS_RG_ShellShare.ps1
+    ansible.windows.win_powershell: 
+      script: |
+       C:\Users\administrator.TORTOISE\NS_RG_ShellShare.ps1
