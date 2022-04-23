@@ -7,11 +7,11 @@
 - name: Play "Reqs"
   import_playbook: Reqs.yaml
 
-- name: Play "DFS"
-  import_playbook: DFS.yaml'
-
 - name: Play "Mgmt01 RDP GPO"
   import_playbook: Mgmt01_RDP.yaml
   
 - name: Play "Wks RDP"
   import_playbook: Wks_RDP.yaml
+
+- name: Play "DFS"
+  import_playbook: DFS.yaml'
