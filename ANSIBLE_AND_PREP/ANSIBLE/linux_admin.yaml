@@ -17,7 +17,11 @@
       name: "{{ linux_admin_1_user }}"
       password: "{{ linux_admin_1_password }}"
       password_never_expires: yes
-      groups_action: add
-      groups:
-        - linux-admins
+      state: present
+  
+  - name: Add a linuxadmin-adm to linux-admins
+    community.windows.win_domain_group_membership:
+      name: linux-admins
+      members:
+        - linuxadmin-adm
       state: present
