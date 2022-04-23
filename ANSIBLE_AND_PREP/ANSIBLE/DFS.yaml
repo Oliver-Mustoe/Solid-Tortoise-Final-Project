@@ -63,19 +63,3 @@
       - RSAT-DFS-Mgmt-Con
       include_management_tools: yes
       state: present
-  
-  - name: Create needed directory structure
-    ansible.windows.win_file:
-      path: C:\DFSRoots\shell_share\user_info
-      state: directory
-
-  - name: Prep for powershell
-    ansible.windows.win_shell: Set-ExecutionPolicy unrestricted
-
-  - name: Get 'NS_RG_ShellShare.ps1'
-    ansible.windows.win_copy:
-      src: ~/Solid-Tortoise/ANSIBLE_AND_PREP/PS_PROD/NS_RG_ShellShare.ps1
-      dest: C:\Users\administrator.TORTOISE\NS_RG_ShellShare.ps1
-  
-  - name: Setup namespace 'shell_share' and replication group 'shell_share_user_sync'
-    ansible.windows.win_shell: C:\Users\administrator.TORTOISE\NS_RG_ShellShare.ps1
