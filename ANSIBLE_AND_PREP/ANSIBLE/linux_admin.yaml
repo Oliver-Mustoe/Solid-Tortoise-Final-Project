@@ -30,5 +30,5 @@
     become_user: root
   tasks:
   - name: edit sudoers config:
-    shell: "tortoise.local\\linux-admins      ALL=(ALL) ALL" >> /etc/sudoers 
+    shell: "tortoise.local\\linux-admins      ALL=(ALL) ALL" >> /etc/sudoers.d/sys265
   
