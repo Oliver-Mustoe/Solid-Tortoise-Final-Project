@@ -17,7 +17,7 @@
       name: "{{ linux_admin_1_user }}"
       password: "{{ linux_admin_1_password }}"
       password_never_expires: yes
-      path: ou=Users,dc=tortoise,dc=local
+      path: OU=Users,DC=tortoise,DC=local
       groups_action: add
       groups:
         - linux-admins
