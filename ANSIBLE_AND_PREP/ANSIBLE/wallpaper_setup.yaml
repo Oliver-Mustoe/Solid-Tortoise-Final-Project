@@ -7,7 +7,6 @@
   hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
-    become: yes
     ansible_shell_type: powershell
   tasks:
   - name: Make wallpaper ou
