@@ -1,0 +1,13 @@
+# test changing forwarders
+
+- name: Add dc02 to the domain
+  hosts: dc02
+  vars:
+    ansible_user: "{{ dc02_local_user }}"
+  tasks:  
+  - name: Ensure forwarder has specific DNS servers
+    community.windows.win_dns_zone:
+      name: tortoise.local
+      type: forwarder
+      dns_servers:
+        - 172.16.1.2
