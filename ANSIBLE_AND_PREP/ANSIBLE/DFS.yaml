@@ -72,7 +72,11 @@
   - name: Prep for powershell
     ansible.windows.win_shell: set-executionpolicy unrestricted
 
+  - name: Get 'NS_RG_ShellShare.ps1'
+    ansible.windows.win_copy:
+      src: ~/Solid-Tortoise/ANSIBLE_AND_PREP/PS_PROD/NS_RG_ShellShare.ps1
+      dest: C:\Users\administrator.TORTOISE\NS_RG_ShellShare.ps1
+  
   - name: Setup namespace 'shell_share' and replication group 'shell_share_user_sync'
     ansible.windows.win_shell: |
-      curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/Unsolid-Tortoise/ANSIBLE_AND_PREP/PS_PROD/NS_RG_ShellShare.ps1
-      .\NS_RG_ShellShare.ps1
+      C:\Users\administrator.TORTOISE\NS_RG_ShellShare.ps1
