@@ -66,7 +66,7 @@
   
   - name: Create needed directory structure
     ansible.windows.win_file:
-      path: C:\DFSRoots\shell_share
+      path: C:\DFSRoots\shell_share\user_info
       state: directory
 
   - name: Prep for powershell
