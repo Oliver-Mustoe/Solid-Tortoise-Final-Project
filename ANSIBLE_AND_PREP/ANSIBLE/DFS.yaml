@@ -1,5 +1,5 @@
 # This playbook FULLY setups DFS for the final milestone
-# Version 1.0 - NEEDS DOUBLE CHECK
+# Version 1.1 - NEEDS DOUBLE CHECK
 
 - name: Add DFS's to the domain
   hosts: dfs01,dfs02
