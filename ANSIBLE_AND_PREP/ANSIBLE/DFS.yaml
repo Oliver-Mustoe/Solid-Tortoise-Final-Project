@@ -33,7 +33,7 @@
     ansible_user: "Administrator@tortoise.local"
     ansible_shell_type: powershell
   vars_files:
-  - spyro.yml
+  - group_vars/spyro.yml
   tasks:
   - name: Install needed features on DFS the systems
     ansible.windows.win_feature:
