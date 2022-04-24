@@ -20,9 +20,6 @@ linux_test_user:
 
 safemode_password: 
 
-mysql_root_password:
+mysql_root_password: 
 mysql_user: 
-mysql_password:
-
-linux_admin_1_user:
-linux_admin_1_password:
+mysql_password: 
