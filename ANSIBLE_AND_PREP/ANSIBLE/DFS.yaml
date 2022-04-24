@@ -30,7 +30,7 @@
 - name: Install features and setup shared folders on DFS systems
   hosts: dfs01,dfs02
   vars:
-    ansible_user: "{{ domain_admin_user }}"
+    ansible_user: "Administrator@tortoise.local"
     ansible_shell_type: powershell
   tasks:
   - name: Install needed features on DFS the systems
@@ -53,7 +53,7 @@
 - name: Setup Namespace and replication
   hosts: mgmt01
   vars:
-    ansible_user: "{{ domain_admin_user }}"
+    ansible_user: "Administrator@tortoise.local"
     ansible_shell_type: powershell
   tasks:
   - name: Install needed roles on MGMT01
