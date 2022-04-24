@@ -47,7 +47,7 @@
 
   - name: Create dfs02 shared folder
     ansible.windows.win_shell: New-Item 'c:\dfs02_user' -ItemType Directory; New-SMBShare -Name dfs02 -Path 'c:\dfs02_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
-    delegate_to: dfs01
+    delegate_to: dfs02
 
 # Setup Namespace
 - name: Setup Namespace and replication
@@ -92,7 +92,7 @@
     ansible.windows.win_dsc:
       resource_name: DFSNamespaceRoot
       Path: \\tortoise.local\shell_share
-      TargetPath: \\dfs02.tortoise.local\dfs01_user
+      TargetPath: \\dfs02.tortoise.local\dfs02_user
       Ensure: Present
       Type: DomainV2
 
@@ -128,4 +128,4 @@
       GroupName: shell_share_synch
       FolderName: shell_share
       ComputerName: dfs02
-      ContentPath: \\dfs01.tortoise.local\dfs01_user
+      ContentPath: \\dfs01.tortoise.local\dfs02_user
