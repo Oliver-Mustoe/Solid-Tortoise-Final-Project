@@ -40,13 +40,8 @@
       - FS-DFS-Replication
       state: present
 
-  - name: Create dfs01 shared folder
-    ansible.windows.win_shell: New-Item 'c:\dfs01_user' -ItemType Directory; New-SMBShare -Name dfs01 -Path 'c:\dfs01_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
-    when: ansible_hostname == 'dfs01'
-
-  - name: Create dfs02 shared folder
-    ansible.windows.win_shell: New-Item 'c:\dfs02_user' -ItemType Directory; New-SMBShare -Name dfs02 -Path 'c:\dfs02_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
-    when: ansible_hostname == 'dfs02'
+  - name: Create shared folder
+    ansible.windows.win_shell: if(!(Test-Path C:\shell_share)) {New-Item 'C:\shell_share' -ItemType Directory; New-SMBShare -Name shell_share -Path 'C:\shell_share' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"}
 
 # Setup Namespace
 - name: Setup Namespace and replication
@@ -55,7 +50,7 @@
     ansible_user: "Administrator@tortoise.local"
     ansible_shell_type: powershell
   vars_files:
-    - spyro.yml
+    - group_vars/spyro.yml
   tasks:
   - name: Install needed roles on MGMT01
     ansible.windows.win_feature:
@@ -97,7 +92,7 @@
     ansible.windows.win_dsc:
       resource_name: DFSNamespaceRoot
       Path: \\tortoise.local\shell_share
-      TargetPath: \\dfs01.tortoise.local\dfs01_user
+      TargetPath: \\dfs01.tortoise.local\shell_share
       Ensure: Present
       Type: DomainV2
       PsDscRunAsCredential_username: "{{ domain_admin_user }}"
@@ -140,7 +135,7 @@
       GroupName: shell_share_synch
       FolderName: shell_share
       ComputerName: dfs01
-      ContentPath: \\dfs01.tortoise.local\dfs01_user
+      ContentPath: \\dfs01.tortoise.local\shell_share
       PrimaryMember: $true
       PsDscRunAsCredential_username: "{{ domain_admin_user }}"
       PsDscRunAsCredential_password: "{{ domain_admin_password }}"
