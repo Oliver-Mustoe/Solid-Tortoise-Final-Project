@@ -40,14 +40,13 @@
       - FS-DFS-Replication
       state: present
 
-    # delegate_to essentially says to run this on a certain host
   - name: Create dfs01 shared folder
     ansible.windows.win_shell: New-Item 'c:\dfs01_user' -ItemType Directory; New-SMBShare -Name dfs01 -Path 'c:\dfs01_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
-    delegate_to: dfs01
+    when: ansible_hostname == 'dfs01'
 
   - name: Create dfs02 shared folder
     ansible.windows.win_shell: New-Item 'c:\dfs02_user' -ItemType Directory; New-SMBShare -Name dfs02 -Path 'c:\dfs02_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
-    delegate_to: dfs02
+    when: ansible_hostname == 'dfs02'
 
 # Setup Namespace
 - name: Setup Namespace and replication
@@ -66,6 +65,15 @@
       state: present
 
 ### DELETE EVERYTHING BELOW TO CONVERT TO MANUAL
+  - name: Create needed directory structure
+    ansible.windows.win_file:
+      path: C:\DFSRoots\shell_share\
+      state: directory
+
+  - name: Create needed directory share
+    ansible.windows.win_shell: |
+      New-SMBShare -Name shell_share -Path 'C:\DFSRoots\shell_share' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
+
   - name: Add the DFSDsc module
     community.windows.win_psmodule:
       name: DFSDsc
