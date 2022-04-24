@@ -1,6 +1,0 @@
-# STORES DOMAIN ADMIN USER AND PASSWORD, SHOULD ONLY BE USED WHEN ABSOLUTELY NECESSARY
-
-# should be in administrator@yourdomain.local
-domain_admin_user: 
-
-domain_admin_password: 

@@ -23,3 +23,8 @@ safemode_password:
 mysql_root_password: 
 mysql_user: 
 mysql_password: 
+
+# should be in administrator@yourdomain.local
+domain_admin_user: 
+
+domain_admin_password: 
