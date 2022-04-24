@@ -32,8 +32,6 @@
   vars:
     ansible_user: "Administrator@tortoise.local"
     ansible_shell_type: powershell
-  vars_files:
-  - group_vars/spyro.yml
   tasks:
   - name: Install needed features on DFS the systems
     ansible.windows.win_feature:
@@ -149,7 +147,7 @@
       FolderName: shell_share_user
       ComputerName: dfs01
       ContentPath: C:\shell_share_user
-      PrimaryMember: $true
+      PrimaryMember: true
       PsDscRunAsCredential_username: "{{ domain_admin_user }}"
       PsDscRunAsCredential_password: "{{ domain_admin_password }}"
  
