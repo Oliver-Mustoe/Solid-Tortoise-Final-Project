@@ -1,5 +1,5 @@
 # This playbook partly setups DFS for the final milestone
-# Version 0.85
+# Version 0.9
 
 - name: Add DFS's to the domain
   hosts: dfs01,dfs02
