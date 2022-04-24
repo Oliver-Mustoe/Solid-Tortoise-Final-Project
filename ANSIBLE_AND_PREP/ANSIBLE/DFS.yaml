@@ -32,6 +32,8 @@
   vars:
     ansible_user: "Administrator@tortoise.local"
     ansible_shell_type: powershell
+  vars_files:
+  - spyro.yml
   tasks:
   - name: Install needed features on DFS the systems
     ansible.windows.win_feature:
@@ -84,7 +86,8 @@
       TargetPath: \\mgmt01.tortoise.local\shell_share
       Ensure: Present
       Type: DomainV2
-      PsDscRunAsCredential: Administrator@tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
 
   - name: Configure namespace 'shell_share' folder 'shell_share_user' on mgmt01
     ansible.windows.win_dsc:
@@ -92,7 +95,8 @@
       Path: \\tortoise.local\shell_share\shell_share_user
       TargetPath: \\mgmt01.tortoise.local\shell_share\shell_share_user
       Ensure: Present
-      PsDscRunAsCredential: Administrator@tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
 
   - name: Configure namespace 'shell_share' folder 'shell_share_user' dfs01
     ansible.windows.win_dsc:
@@ -100,7 +104,8 @@
       Path: \\tortoise.local\shell_share\shell_share_user
       TargetPath: \\dfs01.tortoise.local\shell_share_user
       Ensure: Present
-      PsDscRunAsCredential: Administrator@tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
 
   - name: Configure namespace 'shell_share' folder 'shell_share_user' dfs02
     ansible.windows.win_dsc:
@@ -108,7 +113,8 @@
       Path: \\tortoise.local\shell_share\shell_share_user
       TargetPath: \\dfs02.tortoise.local\shell_share_user
       Ensure: Present
-      PsDscRunAsCredential: Administrator@tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
  
   - name: Configure a replication group for 'shell_share'
     ansible.windows.win_dsc:
@@ -119,7 +125,8 @@
       Folders: shell_share_user
       Topology: Fullmesh
       DomainName: tortoise.local
-      PsDscRunAsCredential: Administrator@tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
  
   - name: Configure a replication folder for shell_share
     ansible.windows.win_dsc:
@@ -127,7 +134,8 @@
       GroupName: shell_share_user_synch
       FolderName: shell_share_user
       DfsnPath: \\tortoise.local\shell_share\shell_share_user
-      PsDscRunAsCredential: Administrator@tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
  
   - name: Configure replication membership for 'dfs01'
     ansible.windows.win_dsc:
@@ -137,7 +145,8 @@
       ComputerName: dfs01
       ContentPath: C:\shell_share_user
       PrimaryMember: $true
-      PsDscRunAsCredential: Administrator@tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
  
   - name: Configure replication membership for 'dfs02'
     ansible.windows.win_dsc:
@@ -146,5 +155,6 @@
       FolderName: shell_share_user
       ComputerName: dfs02
       ContentPath: C:\shell_share_user
-      PsDscRunAsCredential: Administrator@tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
  
