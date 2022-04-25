@@ -24,7 +24,9 @@ mysql_root_password:
 mysql_user: 
 mysql_password: 
 
+linux_admin_1_user:
+linux_admin_1_password:
+
 # should be in administrator@yourdomain.local
 domain_admin_user: 
-
 domain_admin_password: 
