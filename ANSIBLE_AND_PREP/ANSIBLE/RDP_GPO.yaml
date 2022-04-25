@@ -28,14 +28,14 @@
     ansible_shell_type: powershell
   tasks:
   - name: Make rdp ou
-    ansible.windows.win_shell: New-ADOrganizationalUnit -Name 'rdp' -Path 'DC=tortoise,DC=local' -ProtectedFromAccidentalDeletion $False
+    ansible.windows.win_shell: New-ADOrganizationalUnit -Name 'rdp' -Path 'OU=wallpaper,DC=tortoise,DC=local' -ProtectedFromAccidentalDeletion $False
   - name: Move wks01&02 to rdp ou
     ansible.windows.win_shell: |
-      Move-ADObject –Identity 'CN=wks01,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=rdp,DC=tortoise,DC=local'
-      Move-ADObject –Identity 'CN=wks02,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=rdp,DC=tortoise,DC=local'
+      Move-ADObject –Identity 'CN=wks01,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=rdp,OU=wallpaper,DC=tortoise,DC=local'
+      Move-ADObject –Identity 'CN=wks02,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=rdp,OU=wallpaper,DC=tortoise,DC=local'
   - name: Make RDPallow GPO
     ansible.windows.win_shell: New-GPO -name 'RDPallow'
   - name: Change regvalue for rdp
     ansible.windows.win_shell: Set-GPRegistryValue -Name 'RDPallow' -Key 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server' -ValueName 'fDenyTSConnections' -Type Binary -Value 0
   - name: Link GPO
-    ansible.windows.win_shell: New-GPLink -name 'RDPallow' -target 'ou=rdp,dc=tortoise,dc=local' 
+    ansible.windows.win_shell: New-GPLink -name 'RDPallow' -target 'ou=rdp,OU=wallpaper,dc=tortoise,dc=local' 
