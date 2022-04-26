@@ -15,6 +15,11 @@
       type: collection
       name: community.windows
 
+  - name: Install collection 'community.docker'
+    community.general.ansible_galaxy_install:
+      type: collection
+      name: community.docker
+
 # Any failures in this and the linux sections "gathering" phase is fine since it most likely means the computer just isn't on :) (OR NOT IN THE DOMAIN)
 - name: Set Windows Timezones to 'Eastern Standard Time'
   hosts: windows
