@@ -16,7 +16,7 @@
   - name: Download Wallpaper
     ansible.windows.win_shell: Invoke-WebRequest -URI 'https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg' -OutFile 'C:\background.jpg'
   - name: Make wallpaperSet GPO
-    ansible.windows.win_shell: New-GPO -name 'wallpaperSet'
+    ansible.windows.win_shell: New-GPO -Name 'wallpaperSet'
   - name: Change regvalue for wallpaperSet
     ansible.windows.win_shell: Set-GPRegistryValue -Name 'WP_ICT' -Key 'HKCU:\Control Panel\Desktop\' -ValueName 'Wallpaper' -Type String -Value 'C:\background.jpg'
   - name: Link GPO
