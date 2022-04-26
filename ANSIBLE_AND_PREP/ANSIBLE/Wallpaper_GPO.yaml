@@ -22,7 +22,7 @@
       New-GPO -name 'wallpaperSet'
   - name: Download wallpaper
     ansible.windows.win_shell: |
-      Invoke-WebRequest -Uri 'https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg' -OutFile 'C:\background.jpg'
+      Invoke-WebRequest -Uri "https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg" -OutFile "C:\background.jpg"
   - name: Change regvalue for wallpaperSet
     ansible.windows.win_shell: |
       Set-GPRegistryValue -Name 'WP_ICT' -key 'HKCU:\Control Panel\Desktop\' -ValueName 'Wallpaper' -type string -value 'C:\background.jpg'
