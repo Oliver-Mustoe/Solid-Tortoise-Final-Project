@@ -16,7 +16,7 @@
     - name: Install prereqs for pip
       ansible.builtin.package:
         name:
-        - python-pip-wh1
+        - python3-pip
         - python-setuptools
         state: present
 
