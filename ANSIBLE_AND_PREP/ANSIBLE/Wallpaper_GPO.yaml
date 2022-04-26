@@ -11,19 +11,14 @@
   tasks:
   - name: Make wallpaper ou
     ansible.windows.win_shell: New-ADOrganizationalUnit -Name 'wallpaper' -Path 'DC=tortoise,DC=local' -ProtectedFromAccidentalDeletion $False
-  # - name: Move rdp ou to wallpaper
-  #   ansible.windows.win_shell: |
-  #     Move-ADObject –Identity 'OU=rdp,DC=tortoise,DC=local' -TargetPath 'OU=wallpaper,DC=tortoise,DC=local'
   - name: Move MGMT01 to wallpaper
     ansible.windows.win_shell: |
       Move-ADObject –Identity 'CN=MGMT01,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=wallpaper,DC=tortoise,DC=local'
-  - name: Make wallpaperSet GPO
-    ansible.windows.win_shell: |
-      New-GPO -name 'wallpaperSet'
-  - name: Download wallpaper
+  - name: Download Wallpaper
     ansible.windows.win_shell: Invoke-WebRequest -URI 'https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg' -OutFile 'C:\background.jpg'
+  - name: Make wallpaperSet GPO
+    ansible.windows.win_shell: New-GPO -name 'wallpaperSet'
   - name: Change regvalue for wallpaperSet
     ansible.windows.win_shell: Set-GPRegistryValue -Name 'WP_ICT' -key 'HKCU:\Control Panel\Desktop\' -ValueName 'Wallpaper' -type String -value 'C:\background.jpg'
   - name: Link GPO
-    ansible.windows.win_shell: |
-      New-GPLink -name 'wallpaperSet' -target 'ou=wallpaper,dc=tortoise,dc=local' 
+    ansible.windows.win_shell: New-GPLink -name 'wallpaperSet' -target 'OU=wallpaper,dc=tortoise,dc=local' 
