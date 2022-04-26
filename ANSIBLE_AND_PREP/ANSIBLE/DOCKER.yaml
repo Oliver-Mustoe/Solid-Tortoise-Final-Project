@@ -39,16 +39,12 @@
         project_name: owncloud_compose
         definition:
             version: '3.1'
-
             services:
-
               owncloud:
                 image: owncloud
                 restart: always
                 ports:
                   - 8080:80
-
-
               mysql:
                 image: mariadb
                 restart: always
@@ -57,8 +53,7 @@
                   MYSQL_DATABASE: mariadb
                   MYSQL_USER: "{{ mysql_user }}"
                   MYSQL_PASSWORD: "{{ mysql_password }}"
-       
       register: output
 
-    - debug:
+    - ansible.builtin.debug:
         var: output
