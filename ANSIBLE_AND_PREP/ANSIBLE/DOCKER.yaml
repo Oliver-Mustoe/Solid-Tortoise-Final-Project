@@ -10,7 +10,6 @@
           - ca-certificates
           - curl
           - software-properties-common
-          - epel-release
         state: present
         update_cache: true
 
