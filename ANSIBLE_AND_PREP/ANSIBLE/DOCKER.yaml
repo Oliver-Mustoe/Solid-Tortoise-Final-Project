@@ -10,8 +10,16 @@
           - ca-certificates
           - curl
           - software-properties-common
+          - epel-release
         state: present
         update_cache: true
+
+    - name: Install prereqs for pip
+      ansible.builtin.package:
+        name:
+        - python-pip
+        - python-setuptools
+        state: present
 
     - name: Add Dockers GPG apt Key
       apt_key:
@@ -33,22 +41,24 @@
       ansible.builtin.shell: |
         curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
-      
+
+    - name: Install Docker SDK & PyYAML
+      ansible.builtin.pip:
+        name: 
+        - docker
+        - PyYAML
+  
     - name: Create and Install 'owncloud_compose'
       community.docker.docker_compose:
         project_name: owncloud_compose
         definition:
             version: '3.1'
-
             services:
-
               owncloud:
                 image: owncloud
                 restart: always
                 ports:
                   - 8080:80
-
-
               mysql:
                 image: mariadb
                 restart: always
@@ -57,8 +67,7 @@
                   MYSQL_DATABASE: mariadb
                   MYSQL_USER: "{{ mysql_user }}"
                   MYSQL_PASSWORD: "{{ mysql_password }}"
-       
       register: output
 
-    - debug:
+    - ansible.builtin.debug:
         var: output
