@@ -17,22 +17,17 @@
   
   - name: Move MGMT01 to wallpaper
     ansible.windows.win_shell: Move-ADObject –Identity 'CN=MGMT01,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=wallpaper,DC=tortoise,DC=local'
-
-  - name: map drive
-    community.windows.win_mapped_drive:
-      letter: Z
-      path: \\tortoise.local\shell_share\shell_share_user
     
   - name: Download Wallpaper
     ansible.windows.win_get_url:
       url: https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg
-      dest: Z:\background.jpg
+      dest: \\tortoise.local\shell_share\background.jpg
 
   - name: Make wallpaperSet GPO
     ansible.windows.win_shell: New-GPO -Name 'wallpaperSet'
   
   - name: Change regvalue for wallpaperSet
-    ansible.windows.win_shell: Set-GPRegistryValue -Name 'wallpaper' -Key 'HKCU:\Control Panel\Desktop' -ValueName 'Wallpaper' -Type String -Value 'Z:\background.jpg'
+    ansible.windows.win_shell: Set-GPRegistryValue -Name 'wallpaper' -Key 'HKCU:\Control Panel\Desktop' -ValueName 'Wallpaper' -Type String -Value '\\tortoise.local\shell_share\background.jpg'
   
   - name: Link GPO
     ansible.windows.win_shell: New-GPLink -name 'wallpaperSet' -target 'OU=wallpaper,dc=tortoise,dc=local' 
