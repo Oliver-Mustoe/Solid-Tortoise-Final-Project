@@ -10,3 +10,21 @@
     ansible.windows.win_get_url:
       url: https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg
       dest: \\tortoise.local\shell_share\background.jpg
+
+- name: Wallpaper setup
+  hosts: dc01
+  become: yes
+  become_method: runas
+  become_user: "{{ domain_admin_1_user }}"
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Make wallpaperSet GPO
+    ansible.windows.win_shell: New-GPO -Name 'wallpaperSet'
+  
+  - name: Change regvalue for wallpaperSet
+    ansible.windows.win_shell: Set-GPRegistryValue -Name 'wallpaper' -Key 'HKCU:\Control Panel\Desktop' -ValueName 'Wallpaper' -Type String -Value '\\tortoise.local\shell_share\background.jpg'
+  
+  - name: Link GPO
+    ansible.windows.win_shell: New-GPLink -name 'wallpaperSet' -target 'OU=wallpaper,dc=tortoise,dc=local' 
