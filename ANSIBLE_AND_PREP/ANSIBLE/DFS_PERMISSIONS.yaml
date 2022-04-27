@@ -8,5 +8,5 @@
   tasks:
   - name: Make wallpaper ou
     ansible.windows.win_shell: |
-    Grant-SmbShareAccess -Name shell_share -AccountName "TORTOISE\Domain Users" -AccessRight Read -Force
-    Grant-SmbShareAccess -Name shell_share -AccountName "TORTOISE\Domain Admins" -AccessRight Full -Force
+      Grant-SmbShareAccess -Name shell_share -AccountName "TORTOISE\Domain Users" -AccessRight Read -Force
+      Grant-SmbShareAccess -Name shell_share -AccountName "TORTOISE\Domain Admins" -AccessRight Full -Force
