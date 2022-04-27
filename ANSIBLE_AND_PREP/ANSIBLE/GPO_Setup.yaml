@@ -1,0 +1,58 @@
+# GPO setup
+
+- name: mgmt01 install group policy management
+  hosts: mgmt01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+    - name: "Install GPMC"
+      ansible.windows.win_feature:
+         name: 
+         - GPMC
+         state: present 
+      register: host_restart
+      
+    - name: Reboot
+      ansible.windows.win_reboot:
+      when: host_restart.reboot_required
+
+- name: dc01 rdp setup
+  hosts: dc01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Make wallpaper ou
+    ansible.windows.win_shell: New-ADOrganizationalUnit -Name 'wallpaper' -Path 'DC=tortoise,DC=local' -ProtectedFromAccidentalDeletion $False
+  - name: Move MGMT01 to wallpaper
+    ansible.windows.win_shell: Move-ADObject –Identity 'CN=MGMT01,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=wallpaper,DC=tortoise,DC=local'
+
+- name: dc01 rdp setup
+  hosts: dc01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    become: yes
+    ansible_shell_type: powershell
+  tasks:
+  - name: Make rdp ou
+    ansible.windows.win_shell: New-ADOrganizationalUnit -Name 'rdp' -Path 'OU=wallpaper,DC=tortoise,DC=local' -ProtectedFromAccidentalDeletion $False
+  - name: Move wks01&02 to rdp ou
+    ansible.windows.win_shell: |
+      Move-ADObject –Identity 'CN=wks01,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=rdp,OU=wallpaper,DC=tortoise,DC=local'
+      Move-ADObject –Identity 'CN=wks02,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=rdp,OU=wallpaper,DC=tortoise,DC=local'
+  - name: Make RDPallow GPO
+    ansible.windows.win_shell: New-GPO -name 'RDPallow'
+  - name: Change regvalue for rdp
+    ansible.windows.win_shell: Set-GPRegistryValue -Name 'RDPallow' -Key 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server' -ValueName 'fDenyTSConnections' -Type Binary -Value 0
+  - name: Link GPO
+    ansible.windows.win_shell: New-GPLink -name 'RDPallow' -target 'ou=rdp,OU=wallpaper,dc=tortoise,dc=local' 
+
+- name: RDP wks01 & wks02
+  hosts: wks01,wks02
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Allow RDP
+    ansible.windows.win_shell: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
