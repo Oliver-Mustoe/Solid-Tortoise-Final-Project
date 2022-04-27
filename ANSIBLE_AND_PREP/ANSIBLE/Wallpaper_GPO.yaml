@@ -22,7 +22,7 @@
     ansible.windows.win_shell: New-GPO -Name 'wallpaperSet'
   
   - name: Change regvalue for wallpaperSet
-    ansible.windows.win_shell: Set-GPRegistryValue -Name 'wallpaper' -Key 'HKCU\Control Panel\Desktop\' -ValueName 'Wallpaper' -Type String -Value '\\tortoise.local\shell_share\shell_share_user\background.jpg'
+    ansible.windows.win_shell: Set-GPRegistryValue -Name 'wallpaper' -Key 'HKCU:\Control Panel\Desktop' -ValueName 'Wallpaper' -Type String -Value '\\tortoise.local\shell_share\shell_share_user\background.jpg'
   
   - name: Link GPO
     ansible.windows.win_shell: New-GPLink -name 'wallpaperSet' -target 'OU=wallpaper,dc=tortoise,dc=local' 
