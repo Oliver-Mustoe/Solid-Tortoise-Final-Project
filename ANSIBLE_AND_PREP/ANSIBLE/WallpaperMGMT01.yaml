@@ -9,4 +9,4 @@
   - name: Download Wallpaper
     ansible.windows.win_get_url:
       url: https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg
-      dest: Z:\background.jpg
+      dest: \\tortoise.local\shell_share\shell_share_user\background.jpg
