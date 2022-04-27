@@ -22,7 +22,7 @@
     ansible_shell_type: powershell
   tasks:
   - name: map drive
-    ansible.windows.win_shell: New-PSDrive -Name "Z" -Root "\\tortoise.local\shell_share\shell_share_user" -Persist -PSProvider "FileSystem"
+    ansible.windows.win_shell: New-PSDrive -Name 'Z' -Root '\\tortoise.local\shell_share\shell_share_user" -Persist -PSProvider "FileSystem'
   
   - name: Download Wallpaper
     ansible.windows.win_shell: Invoke-WebRequest -URI 'https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg' -OutFile 'Z:\background.jpg'
