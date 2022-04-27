@@ -6,6 +6,7 @@
 - name: Wallpaper setup
   hosts: dc01
   become: yes
+  become_method: runas
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     ansible_shell_type: powershell
