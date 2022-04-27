@@ -4,6 +4,7 @@
   hosts: mgmt01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
   tasks:
   - name: Download Wallpaper
     ansible.windows.win_get_url:
