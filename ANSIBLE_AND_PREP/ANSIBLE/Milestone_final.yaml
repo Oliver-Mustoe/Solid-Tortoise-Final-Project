@@ -13,3 +13,5 @@
 - name: Play "GPO_Setup"
   import_playbook: GPO_Setup.yaml
  
+- name: Play "Linux-ADM_Setup"
+  import_playbook: linux_admin.yaml
