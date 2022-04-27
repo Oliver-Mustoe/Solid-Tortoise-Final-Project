@@ -1,0 +1,11 @@
+# Download wallpaper onto MGMT01
+
+- name: Download WP
+  hosts: mgmt01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+  tasks:
+  - name: Download Wallpaper
+    ansible.windows.win_get_url:
+      url: https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg
+      dest: Z:\background.jpg
