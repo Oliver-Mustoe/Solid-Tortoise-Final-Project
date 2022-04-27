@@ -3,7 +3,7 @@
 # CAN'T RUN TWICE!!!
 # v 0.1
 
-- name: Wallpaper setup part 1
+- name: Wallpaper setup
   hosts: dc01
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
@@ -14,25 +14,13 @@
   
   - name: Move MGMT01 to wallpaper
     ansible.windows.win_shell: Move-ADObject –Identity 'CN=MGMT01,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=wallpaper,DC=tortoise,DC=local'
-    
-- name: Wallpaper setup part 2
-  hosts: dc01
-  vars:
-    ansible_user: "{{ dc01_local_user }}"
-    ansible_shell_type: powershell
-  tasks:
+
   - name: map drive
     ansible.windows.win_shell: New-PSDrive -Name 'Z' -Root "\\tortoise.local\shell_share\shell_share_user" -Persist -PSProvider "FileSystem"
   
   - name: Download Wallpaper
     ansible.windows.win_shell: Invoke-WebRequest -URI 'https://github.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/raw/Unsolid-Tortoise/Wallpaper.jpg' -OutFile 'Z:\background.jpg'
 
-- name: Wallpaper setup part 3(
-  hosts: dc01
-  vars:
-    ansible_user: "{{ domain_admin_1_user }}"
-    ansible_shell_type: powershell
-  tasks:
   - name: Make wallpaperSet GPO
     ansible.windows.win_shell: New-GPO -Name 'wallpaperSet'
   
