@@ -7,6 +7,7 @@
   hosts: dc01
   become: yes
   become_method: runas
+  become_user: "{{ domain_admin_1_user }}"
   vars:
     ansible_user: "{{ domain_admin_1_user }}"
     ansible_shell_type: powershell
