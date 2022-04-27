@@ -142,3 +142,5 @@ https://docs.microsoft.com/en-us/search/?terms=New-DFsnRoot&category=Reference
 https://docs.microsoft.com/en-us/powershell/module/dfsn/new-dfsnfolder
 
 https://docs.microsoft.com/en-us/powershell/module/dfsn/new-dfsnfoldertarget
+
+https://docs.ansible.com/ansible/latest/collections/community/windows/win_mapped_drive_module.html
