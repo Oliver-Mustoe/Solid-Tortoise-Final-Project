@@ -16,9 +16,9 @@
     ansible.windows.win_shell: Move-ADObject –Identity 'CN=MGMT01,CN=Computers,DC=tortoise,DC=local' -TargetPath 'OU=wallpaper,DC=tortoise,DC=local'
 
   - name: map drive
-   community.windows.win_mapped_drive:
-    letter: Z
-    path: \\tortoise.local\shell_share\shell_share_user
+    community.windows.win_mapped_drive:
+      letter: Z
+      path: \\tortoise.local\shell_share\shell_share_user
     
   - name: Download Wallpaper
     ansible.windows.win_get_url:
