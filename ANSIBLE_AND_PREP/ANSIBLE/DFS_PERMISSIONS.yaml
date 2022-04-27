@@ -6,7 +6,7 @@
    ansible_user: "{{ domain_admin_1_user }}"
    ansible_shell_type: powershell
   tasks:
-  - name: Make wallpaper ou
+  - name: Change to appropriate permissions
     ansible.windows.win_shell: |
       Grant-SmbShareAccess -Name shell_share -AccountName "TORTOISE\Domain Users" -AccessRight Read -Force
       Grant-SmbShareAccess -Name shell_share -AccountName "TORTOISE\Domain Admins" -AccessRight Full -Force
