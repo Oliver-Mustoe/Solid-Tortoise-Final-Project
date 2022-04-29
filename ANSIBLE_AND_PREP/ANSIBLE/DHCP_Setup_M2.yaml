@@ -6,6 +6,9 @@
   become: yes
   become_user: root
   tasks:
+  - name: install dhcpd
+    ansible.builtin.shell: yum install dhcpd -y
+   
   - name: curl script dhcp01
     shell: "curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/main/dhcp01/dhcpd.conf > /etc/dhcp/dhcpd.conf"
     when: ansible_hostname == 'dhcp01'
