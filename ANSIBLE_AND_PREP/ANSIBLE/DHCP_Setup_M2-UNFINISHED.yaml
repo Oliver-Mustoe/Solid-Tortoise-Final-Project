@@ -1,0 +1,53 @@
+#dhcp ansible
+#Solid-Tortoise
+#Version 0.1
+- name: dhcpd setup
+  hosts: dhcp01,dhcp02
+  become: yes
+  become_user: root
+  tasks:
+  - name: install dhcpd
+    ansible.builtin.shell: yum install dhcp -y
+   
+  - name: curl script dhcp01
+    shell: "curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/main/dhcp01/dhcpd.conf > /etc/dhcp/dhcpd.conf"
+    when: ansible_hostname == 'dhcp01'
+  
+  - name: curl script dhcp02
+    shell: "curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/main/dhcp02/dhcpd.conf > /etc/dhcp/dhcpd.conf"
+    when: ansible_hostname == 'dhcp02'
+  
+  - name: dhcpd start and enable
+    ansible.builtin.service:
+     name: dhcpd 
+     enabled: yes
+     state: started
+
+  - name: Firewall 647/tcp
+    ansible.posix.firewalld:
+     port: 647/tcp
+     permanent: yes
+     state: enabled
+  - name: Firewall 647/udp  
+    ansible.posix.firewalld:
+     port: 647/udp
+     permanent: yes
+     state: enabled
+  - name: Firewall dhcpd
+    ansible.posix.firewalld:
+     service: dhcp
+     permanent: yes
+     state: enabled
+
+# Ensure DHCP is running
+- hosts: dhcp01,dhcp02
+  become: yes
+  tasks:
+  - name: Ensure DHCP is in a running state
+    service:
+      name: dhcpd
+      state: started
+    register: dhcp_start
+    until: dhcp_start.status.ActiveState == "active"
+    retries: 50
+    delay: 10
