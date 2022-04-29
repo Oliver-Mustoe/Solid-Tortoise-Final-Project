@@ -1,0 +1,13 @@
+# test changing forwarders
+
+- name: Add dc02 to the domain
+  hosts: dc02
+  vars:
+    ansible_user: "{{ dc02_local_user }}"
+    ansible_shell_type: powershell
+  tasks:  
+  - name: Setup dc02 DNS forwarder
+    ansible.windows.win_shell: |
+      Set-DnsServerForwarder -IPAddress "172.16.1.2" -PassThru
+      Set-DnsServerForwarder -EnableReordering $True -PassThru
+    
