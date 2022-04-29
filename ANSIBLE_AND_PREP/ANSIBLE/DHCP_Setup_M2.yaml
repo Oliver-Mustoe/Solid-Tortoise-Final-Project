@@ -1,40 +1,15 @@
-#dhcp ansible
-#Solid-Tortoise
-#Version 0.1
-- name: dhcpd setup
-  hosts: dhcp01,dhcp02
-  become: yes
-  become_user: root
-  tasks:
-  - name: curl script dhcp01
-    shell: "curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/main/dhcp01/dhcpd.conf > /etc/dhcp/dhcpd.conf"
-    when: ansible_hostname == 'dhcp01'
-  
-  - name: curl script dhcp02
-    shell: "curl https://raw.githubusercontent.com/Oliver-Mustoe/Solid-Tortoise-Final-Project/main/dhcp02/dhcpd.conf > /etc/dhcp/dhcpd.conf"
-    when: ansible_hostname == 'dhcp02'
-  
-  - name: dhcpd start and enable
-    ansible.builtin.service:
-     name: dhcpd 
-     enabled: yes
-     state: started
+# Ensure that Milestone 1 is ran, installs and setups DHCP, TIME ON BOTH DHCP MACHINES MUST BE THE SAME!!!!!!!!!
+# Version 1.0
 
-  - name: Firewall 647/tcp
-    ansible.posix.firewalld:
-     port: 647/tcp
-     permanent: yes
-     state: enabled
-  - name: Firewall 647/udp  
-    ansible.posix.firewalld:
-     port: 647/udp
-     permanent: yes
-     state: enabled
-  - name: Firewall dhcpd
-    ansible.posix.firewalld:
-     service: dhcp
-     permanent: yes
-     state: enabled
+# Setup DHCP
+- name: Configure DHCP
+  hosts: localhost
+  connection: local
+  # Become an administrator
+  become: yes
+  tasks:
+  - name: Run dhcp configure script
+    ansible.builtin.shell: bash /home/hatchling/Solid-Tortoise/dhcp_script.sh
 
 # Ensure DHCP is running
 - hosts: dhcp01,dhcp02
