@@ -1,14 +1,17 @@
 # Input variables for assigned sections here, recommended to vault this file after input using the command "ansible-vault encrypt $PATH/all.yml"
 # IF VAULTED USE THE COMMAND "ansible-vault edit" TO EDIT
-mgmt01_local_user: 
+mgmt01_local_user:  
 
 dc01_local_user: 
 
 dc02_local_user: 
 
-wks01_local_user:
+wks01_local_user: 
 
-wks02_local_user:
+wks02_local_user: 
+
+# Must have the same user on the two dfs's
+dfs_local_user: 
 
 domain_admin_1_user: 
 domain_admin_1_password: 
@@ -16,3 +19,14 @@ domain_admin_1_password:
 linux_test_user: 
 
 safemode_password: 
+
+mysql_root_password: 
+mysql_user: 
+mysql_password: 
+
+linux_admin_1_user:
+linux_admin_1_password:
+
+# should be in administrator@yourdomain.local
+domain_admin_user: 
+domain_admin_password: 

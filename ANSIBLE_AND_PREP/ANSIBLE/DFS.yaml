@@ -1,0 +1,163 @@
+# This playbook FULLY setups DFS for the final milestone
+# Version 1.1 - NEEDS DOUBLE CHECK
+
+- name: Add DFS's to the domain
+  hosts: dfs01,dfs02
+  vars:
+    ansible_user: "{{ dfs_local_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Change dfs dns to point to domain controllers
+    ansible.windows.win_dns_client:
+      adapter_names: 'Ethernet*'
+      dns_servers:
+      - 172.16.1.12
+      - 172.16.1.13
+
+  - name: Add dfs to Domain
+    ansible.windows.win_domain_membership:
+      dns_domain_name: tortoise.local
+      domain_admin_user: "{{ domain_admin_1_user }}@tortoise.local"
+      domain_admin_password: "{{ domain_admin_1_password }}"
+      state: domain
+    register: host_restart
+    
+  - name: Reboot
+    ansible.windows.win_reboot:
+    when: host_restart.reboot_required
+
+# Setup DFS systems
+- name: Install features and setup shared folders on DFS systems
+  hosts: dfs01,dfs02
+  vars:
+    ansible_user: "Administrator@tortoise.local"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Install needed features on DFS the systems
+    ansible.windows.win_feature:
+      name:
+      - FS-DFS-Namespace
+      - FS-FileServer
+      - FS-DFS-Replication
+      state: present
+
+  - name: Create needed directory structure
+    ansible.windows.win_file:
+      path: C:\shell_share_user
+      state: directory
+
+  - name: Create shared folder
+    ansible.windows.win_shell: New-SMBShare -Name shell_share_user -Path 'C:\shell_share_user' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"
+
+# Setup Namespace
+- name: Setup Namespace and replication
+  hosts: mgmt01
+  vars:
+    ansible_user: "Administrator@tortoise.local"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Install needed roles on MGMT01
+    ansible.windows.win_feature:
+      name:
+      - FS-DFS-Namespace
+      - FS-DFS-Replication
+      - RSAT-DFS-Mgmt-Con
+      include_management_tools: yes
+      state: present
+
+### DELETE EVERYTHING BELOW TO CONVERT TO MANUAL
+  - name: Create needed directory structure
+    ansible.windows.win_file:
+      path: C:\DFSRoots\shell_share\
+      state: directory
+
+# Creates share if does not exist
+  - name: Create needed directory share
+    ansible.windows.win_shell: |
+      if(!(Test-Path \\mgmt01.tortoise.local\shell_share)) {New-SMBShare -Name shell_share -Path 'C:\DFSRoots\shell_share' -FullAccess "tortoise\Domain Admins" -ReadAccess "tortoise\Domain Users"}
+
+  - name: Add the DFSDsc module
+    community.windows.win_psmodule:
+      name: DFSDsc
+      state: present
+
+# No '' or "" for the resource even if the documentation has them, ansible no like  
+  - name: Configure namespace 'shell_share' root on mgmt01
+    ansible.windows.win_dsc:
+      resource_name: DFSNamespaceRoot
+      Path: \\tortoise.local\shell_share
+      TargetPath: \\mgmt01.tortoise.local\shell_share
+      Ensure: Present
+      Type: DomainV2
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
+
+  - name: Configure namespace 'shell_share' folder 'shell_share_user' on mgmt01
+    ansible.windows.win_dsc:
+      resource_name: DFSNamespaceFolder
+      Path: \\tortoise.local\shell_share\shell_share_user
+      TargetPath: \\mgmt01.tortoise.local\shell_share\shell_share_user
+      Ensure: Present
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
+
+  - name: Configure namespace 'shell_share' folder 'shell_share_user' dfs01
+    ansible.windows.win_dsc:
+      resource_name: DFSNamespaceFolder
+      Path: \\tortoise.local\shell_share\shell_share_user
+      TargetPath: \\dfs01.tortoise.local\shell_share_user
+      Ensure: Present
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
+
+  - name: Configure namespace 'shell_share' folder 'shell_share_user' dfs02
+    ansible.windows.win_dsc:
+      resource_name: DFSNamespaceFolder
+      Path: \\tortoise.local\shell_share\shell_share_user
+      TargetPath: \\dfs02.tortoise.local\shell_share_user
+      Ensure: Present
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
+ 
+  - name: Configure a replication group for 'shell_share'
+    ansible.windows.win_dsc:
+      resource_name: DFSReplicationGroup
+      GroupName: shell_share_user_synch
+      Ensure: Present
+      Members: dfs01,dfs02
+      Folders: shell_share_user
+      Topology: Fullmesh
+      DomainName: tortoise.local
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
+ 
+  - name: Configure a replication folder for shell_share
+    ansible.windows.win_dsc:
+      resource_name: DFSReplicationGroupFolder
+      GroupName: shell_share_user_synch
+      FolderName: shell_share_user
+      DfsnPath: \\tortoise.local\shell_share\shell_share_user
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
+ 
+  - name: Configure replication membership for 'dfs01'
+    ansible.windows.win_dsc:
+      resource_name: DFSReplicationGroupMembership
+      GroupName: shell_share_user_synch
+      FolderName: shell_share_user
+      ComputerName: dfs01
+      ContentPath: C:\shell_share_user
+      PrimaryMember: true
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
+ 
+  - name: Configure replication membership for 'dfs02'
+    ansible.windows.win_dsc:
+      resource_name: DFSReplicationGroupMembership
+      GroupName: shell_share_user_synch
+      FolderName: shell_share_user
+      ComputerName: dfs02
+      ContentPath: C:\shell_share_user
+      PsDscRunAsCredential_username: "{{ domain_admin_user }}"
+      PsDscRunAsCredential_password: "{{ domain_admin_password }}"
+ 

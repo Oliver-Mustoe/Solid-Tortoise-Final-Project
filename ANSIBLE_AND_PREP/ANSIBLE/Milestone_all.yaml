@@ -2,7 +2,7 @@
 # Needs to be run with the command "ansible-playbook -i domain_install_inventory.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
 
 # Runs all of the milestones in order, meaning this script will be incomplete until all of the milestones are completed
-# Version 1.0
+# Version 0.1
 
 - name: Play "Reqs"
   import_playbook: Reqs.yaml
@@ -12,3 +12,6 @@
 
 - name: Play "Milestone 2"
   import_playbook: Milestone02.yaml
+  
+- name: Play "Milestone 3"
+  import_playbook: Milestone_final.yaml

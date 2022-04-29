@@ -1,0 +1,73 @@
+# This playbook fully setups DOCKER
+# Version 1.0
+- hosts: docker
+  become: true
+  tasks:
+    - name: Install prereqs
+      ansible.builtin.package:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+        update_cache: true
+
+    - name: Install prereqs for pip
+      ansible.builtin.package:
+        name:
+        - python3-pip
+        - python-setuptools
+        state: present
+
+    - name: Add Dockers GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Install docker-ce
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: true
+    # The "|" indicates multiline commands
+    - name: Install docker-compose
+      ansible.builtin.shell: |
+        curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+
+    - name: Install Docker SDK, Docker-Compose SDK & PyYAML
+      ansible.builtin.pip:
+        name: 
+        - docker
+        - PyYAML
+        - docker-compose
+  
+    - name: Create and Install 'owncloud_compose'
+      community.docker.docker_compose:
+        project_name: owncloud_compose
+        definition:
+            version: '3.1'
+            services:
+              owncloud:
+                image: owncloud
+                restart: always
+                ports:
+                  - 8080:80
+              mysql:
+                image: mariadb
+                restart: always
+                environment:
+                  MYSQL_ROOT_PASSWORD: "{{ mysql_root_password }}"
+                  MYSQL_DATABASE: mariadb
+                  MYSQL_USER: "{{ mysql_user }}"
+                  MYSQL_PASSWORD: "{{ mysql_password }}"
+      register: output
+
+    - ansible.builtin.debug:
+        var: output

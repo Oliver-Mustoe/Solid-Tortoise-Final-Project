@@ -109,3 +109,36 @@ https://stackoverflow.com/questions/36290485/how-to-add-user-and-group-without-a
 
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_prompts.html
 
+https://github.com/dsccommunity/DFSDsc/wiki/DFSNamespaceFolder
+
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html
+
+https://www.jorgebernhardt.com/how-to-create-a-shared-folder-using-powershell/
+
+https://docs.microsoft.com/en-us/powershell/module/smbshare/new-smbshare?view=windowsserver2022-ps
+
+https://stackoverflow.com/questions/41922521/using-ansible-on-windows-with-domain-user
+
+https://docs.microsoft.com/en-us/powershell/module/dfsn/new-dfsnroot?view=windowsserver2022-ps
+
+https://www.reddit.com/r/PowerShell/comments/g23fwn/newdfsnroot_standalone_namespaces_path_vs/
+
+https://docs.microsoft.com/en-us/powershell/module/dfsr/new-dfsreplicationgroup?view=windowsserver2022-ps
+
+https://docs.microsoft.com/en-us/powershell/module/dfsr/new-dfsreplicatedfolder?view=windowsserver2022-ps
+
+https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
+
+https://stackoverflow.com/questions/5130847/running-multiple-commands-in-one-line-in-shell
+
+https://docs.microsoft.com/en-us/powershell/module/dfsr/new-dfsreplicationgroup?view=windowsserver2022-ps
+
+https://docs.microsoft.com/en-us/powershell/module/dfsr/new-dfsreplicationgroup?view=windowsserver2022-ps
+
+https://docs.microsoft.com/en-us/powershell/module/dfsr/set-dfsreplicatedfolder?view=windowsserver2022-ps
+
+https://docs.microsoft.com/en-us/search/?terms=New-DFsnRoot&category=Reference
+
+https://docs.microsoft.com/en-us/powershell/module/dfsn/new-dfsnfolder
+
+https://docs.microsoft.com/en-us/powershell/module/dfsn/new-dfsnfoldertarget

@@ -1,4 +1,4 @@
-# Installs all needed prerequsites for milestones
+# Installs all needed prerequsites for milestones, (WINDOWS WORKSTATIONS MAY FAIL IF NOT IN DOMAIN)
 # Version 1.0
 
 - name: Install prereqs
@@ -15,11 +15,16 @@
       type: collection
       name: community.windows
 
-# Any failures in this and the linux sections "gathering" phase is fine since it most likely means the computer just isn't on :)
+  - name: Install collection 'community.docker'
+    community.general.ansible_galaxy_install:
+      type: collection
+      name: community.docker
+
+# Any failures in this and the linux sections "gathering" phase is fine since it most likely means the computer just isn't on :) (OR NOT IN THE DOMAIN)
 - name: Set Windows Timezones to 'Eastern Standard Time'
   hosts: windows
   vars:
-    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_user: "Administrator"
     ansible_shell_type: powershell
   tasks:
     - community.windows.win_timezone:

@@ -1,0 +1,14 @@
+[windows]
+dc01
+dc02
+mgmt01
+wks01
+wks02
+dfs01
+dfs02
+
+[linux]
+dhcp01
+dhcp02
+docker
+util

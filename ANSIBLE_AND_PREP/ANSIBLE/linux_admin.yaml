@@ -1,0 +1,34 @@
+# Linux Admins
+# Solid-Tortoise
+# v 0.2
+
+- name: Setup Group
+  hosts: dc01
+  vars:
+    ansible_user: "{{ domain_admin_1_user }}"
+    ansible_shell_type: powershell
+  tasks:
+  - name: Create linux-admins Group
+    ansible.windows.win_shell: New-ADGroup -Name "linux-admins" -SamAccountName linuxadmin -GroupCategory Security -GroupScope Global -DisplayName "linux-admins" -Path "CN=Users,DC=tortoise,DC=local" -Description "Members of this group are Linux Administrators"
+
+  - name: Create linux admin user
+    community.windows.win_domain_user:
+      domain_server: dc01.tortoise.local
+      name: "{{ linux_admin_1_user }}"
+      password: "{{ linux_admin_1_password }}"
+      password_never_expires: yes
+      state: present
+  
+  - name: Add a linuxadmin-adm to linux-admins
+    ansible.windows.win_shell: Add-ADGroupMember -Identity "CN=linux-admins,CN=Users,DC=tortoise,DC=local" -Members linuxadmin-adm
+
+
+- name: Setup UTIL
+  hosts: util
+  vars:
+    become: yes
+    become_user: root
+  tasks:
+  - name: edit sudoers config:
+    shell: "echo '%tortoise.local\\linuxadmin     ALL=(ALL) ALL' >> /etc/sudoers.d/sys265"
+  
