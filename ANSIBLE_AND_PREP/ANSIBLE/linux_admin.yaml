@@ -22,7 +22,6 @@
   - name: Add a linuxadmin-adm to linux-admins
     ansible.windows.win_shell: Add-ADGroupMember -Identity "CN=linux-admins,CN=Users,DC=tortoise,DC=local" -Members linuxadmin-adm
 
-
 - name: Setup UTIL
   hosts: util
   vars:
