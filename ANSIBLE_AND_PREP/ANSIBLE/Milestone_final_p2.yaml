@@ -1,0 +1,11 @@
+# Some information will need to be placed in all.yml
+# Needs to be run with the command "ansible-playbook -i inventory_host.txt <PLACEHOLDER FOR PATH TO PLAYBOOK>", depending on vault or not add "--ask-vault-pass"
+
+# This file plays the needed playbooks in order to complete the requirments for Milestone Final Part 2
+# Version .1 - NEEDS DOUBLE CHECK
+
+- name: Play "GPO_Setup"
+  import_playbook: GPO_Setup.yaml
+  
+- name: Play "Linux-ADM_Setup"
+  import_playbook: linux_admin.yaml
